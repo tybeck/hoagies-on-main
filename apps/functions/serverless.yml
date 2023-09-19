@@ -1,0 +1,60 @@
+service: hom-api-service
+frameworkVersion: '3'
+useDotenv: true
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-plugin-warmup
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  runtimeManagement: auto
+  memorySize: 512
+  timeout: 10
+  versionFunctions: true
+  tracing:
+    lambda: true
+  vpc:
+    securityGroupIds:
+      - 'sg-04fc3cea2ee552103'
+    subnetIds:
+      - 'subnet-009f69c26fb4ee1ba'
+      - 'subnet-0bcfa8c596a7e18cd'
+      - 'subnet-05c822d45e6d5638f'
+
+package:
+  individually: true
+
+functions:
+  graphql:
+    handler: dist/packages/hom/graphql/index.handler
+    events:
+      - http:
+          path: /graphql
+          method: POST
+          cors: false
+  playground:
+    handler: dist/packages/hom/graphql/index.handler
+    events:
+      - http:
+          path: /
+          method: GET
+    warmup:
+      default:
+        enabled: true
+
+custom:
+  serverless-offline:
+    httpPort: 3000
+    host: 0.0.0.0
+    httpProxy: true
+  warmup:
+    default:
+      enabled: true
+      memorySize: 256
+      name: warmer-default
+      events:
+        - schedule: 'cron(0/5 8-17 ? * MON-FRI *)'
+      prewarm: true

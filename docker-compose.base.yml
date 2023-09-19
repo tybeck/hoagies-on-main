@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  api:
+    image: hom-api
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DEV_PLATFORM=DOCKER
+    volumes:
+      - ./:/hom
+      - mono-node-modules:/hom/node_modules
+
+volumes:
+  mono-node-modules: null

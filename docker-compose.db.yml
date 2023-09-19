@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: 'hom-db'
+    environment:
+      MONGO_INITDB_DATABASE: hom
+    ports:
+      - '27017-27019:27017-27019'
+  redis:
+    image: redis:latest
+    container_name: 'hom-redis'
+    hostname: 'redis'
+    restart: always
+    expose:
+      - '6379'
+    ports:
+      - '6379:6379'

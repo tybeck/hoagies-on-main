@@ -1,0 +1,9 @@
+apps/**/dist
+apps/functions/.serverless
+.idea
+.yalc
+node_modules
+tmp
+tmp-fns
+libs/**/dist
+dist

@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "reflect-metadata": "*",
+    "@nestjs/platform-express": "*",
+    "class-validator": "*",
+    "class-transformer": "*",
+    "tslib": "*",
+    "rxjs": "*",
+    "tsconfig-paths": "*",
+    "@nestjs/core": "*",
+    "@vendia/serverless-express": "*",
+    "graphql": "*",
+    "@apollo/server": "*",
+    "mongoose": "*",
+    "@nestjs/mongoose": "*",
+    "@nestjs/config": "*",
+    "cache-manager-redis-yet": "*",
+    "@nestjs/jwt": "*",
+    "cache-manager": "*"
+  }
+}

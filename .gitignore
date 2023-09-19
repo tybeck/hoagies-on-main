@@ -1,0 +1,12 @@
+.DS_Store
+.idea
+node_modules
+tmp
+tmp-fns
+.yalc
+yalc.lock
+
+dist
+apps/**/local
+apps/**/data
+libs/do-cloud/dist

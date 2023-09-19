@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "executors": {
+    "build": {
+      "implementation": "./dist/src/lib/build/executor",
+      "schema": "./src/lib/build/schema.json",
+      "description": "Build lambda functions for AWS (serverless)"
+    },
+    "deploy": {
+      "implementation": "./dist/src/lib/deploy/executor",
+      "schema": "./src/lib/deploy/schema.json",
+      "description": "Deploy lambda functions to AWS"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "functions",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/functions/src",
+  "projectType": "application",
+  "targets": {
+    "build:cloud": {
+      "executor": "@hoagies-on-main/do-cloud:build"
+    },
+    "deploy:cloud": {
+      "executor": "@hoagies-on-main/do-cloud:deploy"
+    },
+    "serve:local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "cd apps/functions && npx ncc build src/main.local.ts -o local -w",
+          "cd apps/functions && nodemon local/index"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
