@@ -10,3 +10,4 @@ dist
 apps/**/local
 apps/**/data
 libs/do-cloud/dist
+apps/**/.expo
