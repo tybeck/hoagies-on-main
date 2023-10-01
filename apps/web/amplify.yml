@@ -1,6 +1,9 @@
 version: 1
+env:
+  variables:
+    AMPLIFY_MONOREPO_APP_ROOT: apps/web
 applications:
-  - appRoot: apps/wb
+  - appRoot: apps/web
     frontend:
       phases:
         preBuild:
