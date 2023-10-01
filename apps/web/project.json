@@ -78,9 +78,10 @@
         "outputDir": "../../dist/apps/web"
       }
     },
-    "export-web": {
+    "export:browser": {
       "executor": "@nx/expo:export",
       "options": {
+        "platform": "web",
         "bundler": "metro"
       }
     },
