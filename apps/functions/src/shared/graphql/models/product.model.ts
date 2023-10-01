@@ -30,7 +30,7 @@ export class Product implements IProduct {
   @Field(() => String)
   _id: MongooseSchema.Types.ObjectId;
 
-  @Field(() => String)
+  @Field(() => String, {defaultValue: ''})
   @Prop()
   key?: string;
 
@@ -54,7 +54,7 @@ export class Product implements IProduct {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Condiment.name })
   condiments: Condiment[];
 
-  @Field(() => Boolean)
+  @Field(() => Boolean, {defaultValue: false})
   @Prop()
   askForCheese?: boolean;
 
@@ -74,7 +74,7 @@ export class Product implements IProduct {
   @Prop({ schema: CategorySchema })
   categories: Category[];
 
-  @Field(() => [String])
+  @Field(() => [String], {defaultValue: []})
   @Prop()
   needsOneOf?: MongooseSchema.Types.ObjectId[];
 }

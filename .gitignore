@@ -11,3 +11,24 @@ apps/**/local
 apps/**/data
 libs/do-cloud/dist
 apps/**/.expo
+.env
+.env.local
+
+# Expo
+node_modules/
+.expo/
+.yarn/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+cache/
+
+
+apps/web-e2e/artifacts
+apps/web-e2e/artifacts

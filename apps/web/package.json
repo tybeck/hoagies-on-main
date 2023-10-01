@@ -5,12 +5,42 @@
   "dependencies": {
     "@testing-library/jest-native": "*",
     "@testing-library/react-native": "*",
+    "metro-config": "*",
     "react-native": "*",
     "expo": "*",
     "react-native-svg": "*",
-    "react-native-web": "*"
+    "react-native-web": "*",
+    "@nx/expo": "*",
+    "@expo/metro-config": "*",
+    "react-native-svg-transformer": "*",
+    "react": "*",
+    "@fortawesome/fontawesome-svg-core": "*",
+    "@fortawesome/free-solid-svg-icons": "*",
+    "mongoose": "*",
+    "@nestjs/mongoose": "*",
+    "@nestjs/graphql": "*",
+    "react-native-gesture-handler": "*",
+    "expo-constants": "*",
+    "@apollo/client": "*",
+    "styled-components": "*",
+    "expo-splash-screen": "*",
+    "react-redux": "*",
+    "@fortawesome/react-fontawesome": "*",
+    "@fortawesome/react-native-fontawesome": "*",
+    "expo-font": "*",
+    "@fortawesome/free-regular-svg-icons": "*",
+    "@react-navigation/native": "*",
+    "@fortawesome/free-brands-svg-icons": "*",
+    "google-map-react": "*",
+    "react-native-maps": "*",
+    "expo-updates": "*",
+    "expo-asset": "*",
+    "@reduxjs/toolkit": "*",
+    "@react-navigation/drawer": "*",
+    "@react-navigation/stack": "*"
   },
   "scripts": {
-    "postinstall": "rm -r node_modules && cd ../../ && yarn install && npx nx sync-deps web && npx nx ensure-symlink web"
+    "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/web && cp yarn.lock apps/web",
+    "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/web"
   }
 }

@@ -23,7 +23,7 @@ export class Condiment implements ICondiment {
   @Prop()
   type: string;
 
-  @Field(() => String)
+  @Field(() => String, {nullable: true, defaultValue: null})
   @Prop()
   subtype?: string;
 }

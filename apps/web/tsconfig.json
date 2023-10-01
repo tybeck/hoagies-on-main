@@ -8,10 +8,33 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
-    "composite": true,
-    "declaration": true
+    "declaration": true,
+    "baseUrl": "./",
+    "paths": {
+      "@hom/fonts": ["assets/fonts/index"],
+      "@hom/common": ["src/components/common/index"],
+      "@hom/support": ["src/support/index"],
+      "@hom/theme": ["src/theme/index"],
+      "@hom/store": ["src/store/index"],
+      "@hom/navigation": ["src/navigation/index"],
+      "@hom/navigation-types": ["src/navigation/types"],
+      "@hom/navigation-linking-options": ["src/navigation/linking-options"],
+      "@hom/preload": ["src/preload/index"],
+      "@hom/pages": ["src/components/pages/index"],
+      "@hom/layout": ["src/components/layout/index"],
+      "@hom/hooks": ["src/hooks/index"],
+      "@hom/utils": ["src/utils/index"],
+      "@hom/types": ["src/types/index"],
+      "@hom/svg": ["src/svg/index"],
+      "@hom/apollo": ["src/apollo/client"],
+      "@hom/queries": ["src/apollo/generated"],
+      "@hom/assets": ["assets/index"],
+      "@hom/context": ["src/context/index"],
+      "@hom/modals": ["src/components/modals/index"],
+      "@hoagies-on-main/shared": ["../../libs/shared/src/index"]
+    }
   },
-  "files": ["../../node_modules/@nrwl/expo/typings/svg.d.ts"],
+  "files": [],
   "include": [],
   "references": [
     {
@@ -20,6 +43,5 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ],
-  "exclude": ["node_modules"]
+  ]
 }

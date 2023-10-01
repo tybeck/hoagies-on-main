@@ -10,3 +10,5 @@ export * from './hour.model';
 export * from './setting.model';
 export * from './category.model';
 export * from './auth/strategy.model';
+export * from './fb/fb-review.model';
+export * from './fb/fb-post.model';

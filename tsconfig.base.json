@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@hoagies-on-main/shared": ["libs/shared/src/index.ts"]
+      "@hoagies-on-main/shared": ["libs/shared/src/index.ts"],
+      "@hoagies-on-main/shared-be": ["libs/shared/src/index.backend.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

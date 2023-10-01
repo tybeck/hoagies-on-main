@@ -33,19 +33,19 @@ export class Category implements ICategory {
   @Prop()
   name: string;
 
-  @Field(() => String)
+  @Field(() => String, {defaultValue: ''})
   @Prop()
   longName?: string;
 
-  @Field(() => Boolean)
+  @Field(() => Boolean, {defaultValue: false})
   @Prop()
   onHomePage?: boolean;
 
-  @Field(() => String)
+  @Field(() => String, {nullable: true})
   @Prop()
   color?: ColorName;
 
-  @Field(() => String)
+  @Field(() => String, {defaultValue: ''})
   @Prop()
   key?: string;
 }

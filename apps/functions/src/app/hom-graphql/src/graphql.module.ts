@@ -3,18 +3,34 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
-import { CategoryService } from './providers/category/category.service';
-import { CategoryResolver } from './resolvers/category/category.resolver';
 
 import {
   Setting,
   SettingSchema,
   Category,
   CategorySchema,
+  FbReview,
+  FbReviewSchema,
+  FbPost,
+  FbPostSchema,
+  Product,
+  ProductSchema,
 } from '@hom-api/models';
+
+import { CategoryService } from './providers/category/category.service';
+import { CategoryResolver } from './resolvers/category/category.resolver';
 
 import { SettingResolver } from './resolvers/setting/setting.resolver';
 import { SettingService } from './providers/setting/setting.service';
+
+import { ReviewService } from './providers/review/review.service';
+import { ReviewResolver } from './resolvers/review/review.resolver';
+
+import { PostService } from './providers/post/post.service';
+import { PostResolver } from './resolvers/post/post.resolver';
+
+import { ProductService } from './providers/product/product.service';
+import { ProductResolver } from './resolvers/product/product.resolver';
 
 import { DbModule } from './db.module';
 
@@ -32,6 +48,21 @@ import { DbModule } from './db.module';
         schema: CategorySchema,
         collection: Category.name.toLowerCase(),
       },
+      {
+        name: FbReview.name,
+        schema: FbReviewSchema,
+        collection: FbReview.name.toLowerCase(),
+      },
+      {
+        name: FbPost.name,
+        schema: FbPostSchema,
+        collection: FbPost.name.toLowerCase(),
+      },
+      {
+        name: Product.name,
+        schema: ProductSchema,
+        collection: Product.name.toLowerCase(),
+      },
     ]),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       autoSchemaFile: '/tmp/schema.gql',
@@ -46,9 +77,15 @@ import { DbModule } from './db.module';
     // services
     SettingService,
     CategoryService,
+    ReviewService,
+    PostService,
+    ProductService,
     // resolvers
     SettingResolver,
     CategoryResolver,
+    ReviewResolver,
+    PostResolver,
+    ProductResolver,
   ],
 })
 export class GraphqlModule {}
