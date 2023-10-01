@@ -8,7 +8,7 @@ applications:
       phases:
         build:
           commands:
-            - npm i -g nx
+            - yarn global add nx@latest
             - nvm use lts/hydrogen
             - yarn install --frozen-lockfile
             - cd ../../ && npx nx export:browser web
