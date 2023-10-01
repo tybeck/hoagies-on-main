@@ -10,9 +10,9 @@ applications:
           commands:
             - yarn global add nx@latest
             - nvm use lts/hydrogen
+            - cd ../../
             - yarn install --frozen-lockfile
-            - ls -la && cat package.json
-            - cd ../../ && npx nx export:browser web
+            - npx nx export:browser web
       artifacts:
         baseDirectory: dist
         files:
