@@ -11,7 +11,7 @@ applications:
             - npm i -g nx
             - nvm use lts/hydrogen
             - yarn install --frozen-lockfile
-            - nx export:browser web
+            - npx nx export:browser web
       artifacts:
         baseDirectory: dist
         files:
