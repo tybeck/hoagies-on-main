@@ -5,6 +5,7 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "nx": "^16.9.1",
     "@apollo/client": "^3.8.4",
     "@apollo/gateway": "^2.5.5",
     "@apollo/react-hooks": "^4.0.0",

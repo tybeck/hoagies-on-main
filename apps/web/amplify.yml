@@ -1,21 +1,18 @@
 version: 1
-env:
-  variables:
-    AMPLIFY_MONOREPO_APP_ROOT: apps/web
 applications:
-  - appRoot: apps/web
-    frontend:
-      phases:
-        build:
-          commands:
-            - npm i -g nx
-            - nvm use lts/hydrogen
-            - yarn install --frozen-lockfile
-            - cd ../../ && npx nx export:browser web
-      artifacts:
-        baseDirectory: dist
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - node_modules/**/*
+  frontend:
+    phases:
+      build:
+        commands:
+          - pwd
+          - npm i -g nx
+          - nvm use lts/hydrogen
+          - yarn install --frozen-lockfile
+          - cd ../../ && nx export:browser web
+    artifacts:
+      baseDirectory: dist
+      files:
+        - '**/*'
+    cache:
+      paths:
+        - node_modules/**/*
