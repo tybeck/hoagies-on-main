@@ -11,6 +11,7 @@ applications:
             - yarn global add nx@latest
             - nvm use lts/hydrogen
             - yarn install --frozen-lockfile
+            - ls -la && cat package.json
             - cd ../../ && npx nx export:browser web
       artifacts:
         baseDirectory: dist
