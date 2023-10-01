@@ -8,15 +8,16 @@ applications:
       phases:
         preBuild:
           commands:
+            - nvm use lts/hydrogen
+            - npm i -g nx
             - yarn install --frozen-lockfile
         build:
           commands:
-            - cd ../../
-            - npx nx export:browser web
+            - nx export:browser web
       artifacts:
-        baseDirectory: /
+        baseDirectory: dist
         files:
-          - dist
+          - '**/*'
       cache:
         paths:
           - node_modules/**/*
