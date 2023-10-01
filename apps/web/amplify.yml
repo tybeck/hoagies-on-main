@@ -6,13 +6,11 @@ applications:
   - appRoot: apps/web
     frontend:
       phases:
-        preBuild:
-          commands:
-            - nvm use lts/hydrogen
-            - npm i -g nx
-            - yarn install --frozen-lockfile
         build:
           commands:
+            - npm i -g nx
+            - nvm use lts/hydrogen
+            - yarn install --frozen-lockfile
             - nx export:browser web
       artifacts:
         baseDirectory: dist
