@@ -11,7 +11,7 @@ applications:
             - npm i -g nx
             - nvm use lts/hydrogen
             - yarn install --frozen-lockfile
-            - cd ../../ && ls -la && nx export:browser web
+            - cd ../../ && ls -la && cat amplify.yml && nx export:browser web
       artifacts:
         baseDirectory: dist
         files:
