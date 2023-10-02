@@ -20,6 +20,7 @@
     "@fortawesome/react-native-fontawesome": "^0.3.0",
     "@grpc/grpc-js": "^1.9.4",
     "@grpc/proto-loader": "^0.7.10",
+    "@hoagies-on-main/do-cloud": "file:.yalc/@hoagies-on-main/do-cloud",
     "@nestjs/apollo": "^12.0.9",
     "@nestjs/cache-manager": "^2.1.0",
     "@nestjs/common": "^10.2.5",

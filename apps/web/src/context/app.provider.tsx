@@ -118,6 +118,8 @@ export const AppProvider: FC<AppProviderProps> = ({children}) => {
     });
   };
 
+  console.log('OK!!!!', process.env.EXPO_PUBLIC_BASE_URI);
+
   return (
     <AppContext.Provider
       value={{...context, getSetting, getEnvironment, getEndpointUri, setComponentPositionY}}
