@@ -26,6 +26,23 @@ provider:
 
 package:
   individually: true
+  patterns:
+    - '!src/**'
+    - '!data/**'
+    - '!libs/**'
+    - '!local/**'
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
 
 functions:
   graphql:
@@ -34,7 +51,7 @@ functions:
       - http:
           path: /graphql
           method: POST
-          cors: false
+          cors: true
   playground:
     handler: dist/packages/hom/graphql/index.handler
     events:

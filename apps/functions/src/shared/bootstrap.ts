@@ -37,6 +37,9 @@ export async function bootstrap(
 
   const application = await NestFactory.create(BootstrappedModule);
   application.useGlobalPipes(new ValidationPipe());
+  application.enableCors({
+    origin: '*',
+  });
   await application.init();
 
   const app = application.getHttpAdapter().getInstance();
