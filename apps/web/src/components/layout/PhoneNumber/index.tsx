@@ -12,7 +12,9 @@ interface PhoneNumberProps {
   color?: ColorName;
 }
 
-const PhoneNumber: FC<PhoneNumberProps> = ({font, color} = {font: Font.NunitoBlack}) => {
+const PhoneNumber: FC<PhoneNumberProps> = (
+  {font, color} = {font: Font.NunitoBlack},
+) => {
   const {getSetting} = useApp();
   const [phoneNo] = useState<string>(getSetting(SettingType.PhoneNumber));
 

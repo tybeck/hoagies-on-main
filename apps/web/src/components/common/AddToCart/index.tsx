@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 
-import { Button } from '@hom/common';
-import { ColorName } from '@hoagies-on-main/shared';
-import { Font, Sizing } from '@hom/types';
+import {Button} from '@hom/common';
+import {ColorName} from '@hoagies-on-main/shared';
+import {Font, Sizing} from '@hom/types';
 
-type AddToCartProps = {}
+type AddToCartProps = {};
 
 export const AddToCart: FC<AddToCartProps> = () => {
   return (
@@ -18,5 +18,5 @@ export const AddToCart: FC<AddToCartProps> = () => {
       }}
       onPress={() => console.log('add to cart')}
     />
-  )
+  );
 };

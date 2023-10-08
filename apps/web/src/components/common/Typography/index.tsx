@@ -1,12 +1,12 @@
 import React, {FC, ReactNode} from 'react';
 import styled from 'styled-components/native';
 import {StyleProp, TextStyle} from 'react-native';
+import {css} from 'styled-components';
 
 import {ColorName} from '@hoagies-on-main/shared';
 
 import {Font, Size, Sizing} from '@hom/types';
 import {Theme} from '@hom/theme';
-import {css} from 'styled-components';
 
 export interface TypographyProps {
   font?: Font;
@@ -19,12 +19,20 @@ export interface TypographyProps {
   textCenter?: boolean;
   children?: string | ReactNode;
   uppercase?: boolean;
+  italic?: boolean;
+  fullWidth?: boolean;
 }
 
 const TypographyText = styled.Text<TypographyProps>`
   font-family: ${(props) => props.font};
   font-size: ${(props) => props.size};
   color: ${(props) => props.color};
+
+  ${({fullWidth}) =>
+    fullWidth &&
+    css`
+      width: 100%;
+  `}  
 
   ${({center}) =>
     center &&
@@ -44,6 +52,12 @@ const TypographyText = styled.Text<TypographyProps>`
     css`
       text-transform: uppercase;
     `}
+
+  ${({italic}) =>
+    italic &&
+    css`
+      font-style: italic;
+    `}  
 `;
 
 const Typography: FC<TypographyProps> = ({children, text, style, ...props}) => {
@@ -54,6 +68,8 @@ const Typography: FC<TypographyProps> = ({children, text, style, ...props}) => {
     center: props.center || false,
     textCenter: props.textCenter || false,
     uppercase: props.uppercase || false,
+    italic: props.italic || false,
+    fullWidth: props.fullWidth || false,
   };
   return (
     <TypographyText {...typographyProps} style={style}>

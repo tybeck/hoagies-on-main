@@ -1,22 +1,24 @@
-import { constants, promises as fs } from 'fs';
-import { join } from 'path';
+import {constants, promises as fs} from 'fs';
+import {join} from 'path';
 import fg from 'fast-glob';
-import { exec } from 'child_process';
-import { Promise as BluebirdPromise } from 'bluebird';
-import { ExecutorContext } from '@nrwl/devkit';
+import {exec} from 'child_process';
+import {Promise as BluebirdPromise} from 'bluebird';
+import {ExecutorContext} from '@nrwl/devkit';
 import yaml from 'js-yaml';
-import { stringify } from 'yaml';
-import { mkdirp } from 'mkdirp';
-import { copy } from 'fs-extra';
+import {stringify} from 'yaml';
+import {mkdirp} from 'mkdirp';
+import {copy} from 'fs-extra';
 import chalk from 'chalk';
 
-import { TsConfig, Project, DoCloudBuildOptions } from './types';
-import { getImports } from './utils';
+import {TsConfig, Project, CloudBuildOptions} from './types';
+import {getImports} from './utils';
 
-export default async function run<T extends DoCloudBuildOptions>(
+const ENCODING = 'utf-8';
+
+export default async function run<T extends CloudBuildOptions>(
   options: T,
-  ctx: ExecutorContext
-): Promise<{ success: true }> {
+  ctx: ExecutorContext,
+): Promise<{success: true}> {
   const projectName = ctx?.projectName;
   if (projectName) {
     const sourceRoot = ctx.workspace?.projects[projectName]?.sourceRoot;
@@ -33,7 +35,7 @@ export default async function run<T extends DoCloudBuildOptions>(
       });
       if (functions && functions.length) {
         console.log(
-          chalk.bgBlack(chalk.greenBright(chalk.bold('Detected functions:')))
+          chalk.bgBlack(chalk.greenBright(chalk.bold('Detected functions:'))),
         );
         for (const fn of functions) {
           console.log(` - ${fn}`);
@@ -49,7 +51,7 @@ export default async function run<T extends DoCloudBuildOptions>(
             return new Promise(async (resolve) => {
               const environment: string[] = [];
               const fnRoot = join(path, fn);
-              const fnEnvFile = join(appProjectPath, '.env');
+              const fnEnvFile = join(appProjectPath, '.env.development');
               const projectPath = join(path, fn, 'project.yml');
               const fnTsPath = join(path, fn, 'tsconfig.json');
               const fnTsTmpPath = join(path, fn, 'tsconfig.ncc.json');
@@ -68,17 +70,17 @@ export default async function run<T extends DoCloudBuildOptions>(
               }
 
               if (hasEnvFile) {
-                const env = await fs.readFile(fnEnvFile, 'utf-8');
+                const env = await fs.readFile(fnEnvFile, ENCODING);
                 if (env) {
                   environment.push(env);
                 }
               }
 
               const config: TsConfig = JSON.parse(
-                (await fs.readFile(fnTsPath, 'utf-8')) || `{}`
+                (await fs.readFile(fnTsPath, ENCODING)) || `{}`,
               );
               const functionProject: Project = yaml.load(
-                await fs.readFile(projectPath, 'utf-8')
+                await fs.readFile(projectPath, ENCODING),
               ) as Project;
 
               if (config.compilerOptions) {
@@ -113,7 +115,7 @@ export default async function run<T extends DoCloudBuildOptions>(
                       distributionFolder,
                       'packages',
                       pkgName,
-                      pkgFnName
+                      pkgFnName,
                     );
                     const pkgPath = join(pkgDirectoryPath, 'package.json');
                     await copy(assetsPath, join(pkgDirectoryPath, 'assets'));
@@ -126,9 +128,9 @@ export default async function run<T extends DoCloudBuildOptions>(
                             dependencies,
                           },
                           null,
-                          2
+                          2,
                         ),
-                        'utf-8'
+                        ENCODING,
                       );
                     }
                     config.compilerOptions.outDir = join(
@@ -136,22 +138,23 @@ export default async function run<T extends DoCloudBuildOptions>(
                       distributionFolder,
                       'packages',
                       pkgName,
-                      pkgFnName
+                      pkgFnName,
                     );
                     await fs.rename(fnTsPath, fnTsTmpPath);
                     await fs.writeFile(
                       fnTsPath,
                       JSON.stringify(config, null, 2),
-                      'utf-8'
+                      ENCODING,
                     );
                     const packageTsConfigPath = join(
                       pkgDirectoryPath,
-                      'tsconfig.json'
+                      'tsconfig.json',
                     );
                     if (config.extends) {
                       const fnRootTsConfigPath = join(path, fn, config.extends);
                       const fnRootTsConfig: TsConfig = JSON.parse(
-                        (await fs.readFile(fnRootTsConfigPath, 'utf-8')) || '{}'
+                        (await fs.readFile(fnRootTsConfigPath, ENCODING)) ||
+                          '{}',
                       );
                       if (fnRootTsConfig.extends) {
                         delete fnRootTsConfig.extends;
@@ -168,50 +171,51 @@ export default async function run<T extends DoCloudBuildOptions>(
                       await fs.writeFile(
                         packageTsConfigPath,
                         JSON.stringify(tsconfig, null, 2),
-                        'utf-8'
+                        ENCODING,
                       );
                     }
                     const process = exec(
-                      `cd ${fnRoot} && npx ncc build src/index.ts -o ${pkgDirectoryPath}`
+                      `cd ${fnRoot} && npx ncc build src/index.ts -o ${pkgDirectoryPath}`,
                     );
-                    process.stdout?.on('data', (data) =>
-                      console.log('data', data)
-                    );
-                    process.stderr?.on('data', (data) =>
-                      console.log('err', data)
-                    );
+                    process.stdout?.on('data', (data) => {
+                      const msg = data.split('\n');
+                      for (const message of msg) {
+                        if (message.includes('ncc')) {
+                          console.log(message);
+                        }
+                      }
+                    });
                     process.on('exit', async () => {
                       const distProjectPath = join(
                         appProjectPath,
                         distributionFolder,
-                        'project.yml'
+                        'project.yml',
                       );
                       const distEnvPath = join(
                         appProjectPath,
                         distributionFolder,
                         'packages',
-                        '.env'
+                        '.env',
                       );
-                      console.log('...distEnvPath', distEnvPath);
                       const distTsConfigPath = join(
                         appProjectPath,
                         distributionFolder,
                         'packages',
-                        'tsconfig.json'
+                        'tsconfig.json',
                       );
                       await fs.writeFile(
                         distProjectPath,
                         stringify(baseProject),
-                        'utf-8'
+                        ENCODING,
                       );
                       await fs.rm(fnTsPath);
                       await fs.rename(fnTsTmpPath, fnTsPath);
-                      await fs.writeFile(distTsConfigPath, `{}`, 'utf-8');
+                      await fs.writeFile(distTsConfigPath, `{}`, ENCODING);
                       if (environment.length) {
                         await fs.writeFile(
                           distEnvPath,
                           environment.join('\r\n'),
-                          'utf-8'
+                          ENCODING,
                         );
                       }
                       resolve(true);
@@ -222,10 +226,10 @@ export default async function run<T extends DoCloudBuildOptions>(
               return Promise.resolve(true);
             });
           },
-          { concurrency: 3 }
+          {concurrency: 3},
         );
       }
     }
   }
-  return Promise.resolve({ success: true });
+  return Promise.resolve({success: true});
 }

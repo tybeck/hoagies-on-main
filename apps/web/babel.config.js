@@ -1,4 +1,4 @@
-module.exports = function(api) {
+module.exports = function (api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],
@@ -25,14 +25,15 @@ module.exports = function(api) {
             '@hom/store': './src/store/index.ts',
             '@hom/navigation': './src/navigation/index.tsx',
             '@hom/navigation-types': './src/navigation/types.ts',
-            '@hom/navigation-linking-options': './src/navigation/linking-options.ts',
+            '@hom/navigation-linking-options':
+              './src/navigation/linking-options.ts',
             '@hom/preload': './src/preload/index.ts',
             '@hom/svg': './src/svg/index.ts',
             '@hoagies-on-main/shared': '../../libs/shared/src/index.ts',
             '^react-native$': 'react-native-web',
           },
         },
-      ]
+      ],
     ],
   };
 };

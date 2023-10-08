@@ -13,7 +13,16 @@
       "@hom-api/auth-utils": ["src/shared/modules/auth/utils/index"],
       "@hom-api/auth-strategies": ["src/shared/modules/auth/strategies/index"],
       "@hom-api/auth-decorators": ["src/shared/modules/auth/decorators/index"],
-      "@hom-api/shared-utils": ["src/shared/utils/index"]
+      "@hom-api/shared-utils": ["src/shared/utils/index"],
+      "@hom-api/entities-response": [
+        "src/shared/graphql/entities/response/index"
+      ],
+      "@hom-api-fn/graphql-providers": [
+        "src/app/hom-graphql/src/providers/index"
+      ],
+      "@hom-api-fn/graphql-resolvers": [
+        "src/app/hom-graphql/src/resolvers/index"
+      ]
     },
     "types": ["node"]
   },

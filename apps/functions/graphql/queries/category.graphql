@@ -1,0 +1,10 @@
+query Category {
+  getCategories {
+    _id
+    name
+    longName
+    color
+    onHomePage
+    key
+  }
+}

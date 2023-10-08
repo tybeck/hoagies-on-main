@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Svg, { SvgProps, G, Path, Circle, Ellipse } from 'react-native-svg';
+import Svg, {SvgProps, G, Path, Circle, Ellipse} from 'react-native-svg';
 
-import { Theme } from '@hom/theme';
+import {Theme} from '@hom/theme';
 
 const Meatball = (props: SvgProps) => {
   const meatballFill = props.fill || Theme.colors.davysGrey;
@@ -136,6 +136,6 @@ const Meatball = (props: SvgProps) => {
       </G>
     </Svg>
   );
-}
+};
 
 export {Meatball};

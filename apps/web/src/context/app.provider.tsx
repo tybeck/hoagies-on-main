@@ -1,9 +1,20 @@
 import React, {createContext, FC, useContext, useEffect, useState} from 'react';
+import styled from 'styled-components/native';
 import Constants from 'expo-constants';
+import {View} from 'react-native';
 
-import { Content, EnvironmentKey, SettingType } from '@hom/types';
-import { useSettingQuery, Setting, Category, useCategoryQuery } from '@hom/queries';
-import {noop} from "@hom/utils";
+import {Content, EnvironmentKey, SettingType} from '@hom/types';
+import {
+  useSettingQuery,
+  Setting,
+  Category,
+  useCategoryQuery,
+} from '@hom/queries';
+import {noop} from '@hom/utils';
+
+const AppProviderView = styled.View`
+  flex: 1;
+`;
 
 interface IAppContext {
   settings: Setting[] | null;
@@ -13,13 +24,14 @@ interface IAppContext {
   setScroll: (value: number) => void;
   setHeaderHeight: (value: number) => void;
   setAuthToken: (value: string) => void;
-  getSetting: (key: SettingType) => string | null | undefined;
+  getSetting: (key: SettingType) => string | null;
   getEnvironment: (key: EnvironmentKey) => string | null | undefined;
   getEndpointUri: (key: EnvironmentKey) => string | null;
   setComponentPositionY: (component: Content, y: number) => void;
   categories: Category[];
   headerHeight: number;
   positions: Positions;
+  appWidth: number | null;
 }
 
 export const AppContext = createContext({
@@ -37,6 +49,7 @@ export const AppContext = createContext({
   categories: [],
   headerHeight: 0,
   positions: {},
+  appWidth: null,
 } as IAppContext);
 
 type Environment = {
@@ -49,9 +62,10 @@ type Positions = {
 
 export type AppProviderProps = {
   children: React.ReactElement;
-}
+};
 
 export const AppProvider: FC<AppProviderProps> = ({children}) => {
+  const [appWidth, setAppWidth] = useState<number | null>(null);
   const [scroll, setScroll] = useState<number>(0);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
   const [hasSettingsLoaded, setSettingsLoaded] = useState<boolean>(false);
@@ -85,9 +99,10 @@ export const AppProvider: FC<AppProviderProps> = ({children}) => {
     settings: settings?.data?.getSettings ?? [],
     categories: categories?.data?.getCategories ?? [],
     positions,
+    appWidth,
   };
 
-  const getSetting = (key: SettingType): string | null | undefined => {
+  const getSetting = (key: SettingType) => {
     if (context.settings) {
       return context.settings.find((setting) => setting.key === key)?.value;
     }
@@ -118,13 +133,26 @@ export const AppProvider: FC<AppProviderProps> = ({children}) => {
     });
   };
 
-  console.log('OK!!!!', process.env.EXPO_PUBLIC_BASE_URI);
+  const onLayout = (event: {nativeEvent: {layout: {y: number, width: number}}}) => {
+    const width = event?.nativeEvent?.layout?.width;
+    if (width !== appWidth) {
+      setAppWidth(width);
+    }
+  };
 
   return (
     <AppContext.Provider
-      value={{...context, getSetting, getEnvironment, getEndpointUri, setComponentPositionY}}
+      value={{
+        ...context,
+        getSetting,
+        getEnvironment,
+        getEndpointUri,
+        setComponentPositionY,
+      }}
     >
-      {children}
+      <AppProviderView onLayout={onLayout}>
+        {children}
+      </AppProviderView>
     </AppContext.Provider>
   );
 };

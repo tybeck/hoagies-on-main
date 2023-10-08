@@ -29,7 +29,9 @@ const Icon = React.lazy(async (): Promise<{default: FC<Icon>}> => {
       default: FontAwesomeIcon,
     };
   }
-  const {FontAwesomeIcon} = await import('@fortawesome/react-native-fontawesome');
+  const {FontAwesomeIcon} = await import(
+    '@fortawesome/react-native-fontawesome'
+  );
   console.log('???', FontAwesomeIcon);
   return {
     default: FontAwesomeIcon,

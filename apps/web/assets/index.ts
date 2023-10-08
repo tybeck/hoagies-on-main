@@ -24,4 +24,4 @@ export {
   newsletter,
   logoSmallest,
   buildYourOwnBanner,
-}
+};

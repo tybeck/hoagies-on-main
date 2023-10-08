@@ -2,8 +2,8 @@
   "$schema": "http://json-schema.org/schema",
   "version": 2,
   "cli": "nx",
-  "title": "DigitalOcean Cloud - Build",
-  "description": "Builds all functions for release on DigitalOcean",
+  "title": "HOM - Build",
+  "description": "Builds all functions for release on AWS",
   "type": "object",
   "properties": {},
   "required": []

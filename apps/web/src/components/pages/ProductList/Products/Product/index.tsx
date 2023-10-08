@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components/native';
 
-import { Product as IProduct } from '@hom/queries';
-import { Typography, AddToCart, AddToFavorites } from '@hom/common';
-import { useCart } from '@hom/context';
-import { Font } from '@hom/types';
+import {Product as IProduct} from '@hom/queries';
+import {Typography, AddToCart, AddToFavorites} from '@hom/common';
+import {useCart} from '@hom/context';
+import {Font} from '@hom/types';
 
 const ProductView = styled.View`
   min-height: 350px;
@@ -29,14 +29,14 @@ interface ProductProps {
   index: number;
 }
 
-export const Product: FC<ProductProps> = ({ product, index }) => {
-  const { add } = useCart();
+export const Product: FC<ProductProps> = ({product, index}) => {
+  const {add} = useCart();
   const ingredientNames = [
     ...product.meats,
     ...product.cheeses,
     ...product.condiments,
   ]
-    .map(ingredient => ingredient.name)
+    .map((ingredient) => ingredient.name)
     .join(', ');
   return (
     <ProductView>
@@ -46,9 +46,11 @@ export const Product: FC<ProductProps> = ({ product, index }) => {
         <Typography textCenter>{ingredientNames}</Typography>
       </Ingredients>
       <Price>
-        <Typography font={Font.NunitoBlack}>${(product.price / 100).toFixed(2)}</Typography>
+        <Typography font={Font.NunitoBlack}>
+          ${(product.price / 100).toFixed(2)}
+        </Typography>
       </Price>
       <AddToCart />
     </ProductView>
-  )
-}
+  );
+};

@@ -1,11 +1,11 @@
-import { ExecutorContext } from '@nrwl/devkit';
-import { join } from 'path';
-import { constants, promises as fs } from 'fs';
-import { PackageJson } from 'nx/src/utils/package-json';
+import {ExecutorContext} from '@nrwl/devkit';
+import {join} from 'path';
+import {constants, promises as fs} from 'fs';
+import {PackageJson} from 'nx/src/utils/package-json';
 import fg from 'fast-glob';
-import { Promise as BluebirdPromise } from 'bluebird';
+import {Promise as BluebirdPromise} from 'bluebird';
 
-import { getPaths } from './get-paths';
+import {getPaths} from './get-paths';
 
 export const getImports = async (ctx: ExecutorContext, root: string) => {
   const fnPkgPath = join(root, 'package.json');
@@ -45,7 +45,7 @@ export const getImports = async (ctx: ExecutorContext, root: string) => {
                 const contents = await fs.readFile(file, 'utf-8');
                 return getPaths(contents);
               })
-            ).flat()
+            ).flat(),
           ),
         ];
         return dependencies

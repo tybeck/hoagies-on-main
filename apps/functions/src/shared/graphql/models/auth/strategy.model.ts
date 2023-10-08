@@ -1,6 +1,6 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import {Field, ObjectType} from '@nestjs/graphql';
 
-import { StrategyType } from '@hom-api/types';
+import {StrategyType} from '@hom-api/types';
 
 @ObjectType()
 export class Strategy {

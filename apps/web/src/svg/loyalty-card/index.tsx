@@ -10,7 +10,12 @@ const LoyaltyCardView = styled.View`
 const LoyaltyCard = (props: SvgProps) => {
   return (
     <LoyaltyCardView>
-      <Svg viewBox={'0 0 286.404 187.422'} width="100%" height={213.422} {...props}>
+      <Svg
+        viewBox={'0 0 286.404 187.422'}
+        width="100%"
+        height={213.422}
+        {...props}
+      >
         <Defs>
           <ClipPath id="a">
             <Path
@@ -48,7 +53,11 @@ const LoyaltyCard = (props: SvgProps) => {
               />
             </G>
             <G data-name="Group 821">
-              <G data-name="Group 820" clipPath="url(#a)" transform="translate(-235.44 209.422)">
+              <G
+                data-name="Group 820"
+                clipPath="url(#a)"
+                transform="translate(-235.44 209.422)"
+              >
                 <G data-name="Group 743">
                   <G data-name="Group 742">
                     <G data-name="Group 740">

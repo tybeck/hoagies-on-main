@@ -2,8 +2,8 @@
   "$schema": "http://json-schema.org/schema",
   "version": 2,
   "cli": "nx",
-  "title": "DigitalOcean Cloud - Deploy",
-  "description": "Deploy all functions to DigitalOcean",
+  "title": "HOM - Deploy",
+  "description": "Deploy all functions to AWS",
   "type": "object",
   "properties": {},
   "required": []

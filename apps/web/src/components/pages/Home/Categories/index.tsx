@@ -2,6 +2,7 @@ import React, {FC, RefObject, useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {Platform, View} from 'react-native';
 import {css} from 'styled-components';
+import {useTranslation} from 'react-i18next';
 
 import {ColorName} from '@hoagies-on-main/shared';
 
@@ -10,6 +11,7 @@ import {Theme} from '@hom/theme';
 import {useApp} from '@hom/context';
 import {Category as ICategory} from '@hom/queries';
 import {hoagie, burger, fries, cheesesteak, chicken} from '@hom/assets';
+import {LocaleKey} from '@hom/locale';
 
 import {Category} from './Category';
 
@@ -63,11 +65,16 @@ interface CategoriesProps<T> {
   onPositionChange?: (y: number) => void;
 }
 
-const Categories: FC<CategoriesProps<View>> = ({viewRef, onPositionChange}): React.ReactElement => {
-  const {categories} = useApp();
-  const [allCategories, setAllCategories] = useState<Omit<ICategory, '__typename'>[]>([]);
+const Categories: FC<CategoriesProps<View>> = ({
+  viewRef,
+  onPositionChange,
+}): React.ReactElement => {
+  const {t} = useTranslation();
+  const {appWidth, categories} = useApp();
+  const [allCategories, setAllCategories] = useState<Partial<ICategory>[]>([]);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const onMouseEnter = (categoryIndex: number) => () => setHoverIndex(categoryIndex);
+  const onMouseEnter = (categoryIndex: number) => () =>
+    setHoverIndex(categoryIndex);
   const onMouseLeave = () => setHoverIndex(null);
 
   useEffect(() => {
@@ -76,15 +83,15 @@ const Categories: FC<CategoriesProps<View>> = ({viewRef, onPositionChange}): Rea
         ...categories,
         {
           color: '#FFF',
-          name: 'And much more...',
+          name: t(LocaleKey.AndMuchMore),
           _id: '',
         },
       ]);
     }
   }, [categories]);
 
-  const getSize = (categoryIndex) => {
-    if (Platform.OS !== OS.web) {
+  const getSize = (categoryIndex: number): number => {
+    if (!appWidth || (appWidth && appWidth < 800)) {
       return 100;
     }
     return sizes[categoryIndex];
@@ -97,42 +104,45 @@ const Categories: FC<CategoriesProps<View>> = ({viewRef, onPositionChange}): Rea
     }
   };
 
-  const filteredCategories = allCategories.filter(category => category.onHomePage || !category._id);
+  const filteredCategories = allCategories.filter(
+    (category) => category.onHomePage || !category._id,
+  );
 
   return (
     <CategoriesView ref={viewRef} onLayout={onLayout}>
       {allCategories.length !== 0 &&
-        filteredCategories
-          .map((category, categoryIndex) => {
-            const groupIndex = Math.floor(categoryIndex / 3);
-            const hoverGroupIndex = hoverIndex !== null ? Math.floor(hoverIndex / 3) : null;
-            const isLastItem = filteredCategories.length - 1 === categoryIndex;
-            let headingColor = null;
-            if (isLastItem) {
-              headingColor = ColorName.SpaceCadet;
-            }
-            return (
-              <CategoryWrap
-                size={getSize(categoryIndex)}
-                onMouseEnter={onMouseEnter(categoryIndex)}
-                onMouseLeave={onMouseLeave}
-                hover={categoryIndex === hoverIndex}
-                isInHoverGroup={
-                  (isLastItem && categoryIndex === hoverIndex) ||
-                  (!isLastItem && categoryIndex !== hoverIndex && groupIndex === hoverGroupIndex)
-                }
-                color={category.color}
-                key={category._id}
-              >
-                <Category
-                  category={category}
-                  image={images[categoryIndex]}
-                  headingColor={headingColor}
-                />
-              </CategoryWrap>
-            );
-          })
-      }
+        filteredCategories.map((category, categoryIndex) => {
+          const groupIndex = Math.floor(categoryIndex / 3);
+          const hoverGroupIndex =
+            hoverIndex !== null ? Math.floor(hoverIndex / 3) : null;
+          const isLastItem = filteredCategories.length - 1 === categoryIndex;
+          let headingColor = null;
+          if (isLastItem) {
+            headingColor = ColorName.SpaceCadet;
+          }
+          return (
+            <CategoryWrap
+              size={getSize(categoryIndex)}
+              onMouseEnter={onMouseEnter(categoryIndex)}
+              onMouseLeave={onMouseLeave}
+              hover={categoryIndex === hoverIndex}
+              isInHoverGroup={
+                (isLastItem && categoryIndex === hoverIndex) ||
+                (!isLastItem &&
+                  categoryIndex !== hoverIndex &&
+                  groupIndex === hoverGroupIndex)
+              }
+              color={category.color}
+              key={category._id}
+            >
+              <Category
+                category={category}
+                image={images[categoryIndex]}
+                headingColor={headingColor}
+              />
+            </CategoryWrap>
+          );
+        })}
     </CategoriesView>
   );
 };

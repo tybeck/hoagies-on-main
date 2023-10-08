@@ -1,4 +1,4 @@
-import { StrategyType } from './stategy.type';
+import {StrategyType} from './stategy.type';
 
 export type User = {
   id: string;

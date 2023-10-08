@@ -28,7 +28,14 @@ const ButtonView = styled.View`
   width: ${() => (isElectron() ? 'calc(100% + 1px)' : '100%')};
 `;
 
-const Button: FC<Props> = ({style, text, fill, typographyProps, buttonProps, onPress}) => {
+const Button: FC<Props> = ({
+  style,
+  text,
+  fill,
+  typographyProps,
+  buttonProps,
+  onPress,
+}) => {
   return (
     <Pressable onPress={onPress || null}>
       <View style={{alignItems: 'baseline', ...style}}>

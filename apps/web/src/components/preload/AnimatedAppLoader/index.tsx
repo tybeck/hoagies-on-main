@@ -10,8 +10,8 @@ import AnimatedSplashScreen from '../AnimatedSplashScreen';
 
 type AnimatedAppLoaderProps = {
   children: React.ReactElement;
-  image?: { uri: string };
-}
+  image?: {uri: string};
+};
 
 const AnimatedAppLoader: FC<AnimatedAppLoaderProps> = ({children, image}) => {
   const [isSplashReady, setSplashReady] = useState<boolean>(false);
@@ -48,6 +48,6 @@ const AnimatedAppLoader: FC<AnimatedAppLoaderProps> = ({children, image}) => {
   }
 
   return <AnimatedSplashScreen image={image}>{children}</AnimatedSplashScreen>;
-}
+};
 
 export default AnimatedAppLoader;

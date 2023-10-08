@@ -39,13 +39,17 @@ const BuildYourOwnBanner: FC = () => {
   return (
     <BuildYourOwnView>
       <TextColumn>
-        <Typography font={Font.LithosProBlack} size={Sizing.Large} color={ColorName.White}>
+        <Typography
+          font={Font.LithosProBlack}
+          size={Sizing.Large}
+          color={ColorName.White}
+        >
           Build your own hoagie
         </Typography>
         <TextView>
           <Typography color={ColorName.White}>
-            Make a hoagie to your own liking! Add your meats, cheeses, condiments and more in our
-            custom hoagie builder.
+            Make a hoagie to your own liking! Add your meats, cheeses,
+            condiments and more in our custom hoagie builder.
           </Typography>
         </TextView>
         <Button
@@ -58,7 +62,10 @@ const BuildYourOwnBanner: FC = () => {
           onPress={() => console.log('get started.')}
         />
       </TextColumn>
-      <BuildYourOwnImage resizeMode="contain" source={unpackAsset(BuildYourOwnBannerImage)} />
+      <BuildYourOwnImage
+        resizeMode="contain"
+        source={unpackAsset(BuildYourOwnBannerImage)}
+      />
     </BuildYourOwnView>
   );
 };

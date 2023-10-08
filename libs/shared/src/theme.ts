@@ -18,7 +18,7 @@ export type Color = Record<ColorName, string>;
 
 export type ISharedTheme = {
   colors: Color;
-}
+};
 
 const SharedTheme: ISharedTheme = {
   colors: {
@@ -36,6 +36,6 @@ const SharedTheme: ISharedTheme = {
     darkSilver: '#707070',
     cultured: '#FAF7F2',
   },
-}
+};
 
-export { SharedTheme };
+export {SharedTheme};

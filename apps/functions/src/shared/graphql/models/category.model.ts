@@ -1,6 +1,6 @@
-import { Document, Schema as MongooseSchema } from 'mongoose/lib';
-import { ObjectType, Field } from '@nestjs/graphql';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import {Document, Schema as MongooseSchema} from 'mongoose/lib';
+import {ObjectType, Field} from '@nestjs/graphql';
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 
 export enum ColorName {
   White = 'white',

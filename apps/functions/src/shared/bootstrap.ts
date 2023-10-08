@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { NestFactory } from '@nestjs/core';
+import {NestFactory} from '@nestjs/core';
 import {
   DynamicModule,
   ForwardReference,
@@ -7,10 +7,10 @@ import {
   Type,
   ValidationPipe,
 } from '@nestjs/common';
-import { Handler } from 'aws-lambda';
+import {Handler} from 'aws-lambda';
 import serverlessExpress from '@vendia/serverless-express';
 
-import { GlobalModule } from '@hom-api/modules';
+import {GlobalModule} from '@hom-api/modules';
 
 let instance: Handler;
 
@@ -21,7 +21,7 @@ let instance: Handler;
  * @param module
  */
 export async function bootstrap(
-  module: Type | DynamicModule | Promise<DynamicModule> | ForwardReference
+  module: Type | DynamicModule | Promise<DynamicModule> | ForwardReference,
 ): Promise<Handler> {
   if (instance) {
     return Promise.resolve(instance);
@@ -44,5 +44,5 @@ export async function bootstrap(
 
   const app = application.getHttpAdapter().getInstance();
 
-  return serverlessExpress({ app });
+  return serverlessExpress({app});
 }

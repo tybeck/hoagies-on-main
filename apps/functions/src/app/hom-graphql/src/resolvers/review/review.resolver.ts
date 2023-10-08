@@ -1,14 +1,13 @@
-import { Query, Resolver } from '@nestjs/graphql';
-import { forwardRef, Inject } from '@nestjs/common';
+import {Query, Resolver} from '@nestjs/graphql';
+import {forwardRef, Inject} from '@nestjs/common';
 
-import { FbReview, IReview } from '@hom-api/models';
-
-import { ReviewService } from '../../providers/review/review.service';
+import {FbReview, IReview} from '@hom-api/models';
+import {ReviewService} from '@hom-api-fn/graphql-providers';
 
 @Resolver(() => FbReview)
 export class ReviewResolver {
   constructor(
-    @Inject(forwardRef(() => ReviewService)) private review: ReviewService
+    @Inject(forwardRef(() => ReviewService)) private review: ReviewService,
   ) {}
 
   @Query(() => [FbReview])

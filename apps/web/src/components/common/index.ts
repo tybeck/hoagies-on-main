@@ -8,6 +8,7 @@ export * from './Heading';
 export * from './Input';
 export * from './AddToCart';
 export * from './AddToFavorites';
+export * from './View';
 // sign in
 export * from './SignInButton/Twitter';
 export * from './SignInButton/Facebook';

@@ -1,6 +1,6 @@
-import { Document, Schema as MongooseSchema } from 'mongoose/lib/index';
-import { ObjectType, Field } from '@nestjs/graphql';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import {Document, Schema as MongooseSchema} from 'mongoose/lib/index';
+import {ObjectType, Field} from '@nestjs/graphql';
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 
 export interface IMeat extends Document {

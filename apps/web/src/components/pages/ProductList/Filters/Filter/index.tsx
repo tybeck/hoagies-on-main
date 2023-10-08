@@ -1,30 +1,32 @@
-import React, { FC, useEffect, useRef } from 'react'
+import React, {FC, useEffect, useRef} from 'react';
 import styled from 'styled-components/native';
-import { Animated, Pressable } from 'react-native'
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { SvgProps } from 'react-native-svg';
-import { css } from 'styled-components';
+import {Animated, Pressable} from 'react-native';
+import {useRoute, RouteProp} from '@react-navigation/native';
+import {SvgProps} from 'react-native-svg';
+import {css} from 'styled-components';
 
-import { ColorName } from '@hoagies-on-main/shared';
+import {ColorName} from '@hoagies-on-main/shared';
 
-import { Burger, Chicken, Fries, Hoagie, Kids, Meatball } from '@hom/svg';
-import { Category as ICategory } from '@hom/queries';
-import { Category, Font } from '@hom/types'
-import { Typography } from '@hom/common';
-import { Theme } from '@hom/theme';
-import { useProductList } from '@hom/context';
+import {Burger, Chicken, Fries, Hoagie, Kids, Meatball} from '@hom/svg';
+import {Category as ICategory} from '@hom/queries';
+import {Category, Font} from '@hom/types';
+import {Typography} from '@hom/common';
+import {Theme} from '@hom/theme';
+import {useProductList} from '@hom/context';
 
-const FilterView = styled.View<{ index: number, total: number }>`
+const FilterView = styled.View<{index: number; total: number}>`
   margin: 0 0.5%;
   width: 15.83%;
-  
-  ${({ index }) => index === 0 &&
-  css`
+
+  ${({index}) =>
+    index === 0 &&
+    css`
       margin-left: 0;
     `}
 
-  ${({ index, total }) => index === (total - 1) &&
-  css`
+  ${({index, total}) =>
+    index === total - 1 &&
+    css`
       margin-right: 0;
     `}
 `;
@@ -65,7 +67,7 @@ const getCategoryIcon = (category: Category): FC<SvgProps> => {
     default:
       return Burger;
   }
-}
+};
 
 interface FilterProps {
   index: number;
@@ -79,10 +81,10 @@ type ParamList = {
   };
 };
 
-export const Filter: FC<FilterProps> = ({ index, total, category }) => {
+export const Filter: FC<FilterProps> = ({index, total, category}) => {
   const {selectedCategories, setSelectedCategories} = useProductList();
   const route = useRoute<RouteProp<ParamList, 'Categories'>>();
-  const key = (category.key as Category);
+  const key = category.key as Category;
   const selected = selectedCategories.includes(key);
   const Icon = getCategoryIcon(key);
   const animated = useRef(new Animated.Value(0)).current;
@@ -92,24 +94,30 @@ export const Filter: FC<FilterProps> = ({ index, total, category }) => {
       const selected = selectedCategories.includes(key);
       let categories = [...selectedCategories, key];
       if (selected) {
-        categories = selectedCategories.filter(categoryKey => categoryKey !== key);
+        categories = selectedCategories.filter(
+          (categoryKey) => categoryKey !== key,
+        );
       }
       setSelectedCategories(categories);
       if ('URLSearchParams' in window) {
         const searchParams = new URLSearchParams(window.location.search);
-        searchParams.set('categories', categories.filter(categories => categories.length).join(','));
-        const newRelativePathQuery = window.location.pathname + '?' + decodeURIComponent(searchParams.toString());
+        searchParams.set(
+          'categories',
+          categories.filter((categories) => categories.length).join(','),
+        );
+        const newRelativePathQuery =
+          window.location.pathname +
+          '?' +
+          decodeURIComponent(searchParams.toString());
         history.pushState(null, '', newRelativePathQuery);
       }
-      Animated
-        .timing(animated, {
-          toValue: selected ? 0 : 100,
-          duration: 250,
-          useNativeDriver: true,
-        })
-        .start();
+      Animated.timing(animated, {
+        toValue: selected ? 0 : 100,
+        duration: 250,
+        useNativeDriver: true,
+      }).start();
     };
-  }
+  };
 
   useEffect(() => {
     const categoriesInRoute = (route?.params?.categories || '').split(',');
@@ -133,7 +141,9 @@ export const Filter: FC<FilterProps> = ({ index, total, category }) => {
             }}
           >
             <IconView>
-              <Icon fill={selected ? Theme.colors.white : Theme.colors.davysGrey} />
+              <Icon
+                fill={selected ? Theme.colors.white : Theme.colors.davysGrey}
+              />
             </IconView>
             <Typography
               font={Font.NunitoBlack}
@@ -147,5 +157,5 @@ export const Filter: FC<FilterProps> = ({ index, total, category }) => {
         </PressableView>
       </Pressable>
     </FilterView>
-  )
-}
+  );
+};

@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { Profile, Strategy } from 'passport-facebook';
+import {Injectable} from '@nestjs/common';
+import {PassportStrategy} from '@nestjs/passport';
+import {Profile, Strategy} from 'passport-facebook';
 
-import { StrategyType } from '@hom-api/types';
+import {StrategyType} from '@hom-api/types';
 
 @Injectable()
 export class FacebookStrategy extends PassportStrategy(
   Strategy,
-  StrategyType.Facebook
+  StrategyType.Facebook,
 ) {
   constructor() {
     super({
@@ -23,8 +23,8 @@ export class FacebookStrategy extends PassportStrategy(
     accessToken: string,
     refreshToken: string,
     profile: Profile,
-    done: (err: any, user: any, info?: any) => void
+    done: (err: any, user: any, info?: any) => void,
   ): Promise<any> {
-    done(null, { ...profile, accessToken });
+    done(null, {...profile, accessToken});
   }
 }

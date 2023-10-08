@@ -1,0 +1,47 @@
+fragment MeatFields on Meat {
+  _id
+  name
+}
+
+fragment CheeseFields on Cheese {
+  _id
+  name
+}
+
+fragment CondimentFields on Condiment {
+  _id
+  name
+  type
+  subtype
+}
+
+fragment CategoryFields on Category {
+  _id
+  name
+  longName
+  color
+}
+
+query Products($categories: [String!]) {
+  getProducts(categories: $categories) {
+    _id
+    key
+    name
+    meats {
+      ...MeatFields
+    }
+    cheeses {
+      ...CheeseFields
+    }
+    condiments {
+      ...CondimentFields
+    }
+    categories {
+      ...CategoryFields
+    }
+    price
+    askForCheese
+    needsOneOf
+    notes
+  }
+}

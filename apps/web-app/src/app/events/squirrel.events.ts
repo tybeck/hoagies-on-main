@@ -2,10 +2,10 @@
  * This module is responsible on handling all the setup events that is submitted by squirrel.
  */
 
-import { app } from 'electron';
-import { spawn } from 'child_process';
-import { resolve, join, basename } from 'path';
-import { environment } from '../../environments/environment';
+import {app} from 'electron';
+import {spawn} from 'child_process';
+import {resolve, join, basename} from 'path';
+import {environment} from '../../environments/environment';
 
 export default class SquirrelEvents {
   private static isAppFirstRun = false;
@@ -62,9 +62,8 @@ export default class SquirrelEvents {
 
   private static update(args: Array<string>) {
     try {
-      spawn(SquirrelEvents.updateExe, args, { detached: true }).on(
-        'close',
-        () => setTimeout(app.quit, 1000),
+      spawn(SquirrelEvents.updateExe, args, {detached: true}).on('close', () =>
+        setTimeout(app.quit, 1000),
       );
     } catch (error) {
       setTimeout(app.quit, 1000);

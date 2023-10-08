@@ -1,6 +1,6 @@
-import { CompilerOptions, TypeAcquisition } from 'typescript';
+import {CompilerOptions, TypeAcquisition} from 'typescript';
 
-export type DoCloudBuildOptions = {
+export type CloudBuildOptions = {
   directory?: string;
   distributionDirectory?: string;
 };

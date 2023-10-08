@@ -7,13 +7,22 @@ import 'google-map-react';
 
 import {OS} from '@hom/types';
 
+const LATITUDE = 40.303922470598586;
+const LONGITUDE = -76.60372882072272;
+const ZOOM = 18.5;
+
 const WebView = styled.View`
   height: 100%;
   width: 100%;
   flex: 1;
 `;
 
-const AnyReactComponent: FC<any> = ({text}) => <div>{text}</div>;
+type PinProps = {
+  text: string;
+  lat: number;
+  lng: number;
+}
+const Pin: FC<PinProps> = ({text}) => <div>{text}</div>;
 
 export const MapProvider = React.lazy(async (): Promise<{default: FC}> => {
   if (Platform.OS === OS.web) {
@@ -23,16 +32,16 @@ export const MapProvider = React.lazy(async (): Promise<{default: FC}> => {
         <WebView>
           <WebMap
             bootstrapURLKeys={{key: 'AIzaSyBqHFBrfGh4hJsjwAglXuRaff8Xa_YeYQc'}}
-            center={{lat: 40.303922470598586, lng: -76.60372882072272}}
-            zoom={18.5}
+            center={{lat: LATITUDE, lng: LONGITUDE}}
+            zoom={ZOOM}
             options={{
               gestureHandling: 'none',
               zoomControl: true,
             }}
           >
-            <AnyReactComponent
-              lat={40.303922470598586}
-              lng={-76.60372882072272}
+            <Pin
+              lat={LATITUDE}
+              lng={LONGITUDE}
               text="Hoagies on Main"
             />
           </WebMap>

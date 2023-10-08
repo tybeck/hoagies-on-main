@@ -1,6 +1,6 @@
-import { app, autoUpdater, dialog, MessageBoxOptions } from 'electron';
-import { platform, arch } from 'os';
-import { updateServerUrl } from '../constants';
+import {app, autoUpdater, dialog, MessageBoxOptions} from 'electron';
+import {platform, arch} from 'os';
+import {updateServerUrl} from '../constants';
 import App from '../app';
 
 export default class UpdateEvents {

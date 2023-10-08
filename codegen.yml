@@ -1,0 +1,22 @@
+schema: apps/functions/schema.gql
+overwrite: true
+
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+
+generates:
+  apps/web/src/apollo/generated.tsx:
+    documents:
+      - apps/functions/graphql/queries/**/*.graphql
+      - apps/functions/graphql/mutations/**/*.graphql
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      fetcher:
+        endpoint: 'http://localhost:3000/dev/graphql'
+      withHOC: true
+      withComponent: true
+      withHooks: true

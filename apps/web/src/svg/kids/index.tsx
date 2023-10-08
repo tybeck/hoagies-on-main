@@ -1,12 +1,17 @@
 import * as React from 'react';
-import Svg, { SvgProps, G, Path } from 'react-native-svg';
+import Svg, {SvgProps, G, Path} from 'react-native-svg';
 
-import { Theme } from '@hom/theme';
+import {Theme} from '@hom/theme';
 
 const Kids = (props: SvgProps) => {
   const kidsFill = props.fill || Theme.colors.davysGrey;
   return (
-    <Svg xmlns="http://www.w3.org/2000/svg" width={79.998} height={80} {...props}>
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={79.998}
+      height={80}
+      {...props}
+    >
       <G data-name="002---Bear" fill={kidsFill}>
         <Path d="M30.666 21.335a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0-5.333a1.333 1.333 0 1 1-1.333 1.333 1.333 1.333 0 0 1 1.333-1.333Z" />
         <Path
@@ -24,6 +29,6 @@ const Kids = (props: SvgProps) => {
       </G>
     </Svg>
   );
-}
+};
 
 export {Kids};

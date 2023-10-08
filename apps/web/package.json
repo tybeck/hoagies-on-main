@@ -37,7 +37,11 @@
     "expo-asset": "*",
     "@reduxjs/toolkit": "*",
     "@react-navigation/drawer": "*",
-    "@react-navigation/stack": "*"
+    "@react-navigation/stack": "*",
+    "animate.css": "*",
+    "react-i18next": "*",
+    "i18next": "*",
+    "i18next-browser-languagedetector": "*"
   },
   "scripts": {
     "eas-build-pre-install": "cd ../../ && node tools/scripts/eas-build-pre-install.mjs . apps/web && cp yarn.lock apps/web",

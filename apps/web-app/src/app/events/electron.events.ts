@@ -3,8 +3,8 @@
  * between the frontend to the electron backend.
  */
 
-import { app, ipcMain } from 'electron';
-import { environment } from '../../environments/environment';
+import {app, ipcMain} from 'electron';
+import {environment} from '../../environments/environment';
 
 export default class ElectronEvents {
   static bootstrapElectronEvents(): Electron.IpcMain {

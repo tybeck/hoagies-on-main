@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, VerifyCallback, Profile } from 'passport-google-oauth20';
+import {Injectable} from '@nestjs/common';
+import {PassportStrategy} from '@nestjs/passport';
+import {Strategy, VerifyCallback, Profile} from 'passport-google-oauth20';
 
-import { StrategyType } from '@hom-api/types';
+import {StrategyType} from '@hom-api/types';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(
   Strategy,
-  StrategyType.Google
+  StrategyType.Google,
 ) {
   constructor() {
     super({
@@ -22,8 +22,8 @@ export class GoogleStrategy extends PassportStrategy(
     accessToken: string,
     refreshToken: string,
     profile: Profile,
-    done: VerifyCallback
+    done: VerifyCallback,
   ): Promise<any> {
-    done(null, { ...profile, accessToken });
+    done(null, {...profile, accessToken});
   }
 }

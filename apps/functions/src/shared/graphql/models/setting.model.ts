@@ -1,6 +1,6 @@
-import { Document, Schema as MongooseSchema } from 'mongoose/lib/index';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ObjectType, Field } from '@nestjs/graphql';
+import {Document, Schema as MongooseSchema} from 'mongoose/lib/index';
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
+import {ObjectType, Field} from '@nestjs/graphql';
 
 export interface ISetting extends Document {
   _id: MongooseSchema.Types.ObjectId;

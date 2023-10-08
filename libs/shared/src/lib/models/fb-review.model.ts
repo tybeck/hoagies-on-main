@@ -1,6 +1,6 @@
-import { Document, Schema as MongooseSchema } from 'mongoose/lib';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ObjectType, Field } from '@nestjs/graphql';
+import {Document, Schema as MongooseSchema} from 'mongoose/lib';
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
+import {ObjectType, Field} from '@nestjs/graphql';
 import mongoose from 'mongoose';
 
 export interface IReview extends Document {

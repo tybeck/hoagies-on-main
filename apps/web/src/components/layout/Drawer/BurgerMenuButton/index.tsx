@@ -13,7 +13,11 @@ function BurgerMenuButton() {
   return (
     <Pressable onPress={navigate}>
       <View>
-        <FontAwesomeIcon icon="bars" />
+        <FontAwesomeIcon
+          icon="bars"
+          iconWidth={24}
+          iconHeight={24}
+        />
       </View>
     </Pressable>
   );

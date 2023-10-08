@@ -66,7 +66,9 @@ const ButtonComponent: FC<ButtonProps> = ({
     <ButtonView>
       <View
         style={{
-          width: dimensions ? dimensions.width + getAdjustedWidth() || 0 : INITIAL_WIDTH,
+          width: dimensions
+            ? dimensions.width + getAdjustedWidth() || 0
+            : INITIAL_WIDTH,
           height: dimensions ? dimensions.height || 0 : INITIAL_HEIGHT,
           position: 'absolute',
           left: 0,
@@ -76,7 +78,9 @@ const ButtonComponent: FC<ButtonProps> = ({
         {dimensions && (
           <Svg
             preserveAspectRatio="none"
-            viewBox={`0 0 ${dimensions ? `${INITIAL_WIDTH} ${INITIAL_HEIGHT}` : '0 0'}`}
+            viewBox={`0 0 ${
+              dimensions ? `${INITIAL_WIDTH} ${INITIAL_HEIGHT}` : '0 0'
+            }`}
             {...props}
             width={dimensions.width + getAdjustedWidth() || INITIAL_WIDTH}
             height={dimensions.height || INITIAL_HEIGHT}

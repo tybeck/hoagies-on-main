@@ -1,14 +1,13 @@
-import { Query, Resolver } from '@nestjs/graphql';
-import { forwardRef, Inject } from '@nestjs/common';
+import {Query, Resolver} from '@nestjs/graphql';
+import {forwardRef, Inject} from '@nestjs/common';
 
-import { FbPost, IPost } from '@hom-api/models';
-
-import { PostService } from '../../providers/post/post.service';
+import {FbPost, IPost} from '@hom-api/models';
+import {PostService} from '@hom-api-fn/graphql-providers';
 
 @Resolver(() => FbPost)
 export class PostResolver {
   constructor(
-    @Inject(forwardRef(() => PostService)) private post: PostService
+    @Inject(forwardRef(() => PostService)) private post: PostService,
   ) {}
 
   @Query(() => [FbPost])

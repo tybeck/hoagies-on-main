@@ -1,12 +1,12 @@
-import React, { FC, useEffect } from 'react'
+import React, {FC, useEffect} from 'react';
 import styled from 'styled-components/native';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import {RouteProp, useRoute} from '@react-navigation/native';
 
-import { Font } from '@hom/types';
-import { Typography } from '@hom/common';
-import { useApp, useProductList } from '@hom/context';
+import {Font} from '@hom/types';
+import {Typography} from '@hom/common';
+import {useApp, useProductList} from '@hom/context';
 
-import { Filter } from './Filter';
+import {Filter} from './Filter';
 
 const Container = styled.View`
   padding: 0 20px 20px 20px;
@@ -40,7 +40,9 @@ export const Filters: FC = () => {
     if (!categoriesInRoute.join().length) {
       return;
     }
-    const doesSelectedCategoriesMatchRoute = categoriesInRoute.every(category => selectedCategories.includes(category));
+    const doesSelectedCategoriesMatchRoute = categoriesInRoute.every(
+      (category) => selectedCategories.includes(category),
+    );
     if (!doesSelectedCategoriesMatchRoute) {
       setSelectedCategories(categoriesInRoute);
     }
@@ -49,18 +51,22 @@ export const Filters: FC = () => {
   return (
     <Container>
       <HeadingView>
-        <Typography font={Font.NunitoBlack} uppercase>Filter</Typography>
+        <Typography font={Font.NunitoBlack} uppercase>
+          Filter
+        </Typography>
       </HeadingView>
       <FiltersWrapper>
-        {categories && categories.length && categories.map((category, index) => (
-          <Filter
-            index={index}
-            total={categories.length}
-            category={category}
-            key={category._id}
-          />
-        ))}
+        {categories &&
+          categories.length &&
+          categories.map((category, index) => (
+            <Filter
+              index={index}
+              total={categories.length}
+              category={category}
+              key={category._id}
+            />
+          ))}
       </FiltersWrapper>
     </Container>
-  )
-}
+  );
+};

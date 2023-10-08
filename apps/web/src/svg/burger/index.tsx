@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Svg, { SvgProps, Path, Circle } from 'react-native-svg';
-import { Theme } from '@hom/theme'
+import Svg, {SvgProps, Path, Circle} from 'react-native-svg';
+import {Theme} from '@hom/theme';
 
 const Burger = (props: SvgProps) => {
   const burgerFill = props.fill || Theme.colors.davysGrey;
@@ -193,6 +193,6 @@ const Burger = (props: SvgProps) => {
       />
     </Svg>
   );
-}
+};
 
 export {Burger};

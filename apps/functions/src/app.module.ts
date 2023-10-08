@@ -1,10 +1,12 @@
-import { Module } from '@nestjs/common';
+import {Module} from '@nestjs/common';
 
-import { GraphqlModule } from '@hom-api/graphql-module';
+import {GlobalModule} from '@hom-api/modules';
+import {GraphqlModule} from '@hom-api/graphql-module';
 
 @Module({
   imports: [
-    GraphqlModule,
+    GlobalModule,
+    GraphqlModule
   ],
   controllers: [],
   providers: [],

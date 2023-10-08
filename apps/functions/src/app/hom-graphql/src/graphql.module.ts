@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import {Module} from '@nestjs/common';
+import {GraphQLModule} from '@nestjs/graphql';
+import {MongooseModule} from '@nestjs/mongoose';
+import {ApolloDriver} from '@nestjs/apollo';
+import {ApolloServerPluginLandingPageLocalDefault} from '@apollo/server/plugin/landingPage/default';
+import {join} from 'path';
 
 import {
   Setting,
@@ -15,24 +16,28 @@ import {
   FbPostSchema,
   Product,
   ProductSchema,
+  Customer,
+  CustomerSchema,
 } from '@hom-api/models';
+import {ConfigModule, ConfigService, Environment} from '@hom-api/modules';
+import {
+  CategoryService,
+  SettingService,
+  ReviewService,
+  PostService,
+  ProductService,
+  AuthService
+} from '@hom-api-fn/graphql-providers';
+import {
+  CategoryResolver,
+  SettingResolver,
+  ReviewResolver,
+  PostResolver,
+  ProductResolver,
+  AuthResolver
+} from '@hom-api-fn/graphql-resolvers';
 
-import { CategoryService } from './providers/category/category.service';
-import { CategoryResolver } from './resolvers/category/category.resolver';
-
-import { SettingResolver } from './resolvers/setting/setting.resolver';
-import { SettingService } from './providers/setting/setting.service';
-
-import { ReviewService } from './providers/review/review.service';
-import { ReviewResolver } from './resolvers/review/review.resolver';
-
-import { PostService } from './providers/post/post.service';
-import { PostResolver } from './resolvers/post/post.resolver';
-
-import { ProductService } from './providers/product/product.service';
-import { ProductResolver } from './resolvers/product/product.resolver';
-
-import { DbModule } from './db.module';
+import {DbModule} from './db.module';
 
 @Module({
   imports: [
@@ -63,13 +68,27 @@ import { DbModule } from './db.module';
         schema: ProductSchema,
         collection: Product.name.toLowerCase(),
       },
+      {
+        name: Customer.name,
+        schema: CustomerSchema,
+        collection: Customer.name.toLowerCase(),
+      },
     ]),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      autoSchemaFile: '/tmp/schema.gql',
+    GraphQLModule.forRootAsync({
       driver: ApolloDriver,
-      sortSchema: true,
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      useFactory: async (config: ConfigService) => {
+        const local = config.get<boolean>(Environment.Local);
+        return {
+          sortSchema: true,
+          playground: false,
+          plugins: [ApolloServerPluginLandingPageLocalDefault()],
+          autoSchemaFile: local
+            ? join(process.cwd(), 'schema.gql')
+            : '/tmp/schema.gql',
+        };
+      },
+      imports: [ConfigModule],
+      inject: [ConfigService],
     }),
   ],
   controllers: [],
@@ -80,12 +99,14 @@ import { DbModule } from './db.module';
     ReviewService,
     PostService,
     ProductService,
+    AuthService,
     // resolvers
     SettingResolver,
     CategoryResolver,
     ReviewResolver,
     PostResolver,
     ProductResolver,
+    AuthResolver,
   ],
 })
 export class GraphqlModule {}

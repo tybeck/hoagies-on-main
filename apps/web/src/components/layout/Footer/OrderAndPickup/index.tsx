@@ -2,6 +2,7 @@ import React, {FC, useState} from 'react';
 import styled from 'styled-components/native';
 import {Platform} from 'react-native';
 import {css} from 'styled-components';
+import {useTranslation} from 'react-i18next';
 
 import {ColorName} from '@hoagies-on-main/shared';
 
@@ -11,9 +12,10 @@ import {FontAwesomeIcon} from '@hom/support';
 import {logoSmallest} from '@hom/assets';
 import {unpackAsset} from '@hom/utils';
 import {Font, SettingType} from '@hom/types';
+import {LocaleKey} from '@hom/locale';
+import {useApp} from '@hom/context';
 
 import {PhoneNumber} from '../../PhoneNumber';
-import {useApp} from '@hom/context';
 
 const OrderAndPickupView = styled.View`
   background: ${Theme.colors[ColorName.SpaceCadet]};
@@ -62,13 +64,14 @@ interface OrderAndPickupProps {}
 const OrderAndPickup: FC<OrderAndPickupProps> = () => {
   const {getSetting} = useApp();
   const [address] = useState<string>(getSetting(SettingType.Address));
+  const {t} = useTranslation();
 
   return (
     <OrderAndPickupView>
       <LogoImage resizeMode="contain" source={unpackAsset(logoSmallest)} />
       <OrderHeading>
         <Heading color={ColorName.White} textCenter>
-          Order & Pickup
+          {t(LocaleKey.OrderAndPickupHeading)}
         </Heading>
       </OrderHeading>
       <MapMarker>

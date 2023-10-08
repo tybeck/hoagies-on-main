@@ -23,10 +23,15 @@ interface BulletedItemProps {
   children?: string;
 }
 
-const BulletedItem: FC<BulletedItemProps> = ({children}): React.ReactElement => {
+const BulletedItem: FC<BulletedItemProps> = ({
+  children,
+}): React.ReactElement => {
   return (
     <BulletedItemView>
-      <FontAwesomeIcon icon="check-square" color={Theme.colors[ColorName.CyanCornflowerBlue]} />
+      <FontAwesomeIcon
+        icon="check-square"
+        color={Theme.colors[ColorName.CyanCornflowerBlue]}
+      />
       <BulletItemContent>
         <Typography size={Sizing.Small}>{children}</Typography>
       </BulletItemContent>

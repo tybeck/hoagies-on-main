@@ -1,52 +1,38 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {Platform, Pressable} from 'react-native';
+import {css} from 'styled-components';
 
 import {ColorName} from '@hoagies-on-main/shared';
 
 import {Theme} from '@hom/theme';
 import {FbReview, useReviewQuery} from '@hom/queries';
 import {FontAwesomeIcon} from '@hom/support';
-
-import {Typography} from '../../../common/Typography';
-import {css} from 'styled-components';
+import {Typography} from '@hom/common';
 
 const ReviewContainer = styled.View`
   background: ${Theme.colors[ColorName.White]};
   position: relative;
-  padding: 55px;
-
-  ${Platform.select({
-    ios: css`
-      padding: 30px;
-    `,
-  })}
+  //padding: 55px;
+  padding: 30px;
 `;
 
 const Review = styled.View`
   align-items: center;
   justify-content: center;
   min-height: 175px;
-  padding: 35px 55px;
-
-  ${Platform.select({
-    ios: css`
-      padding: 15px 0;
-    `,
-  })}
+  //padding: 35px 55px;
+  padding: 15px 0;
 `;
 
 const QuoteView = styled.View`
   position: absolute;
-  left: 64px;
-  top: -64px;
-
-  ${Platform.select({
-    ios: css`
-      left: 32px;
-      top: -32px;
-    `,
-  })}
+  //left: 64px;
+  //top: -64px;
+  left: 0;
+  top: -32px;
+  width: 64px;
+  height: 64px;
 `;
 
 const Buttons = styled.View`
@@ -101,7 +87,9 @@ function Reviews(): React.ReactElement {
       </QuoteView>
       {currentReview && (
         <Review>
-          <Typography color={ColorName.SpaceCadet}>{currentReview.review}</Typography>
+          <Typography color={ColorName.SpaceCadet} italic>
+            {currentReview.review}
+          </Typography>
         </Review>
       )}
       <Buttons>

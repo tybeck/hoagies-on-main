@@ -21,7 +21,9 @@ type Options = {
 
 @Injectable()
 export class ProductService {
-  constructor(@InjectModel(Product.name) private product: Model<ProductDocument>) {}
+  constructor(
+    @InjectModel(Product.name) private product: Model<ProductDocument>,
+  ) {}
 
   async getProducts(options: {categories?: string[]}): Promise<IProduct[]> {
     const {categories} = options;

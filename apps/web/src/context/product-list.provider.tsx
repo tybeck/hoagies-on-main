@@ -1,4 +1,11 @@
-import React, {createContext, FC, useContext, useState, Dispatch, SetStateAction} from 'react';
+import React, {
+  createContext,
+  FC,
+  useContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 
 interface IProductListContext {
   selectedCategories: string[];
@@ -9,9 +16,11 @@ export const ProductListContext = createContext({} as IProductListContext);
 
 type ProductListProviderProps = {
   children: React.ReactElement;
-}
+};
 
-export const ProductListProvider: FC<ProductListProviderProps> = ({children}) => {
+export const ProductListProvider: FC<ProductListProviderProps> = ({
+  children,
+}) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const context = {

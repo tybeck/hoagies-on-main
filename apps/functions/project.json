@@ -5,10 +5,10 @@
   "projectType": "application",
   "targets": {
     "build:cloud": {
-      "executor": "@hoagies-on-main/do-cloud:build"
+      "executor": "@hoagies-on-main/hom-cloud:build"
     },
     "deploy:cloud": {
-      "executor": "@hoagies-on-main/do-cloud:deploy"
+      "executor": "@hoagies-on-main/hom-cloud:deploy"
     },
     "serve:local": {
       "executor": "nx:run-commands",
@@ -17,6 +17,36 @@
           "cd apps/functions && npx ncc build src/main.local.ts -o local -w",
           "cd apps/functions && nodemon local/index"
         ]
+      }
+    },
+    "build:cloud:all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx nx build hom-cloud > /dev/null",
+          "cd libs/hom-cloud",
+          "yalc publish > /dev/null",
+          "cd ../../",
+          "yalc add @hoagies-on-main/hom-cloud > /dev/null",
+          "npx nx build:cloud functions",
+          "yalc remove @hoagies-on-main/hom-cloud > /dev/null"
+        ],
+        "parallel": false
+      }
+    },
+    "deploy:cloud:all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx nx build hom-cloud > /dev/null",
+          "cd libs/hom-cloud",
+          "yalc publish > /dev/null",
+          "cd ../../",
+          "yalc add @hoagies-on-main/hom-cloud > /dev/null",
+          "npx nx deploy:cloud functions --env production",
+          "yalc remove @hoagies-on-main/hom-cloud > /dev/null"
+        ],
+        "parallel": false
       }
     }
   },

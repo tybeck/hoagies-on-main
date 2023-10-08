@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 
 export enum Environment {
   Url = 'URL',
@@ -41,26 +41,31 @@ declare const process: {
   env: EnvironmentValues;
 };
 
+type EnvConfigType = string | number | boolean;
+
 @Injectable()
 export class ConfigService {
+  get<T>(key: Environment): T extends EnvConfigType ? T : string;
+  get<T>(...key: Environment[]): T extends EnvConfigType[] ? T : string[];
+
   /**
    * @method get
    * @description Get configuration option for the specified environment
    * @param key
    */
-  get<T = string>(...key: Environment[]) {
+  get(...key: Environment[]) {
     if (key.length > 1) {
       return key.map((environmentKey) => {
         if (process.env[environmentKey]) {
           return process.env[environmentKey];
         }
-        return this.getFallbackConfigurationValue<T>(environmentKey) as T;
+        return this.getFallbackConfigurationValue(environmentKey);
       });
     }
     if (process.env[key[0]]) {
       return process.env[key[0]];
     }
-    return this.getFallbackConfigurationValue<T>(key[0]);
+    return this.getFallbackConfigurationValue(key[0]);
   }
 
   /**
@@ -71,7 +76,7 @@ export class ConfigService {
    * @private
    */
   private getFallbackConfigurationValue<T>(
-    key: Environment
+    key: Environment,
   ): T | string | number | boolean | null {
     return null;
   }

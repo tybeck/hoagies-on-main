@@ -1,46 +1,44 @@
-import React, {FC} from 'react';
-import styled from 'styled-components/native';
-import {Platform, View} from 'react-native';
-import {css} from 'styled-components';
+import React from 'react';
 
-import {isNativeMobile} from '@hom/support';
+import {Media} from '@hom/theme';
+import {getView} from '@hom/common';
 
 import {OrderAndPickup} from './OrderAndPickup';
 import {Map} from './Map';
 
-const FooterView = styled.View`
-  flex-direction: row;
-  min-height: 450px;
+export const Footer = React.lazy(async () => {
+  const View = await getView();
 
-  ${Platform.select({
-    ios: css`
-      flex-direction: column;
-      min-height: 790px;
-      width: 100%;
-    `,
-  })}
-`;
+  const FooterView = View`
+    display: flex;
+    flex-direction: column-reverse;
+    min-height: 790px;
+    width: 100%;
 
-const FooterColumnView = styled.View`
-  flex-direction: row;
-  height: 100%;
-  flex: 1;
-`;
+    ${Media.Md`
+      flex-direction: row;
+      min-height: 450px;
+    `}
+  `;
 
-interface FooterProps {}
+  const FooterColumnView = View`
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    flex: 1;
+  `;
 
-const Footer: FC<FooterProps> = () => {
-  let components = [<OrderAndPickup />, <Map />];
-  if (isNativeMobile()) {
-    components = components.reverse();
+  return {
+    default: () => {
+      const components = [<OrderAndPickup />, <Map />]
+
+      return (
+        <FooterView>
+          {components.map((component, index) => (
+            <FooterColumnView key={index}>{component}</FooterColumnView>
+          ))}
+        </FooterView>
+      );
+    }
   }
-  return (
-    <FooterView>
-      {components.map((component, index) => (
-        <FooterColumnView key={index}>{component}</FooterColumnView>
-      ))}
-    </FooterView>
-  );
-};
-
-export {Footer};
+});

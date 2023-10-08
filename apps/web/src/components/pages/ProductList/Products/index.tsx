@@ -1,11 +1,11 @@
-import React, { FC, useCallback, useEffect } from 'react'
+import React, {FC, useCallback, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {useLazyQuery} from '@apollo/client';
 
 import {ProductsDocument, Product as IProduct} from '@hom/queries';
 import {useApp, useProductList} from '@hom/context';
 
-import { Product } from './Product';
+import {Product} from './Product';
 
 const Container = styled.View`
   padding: 0 20px 20px 20px;
@@ -21,8 +21,10 @@ export const Products: FC = () => {
   const products: IProduct[] = data?.getProducts || [];
 
   const getProductsQuery = useCallback(() => {
-    const ids = selectedCategories.map(key => categories.find(category => category.key === key)?._id);
-    getProducts({ variables: { categories: ids }});
+    const ids = selectedCategories.map(
+      (key) => categories.find((category) => category.key === key)?._id,
+    );
+    getProducts({variables: {categories: ids}});
   }, [selectedCategories]);
 
   useEffect(() => {
@@ -31,13 +33,10 @@ export const Products: FC = () => {
 
   return (
     <Container>
-      {Array.isArray(products) && products?.map((product, index) => (
-        <Product
-          key={product._id}
-          product={product}
-          index={index}
-        />
-      ))}
+      {Array.isArray(products) &&
+        products?.map((product, index) => (
+          <Product key={product._id} product={product} index={index} />
+        ))}
     </Container>
-  )
-}
+  );
+};

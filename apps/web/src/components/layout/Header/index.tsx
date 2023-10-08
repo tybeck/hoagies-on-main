@@ -1,98 +1,180 @@
+import {View} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
-import styled from 'styled-components/native';
 import {css} from 'styled-components';
 
 import {MyAccount, OrderNowButton} from '@hom/common';
-import {isNativeMobile} from '@hom/support';
 import {useApp} from '@hom/context';
+import {Media} from '@hom/theme';
+import {getLazyFC} from '@hom/utils';
 
 import {BurgerMenuButton} from '../Drawer/BurgerMenuButton';
 import {NavList} from '../NavList';
 import {Logo} from '../Logo';
 import {PhoneNumber} from '../PhoneNumber';
 
-interface HeaderProps {
-  bg: boolean;
+type LayoutEvent = {
+  nativeEvent: {
+    layout: {
+      height: number;
+    }
+  }
 }
 
-const HeaderView = styled.View<HeaderProps>`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 0 2.5%;
-  width: 100%;
-  transition: 500ms all ease;
+type HeaderViewProps = {
+  bg?: boolean;
+};
 
-  ${({bg}) =>
-    bg &&
+type HeaderContainerProps = Record<string, unknown>;
+
+export const HeaderContainer = getLazyFC<HeaderContainerProps>(({ View }) => {
+  const HeaderView = View<HeaderViewProps>`
+    ${css`
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 0 2.5%;
+      width: 95%;
+      transition: 250ms all ease;
+    `}
+
+    ${({bg}) => bg &&
     css`
       background: rgba(255, 255, 255, 0.85);
       box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px;
     `}
-`;
+  `;
 
-const LeftView = styled.View`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  flex: 1;
-`;
+  const LeftView = View`
+    ${css`
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      flex: 1;
+    `}
+  `;
 
-const PhoneView = styled.View`
-  margin-right: 25px;
-`;
+  const LogoView = View`
+    ${css`
+      flex: 1;
+    `}
+    
+    ${Media.Lg`
+      flex: 0;
+    `}
+  `;
 
-function Header() {
-  const [showBg, setShowBg] = useState<boolean>(false);
-  const headerRef = useRef<HTMLElement>(null);
-  const isNative = isNativeMobile();
-  const {scroll, setHeaderHeight, headerHeight} = useApp();
+  const BurgerMenuButtonView = View`
+    ${css`
+      margin-right: 15px;
+    `}  
+    
+    ${Media.Md`
+      display: none;
+    `}
+  `;
 
-  useEffect(() => {
-    const element = headerRef?.current;
-    if (headerHeight !== null) {
-      if (element) {
-        if (scroll > headerHeight) {
-          if (!showBg) {
-            setShowBg(true);
+  const PhoneView = View`
+    ${css`
+      margin-right: 25px;
+      display: none;
+
+      ${Media.Lg`
+        display: flex;
+      `}
+    `}
+  `;
+
+  const MyAccountView = View`
+    ${css`
+      display: none;
+
+      ${Media.Md`
+        display: flex;
+      `}
+    `}  
+  `;
+
+  const NavListView = View`
+    ${css`
+      display: none;
+
+      ${Media.Md`
+        display: flex;
+      `}
+    `}
+  `;
+
+  const OrderNowButtonContainer = View`
+    ${css`
+      display: none;
+    
+      ${Media.Lg`
+        display: flex;
+      `}
+    `}
+  `;
+
+  return () => {
+    const [showBg, setShowBg] = useState<boolean>(false);
+    const {scroll, setHeaderHeight, headerHeight} = useApp();
+    const headerRef = useRef<View>(null);
+
+    useEffect(() => {
+      const element = headerRef?.current;
+      if (headerHeight !== null) {
+        if (element) {
+          if (scroll > headerHeight) {
+            if (!showBg) {
+              setShowBg(true);
+            }
+            return;
           }
-          return;
-        }
-        if (showBg) {
-          setShowBg(false);
+          if (showBg) {
+            setShowBg(false);
+          }
         }
       }
-    }
-  }, [headerHeight, scroll]);
+    }, [headerHeight, scroll]);
 
-  const onLayout = ({
-    nativeEvent: {
-      layout: {height},
-    },
-  }) => {
-    setHeaderHeight(height);
-  };
+    const onLayout = ({
+      nativeEvent: {
+        layout: {height},
+      },
+    }: LayoutEvent) => {
+      setHeaderHeight(height);
+    };
 
-  return (
-    <HeaderView onLayout={onLayout} ref={headerRef} bg={showBg}>
-      <LeftView>
-        {isNative && <BurgerMenuButton />}
-        <Logo />
-        {!isNative && <NavList />}
-        {!isNative && <OrderNowButton />}
-      </LeftView>
-      {!isNative && (
+    return (
+      <HeaderView onLayout={onLayout} ref={headerRef} bg={showBg}>
+        <LeftView>
+          <LogoView>
+            <Logo />
+          </LogoView>
+          <BurgerMenuButtonView>
+            <BurgerMenuButton />
+          </BurgerMenuButtonView>
+          <NavListView>
+            <NavList />
+          </NavListView>
+          <OrderNowButtonContainer>
+            <OrderNowButton />
+          </OrderNowButtonContainer>
+        </LeftView>
         <PhoneView>
           <PhoneNumber />
         </PhoneView>
-      )}
-      <MyAccount />
-    </HeaderView>
-  );
-}
+        <MyAccountView>
+          <MyAccount />
+        </MyAccountView>
+      </HeaderView>
+    );
+  }
+});
 
-export {Header};
+export const Header = () => {
+  return <HeaderContainer />;
+}

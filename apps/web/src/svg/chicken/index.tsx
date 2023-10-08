@@ -1,13 +1,22 @@
 import * as React from 'react';
-import Svg, { SvgProps, G, Path, Circle } from 'react-native-svg';
+import Svg, {SvgProps, G, Path, Circle} from 'react-native-svg';
 
-import { Theme } from '@hom/theme';
+import {Theme} from '@hom/theme';
 
 const Chicken = (props: SvgProps) => {
   const chickenFill = props.fill || Theme.colors.davysGrey;
   return (
-    <Svg xmlns="http://www.w3.org/2000/svg" width={59.997} height={59} {...props}>
-      <G data-name="018---Chicken" fill={chickenFill} transform="translate(-.003)">
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={59.997}
+      height={59}
+      {...props}
+    >
+      <G
+        data-name="018---Chicken"
+        fill={chickenFill}
+        transform="translate(-.003)"
+      >
         <Path d="M42.172 7.378a10.37 10.37 0 0 1 4.087.442.979.979 0 0 0 .3.048 1 1 0 0 0 .3-1.953A12.343 12.343 0 0 0 42 5.386a1 1 0 0 0 .176 1.992Z" />
         <Path
           data-name="Shape"
@@ -113,6 +122,6 @@ const Chicken = (props: SvgProps) => {
       </G>
     </Svg>
   );
-}
+};
 
 export {Chicken};

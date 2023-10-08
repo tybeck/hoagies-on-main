@@ -1,8 +1,8 @@
-import { Document, Schema as MongooseSchema } from 'mongoose/lib/index';
-import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import {Document, Schema as MongooseSchema} from 'mongoose/lib/index';
+import {ObjectType, Field, Int} from '@nestjs/graphql';
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 
-import { Strategy } from './auth/strategy.model';
+import {Strategy} from './auth/strategy.model';
 
 export interface ICustomer extends Document {
   // Created from initial SSO

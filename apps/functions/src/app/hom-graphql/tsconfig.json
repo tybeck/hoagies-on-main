@@ -4,8 +4,5 @@
     "rootDir": "../../../",
     "outDir": "../../../dist/packages/hom/graphql"
   },
-  "include": [
-    "src",
-    "../../shared"
-  ]
+  "include": ["src", "../../shared"]
 }

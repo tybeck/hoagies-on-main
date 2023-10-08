@@ -1,0 +1,8 @@
+{
+  "name": "@hoagies-on-main/hom-cloud",
+  "version": "0.0.4",
+  "type": "commonjs",
+  "generators": "./generators.json",
+  "executors": "./executors.json",
+  "dependencies": {}
+}

@@ -20,12 +20,13 @@ const HomeView = styled.View`
 
 type HomeProps = {
   children?: React.ReactElement;
-}
+};
 
 const Home: FC<HomeProps> = ({children}): React.ReactElement => {
   const {setComponentPositionY} = useApp();
 
-  const onSubscribePositionChange = (value) => setComponentPositionY(Content.HomeContactUs, value);
+  const onSubscribePositionChange = (value) =>
+    setComponentPositionY(Content.HomeContactUs, value);
 
   return (
     <HomeView>

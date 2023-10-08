@@ -1,160 +1,193 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {Platform} from 'react-native';
-import {css} from 'styled-components';
+import {useTranslation} from 'react-i18next';
 
 import {ColorName} from '@hoagies-on-main/shared';
 
-import {Theme} from '@hom/theme';
-import {basketOfGoods, carrotsMeat, hoagieRoll, sausageChicken} from '@hom/assets';
-import {Font, OS, Sizing} from '@hom/types';
+import {Media, Theme} from '@hom/theme';
+import {
+  basketOfGoods,
+  carrotsMeat,
+  hoagieRoll,
+  sausageChicken,
+} from '@hom/assets';
+import {Font, Sizing} from '@hom/types';
 import {unpackAsset} from '@hom/utils';
-import {Heading, Typography} from '@hom/common';
+import {getView, Heading, Typography} from '@hom/common';
+import {LocaleKey} from '@hom/locale';
 
 import {BulletedItem} from './BulletedItem';
+import {css} from "styled-components";
 
-const IngredientView = styled.View`
-  flex-direction: column;
-  display: flex;
-  background: ${Theme.colors.linen};
-  padding: 55px;
-  flex-wrap: wrap;
+export const Ingredients = React.lazy(async () => {
+  const View = await getView();
 
-  ${Platform.OS !== OS.web &&
-  css`
-    padding: 40px 20px 55px;
-  `}
-`;
+  const IngredientView = View`
+   flex-direction: column;
+   display: flex;
+   background: ${Theme.colors.linen};
+   //padding: 55px;
+   flex-wrap: wrap;
+   padding: 40px 20px 55px;
+  `;
 
-const IngredientsWrapper = styled.View`
-  flex-direction: row;
-  margin-top: 55px;
-
-  ${Platform.OS !== OS.web &&
-  css`
+  const IngredientsWrapper = View`
+    display: flex;
     flex-direction: column;
-    margin-top: 25px;
-    flex: 1;
-  `}
-`;
+    margin-top: 15px;
+    
+    ${Media.C(550)`
+      flex: 1;
+    `}
+  `;
 
-const IngredientsContent = styled.View`
-  flex-direction: column;
-  display: flex;
-`;
-
-const IngredientImagery = styled.View`
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
-  position: relative;
-  min-height: 600px;
-  max-height: 600px;
-  padding: 0 25px;
-
-  ${Platform.OS !== OS.web &&
-  css`
-    min-height: 100px;
-    max-height: 100px;
-    margin-bottom: 30px;
-    margin-top: 30px;
+  const IngredientColumn = View<{last?: boolean}>`
+    margin-bottom: 12px;
     padding: 0;
-  `}
-`;
+  
+    ${Media.C(550)`
+      margin-bottom: 12px;
+      margin-bottom: 0;
+      padding: 0 15px;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      
+      ${(props: {last: boolean}) => props.last && css`
+        align-items: flex-end;
+      `}
+    `}
+  `;
 
-const IngredientColumn = styled.View`
-  margin: 8px 0;
-`;
 
-const IngredientImage = styled.Image`
-  width: 25%;
-  height: 100%;
-`;
+  const IngredientsContent = View`
+    display: flex;
+    flex-direction: column;
+    
+    ${Media.C(550)`
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+    `}
+  `;
 
-const Disclaimer = styled.View`
-  padding-bottom: 35px;
-  margin-top: 35px;
-  width: 100%;
-  flex: 1;
+  const IngredientImagery = View`
+    display: none;
+    
+    ${Media.C(550)`
+      display: flex;
+      height: 300px;
+    `}
+  `;
 
-  ${Platform.OS !== OS.web &&
-  css`
-    padding-bottom: 0;
-  `}
-`;
+  const IngredientImage = styled.Image`
+    flex: 1;
+    height: unset;
+    width: unset;
+  `;
 
-function Ingredients(): React.ReactElement {
-  return (
-    <IngredientView>
-      <Heading textCenter>Best Quality Ingredients</Heading>
-      <IngredientsWrapper>
-        <IngredientsContent>
-          <IngredientColumn>
+  const Disclaimer = View`
+    flex-direction: column;  
+    margin-top: 15px;
+    display: flex;
+  `;
+
+  const IngredientHeading = styled(Typography)``;
+  return {
+    default: () => {
+      const {t} = useTranslation();
+      return (
+        <IngredientView>
+          <Heading textCenter>{t(LocaleKey.IngredientsHeading)}</Heading>
+          <IngredientsWrapper>
+            <IngredientsContent>
+              <IngredientColumn>
+                <IngredientHeading
+                  font={Font.LithosProBlack}
+                  color={ColorName.CyanCornflowerBlue}
+                  size={Sizing.Xmedium}
+                >
+                  {t(LocaleKey.FreshProductsHeading)}
+                </IngredientHeading>
+                <BulletedItem>{t(LocaleKey.MadeFreshBullet)}</BulletedItem>
+                <BulletedItem>{t(LocaleKey.HandTossedBullet)}</BulletedItem>
+              </IngredientColumn>
+              <IngredientColumn last>
+                <IngredientHeading
+                  font={Font.LithosProBlack}
+                  color={ColorName.CyanCornflowerBlue}
+                  size={Sizing.Xmedium}
+                >
+                  {t(LocaleKey.GroundBeefHeading)}
+                </IngredientHeading>
+                <BulletedItem>{t(LocaleKey.SignatureBeefBullet)}</BulletedItem>
+                <BulletedItem>{t(LocaleKey.NeverFrozenBullet)}</BulletedItem>
+              </IngredientColumn>
+            </IngredientsContent>
+            <IngredientImagery>
+              <IngredientImage
+                resizeMode="contain"
+                source={unpackAsset(basketOfGoods)}
+              />
+              <IngredientImage
+                resizeMode="contain"
+                source={unpackAsset(sausageChicken)}
+              />
+              <IngredientImage
+                resizeMode="contain"
+                source={unpackAsset(hoagieRoll)}
+              />
+              <IngredientImage
+                resizeMode="contain"
+                source={unpackAsset(carrotsMeat)}
+              />
+            </IngredientImagery>
+            <IngredientsContent>
+              <IngredientColumn>
+                <IngredientHeading
+                  font={Font.LithosProBlack}
+                  color={ColorName.CyanCornflowerBlue}
+                  size={Sizing.Xmedium}
+                >
+                  {t(LocaleKey.GroundTurkeyHeading)}
+                </IngredientHeading>
+                <BulletedItem>{t(LocaleKey.GroundFreshBullet)}</BulletedItem>
+                <BulletedItem>{t(LocaleKey.NeverFrozenBullet)}</BulletedItem>
+              </IngredientColumn>
+              <IngredientColumn last>
+                <IngredientHeading
+                  font={Font.LithosProBlack}
+                  color={ColorName.CyanCornflowerBlue}
+                  size={Sizing.Xmedium}
+                >
+                  {t(LocaleKey.ArtisanBunsHeading)}
+                </IngredientHeading>
+                <BulletedItem>{t(LocaleKey.AvailableGlutenFreeBullet)}</BulletedItem>
+                <BulletedItem>{t(LocaleKey.CustomRecipeBullet)}</BulletedItem>
+              </IngredientColumn>
+            </IngredientsContent>
+          </IngredientsWrapper>
+          <Disclaimer>
             <Typography
               font={Font.LithosProBlack}
               color={ColorName.CyanCornflowerBlue}
-              size={Sizing.Xmedium}
+              textCenter
             >
-              Fresh Products
+              {t(LocaleKey.DisclaimerPartOne)}
             </Typography>
-            <BulletedItem>Made Fresh Everyday</BulletedItem>
-            <BulletedItem>Hand-Tossed</BulletedItem>
-          </IngredientColumn>
-          <IngredientColumn>
             <Typography
               font={Font.LithosProBlack}
               color={ColorName.CyanCornflowerBlue}
-              size={Sizing.Xmedium}
+              textCenter
             >
-              Ground Beef
+              {t(LocaleKey.DisclaimerPartTwo)}
             </Typography>
-            <BulletedItem>Signature blended beef</BulletedItem>
-            <BulletedItem>Never frozen</BulletedItem>
-          </IngredientColumn>
-        </IngredientsContent>
-        <IngredientImagery>
-          <IngredientImage resizeMode="contain" source={unpackAsset(basketOfGoods)} />
-          <IngredientImage resizeMode="contain" source={unpackAsset(sausageChicken)} />
-          <IngredientImage resizeMode="contain" source={unpackAsset(hoagieRoll)} />
-          <IngredientImage resizeMode="contain" source={unpackAsset(carrotsMeat)} />
-        </IngredientImagery>
-        <IngredientsContent>
-          <IngredientColumn>
-            <Typography
-              font={Font.LithosProBlack}
-              color={ColorName.CyanCornflowerBlue}
-              size={Sizing.Xmedium}
-            >
-              Ground Turkey
-            </Typography>
-            <BulletedItem>Ground fresh</BulletedItem>
-            <BulletedItem>Never frozen</BulletedItem>
-          </IngredientColumn>
-          <IngredientColumn>
-            <Typography
-              font={Font.LithosProBlack}
-              color={ColorName.CyanCornflowerBlue}
-              size={Sizing.Xmedium}
-            >
-              Artisan Buns
-            </Typography>
-            <BulletedItem>Available gluten-free</BulletedItem>
-            <BulletedItem>Custom recipe</BulletedItem>
-          </IngredientColumn>
-        </IngredientsContent>
-      </IngredientsWrapper>
-      <Disclaimer>
-        <Typography font={Font.LithosProBlack} color={ColorName.CyanCornflowerBlue} textCenter>
-          At Hoagies On Main we use the highest quality ingredients
-        </Typography>
-        <Typography font={Font.LithosProBlack} color={ColorName.CyanCornflowerBlue} textCenter>
-          available at market
-        </Typography>
-      </Disclaimer>
-    </IngredientView>
-  );
-}
-
-export {Ingredients};
+          </Disclaimer>
+        </IngredientView>
+      );
+    }
+  }
+});

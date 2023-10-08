@@ -1,114 +1,117 @@
 import React, {FC, RefObject, useState} from 'react';
 import styled from 'styled-components/native';
-import {Platform, View} from 'react-native';
-import {css} from 'styled-components';
+import {View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 import {ColorName} from '@hoagies-on-main/shared';
 
 import {Font, SettingType} from '@hom/types';
-import {Theme} from '@hom/theme';
+import {Media, Theme} from '@hom/theme';
 import {unpackAsset} from '@hom/utils';
 import {newsletter} from '@hom/assets';
-import {Input, Typography} from '@hom/common';
+import {getView, Input, Typography} from '@hom/common';
 import {useApp} from '@hom/context';
+import {LocaleKey} from '@hom/locale';
 
 import {Send} from './Send';
 
-const SubscribeView = styled.View`
-  background: ${Theme.colors[ColorName.Linen]};
-  flex-direction: row;
-  min-height: 300px;
-  padding: 45px 12.5%;
-  width: 100%;
-
-  ${Platform.select({
-    ios: css`
-      padding: 15px;
-      min-height: 450px;
-      flex-direction: column;
-      flex: 1;
-    `,
-  })}
-`;
-
-const SubscribeColumn = styled.View`
-  justify-content: center;
-  align-items: center;
-  width: 65%;
-
-  ${Platform.select({
-    ios: css`
-      width: 100%;
-    `,
-  })}
-`;
-
-const NewsletterImage = styled.Image`
-  height: 100%;
-  width: 35%;
-
-  ${Platform.select({
-    ios: css`
-      margin-bottom: 20px;
-      margin-top: 15px;
-      width: 100%;
-      height: 35%;
-    `,
-  })}
-`;
-
-const InputField = styled.View`
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  margin-top: 20px;
-  width: 100%;
-
-  ${Platform.select({
-    ios: css`
-      flex-direction: column;
-      width: 90%;
-    `,
-  })}
-`;
-
-const SendButton = styled.View`
-  margin-top: 15px;
-`;
-
-interface SubscribeProps<T> {
+type SubscribeProps<T> = {
   viewRef?: RefObject<T>;
   onPositionChange?: (y: number) => void;
 }
 
-const Subscribe: FC<SubscribeProps<View>> = ({viewRef, onPositionChange}) => {
-  const {getSetting} = useApp();
-  const [phoneNo] = useState<string>(getSetting(SettingType.PhoneNumber));
+const MD_BREAKPOINT = 750;
 
-  const onLayout = (event: {nativeEvent: {layout: {y: number}}}) => {
-    const y = event?.nativeEvent?.layout?.y;
-    if (onPositionChange) {
-      onPositionChange(y);
-    }
+export const Subscribe = React.lazy(async () => {
+  const View = await getView();
+
+  const SubscribeView = View`
+    display: flex;
+    background: ${Theme.colors[ColorName.Linen]};
+    flex-direction: column;
+    min-height: 460px;
+    padding: 15px 15px 0 15px;
+    width: calc(100% - 30px);
+    flex: 1;
+    
+    ${Media.C(MD_BREAKPOINT)`
+      align-items: center;
+      flex-direction: row;
+
+      &.subscribe-view > div:first-child {
+        width: 35%;
+        height: 50%;
+      }
+    `}
+  `;
+
+  const SubscribeColumn = View`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  `;
+
+  const NewsletterImage = styled.Image`
+    display: flex;
+    margin-bottom: 20px;
+    margin-top: 15px;
+    width: 100%;
+    height: 35%;
+  `;
+
+  const InputField = View`
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 90%;
+    
+    ${Media.C(MD_BREAKPOINT)`
+      flex-direction: row;
+    `}
+  `;
+
+  const SendButton = View`
+    display: flex;
+    margin: 0;
+    
+    ${Media.C(MD_BREAKPOINT)`
+      margin: 0 0 0 8px;
+    `}
+  `;
+
+  return {
+    default: ({onPositionChange, viewRef}: SubscribeProps<View>) => {
+      const {appWidth, getSetting} = useApp();
+      const [phoneNo] = useState<string | null>(getSetting(SettingType.PhoneNumber));
+      const {t} = useTranslation();
+
+      const onLayout = (event: {nativeEvent: {layout: {y: number}}}) => {
+        const y = event?.nativeEvent?.layout?.y;
+        if (onPositionChange) {
+          onPositionChange(y);
+        }
+      };
+
+      return (
+        <SubscribeView ref={viewRef} onLayout={onLayout} className="subscribe-view">
+          <NewsletterImage resizeMode="contain" source={unpackAsset(newsletter)} />
+          <SubscribeColumn>
+            <Typography font={Font.NunitoBlack} color={ColorName.SpaceCadet} textCenter>
+              {t(LocaleKey.SubscribeParagraph, {phoneNo})}
+            </Typography>
+            <InputField>
+              <Input placeholder={t(LocaleKey.EmailInputPlaceholder)} noMargin={typeof appWidth === 'number' && appWidth >= MD_BREAKPOINT} />
+              <SendButton>
+                <Send />
+              </SendButton>
+            </InputField>
+          </SubscribeColumn>
+        </SubscribeView>
+      );
+    },
   };
-
-  return (
-    <SubscribeView ref={viewRef} onLayout={onLayout}>
-      <NewsletterImage resizeMode="contain" source={unpackAsset(newsletter)} />
-      <SubscribeColumn>
-        <Typography font={Font.NunitoBlack} color={ColorName.SpaceCadet}>
-          We're there when you need us there - available by phone {phoneNo}. You can also subscribe
-          below for alerts, discounts and other notifications!
-        </Typography>
-        <InputField>
-          <Input placeholder="Please enter your email" />
-          <SendButton>
-            <Send />
-          </SendButton>
-        </InputField>
-      </SubscribeColumn>
-    </SubscribeView>
-  );
-};
-
-export {Subscribe};
+});

@@ -38,7 +38,12 @@ const LoyaltyCardContent = styled.View`
 const LoyaltyCard: FC = () => {
   return (
     <LoyaltyCardView>
-      <Typography size={Sizing.Large} font={Font.LithosProBlack} color={ColorName.White} textCenter>
+      <Typography
+        size={Sizing.Large}
+        font={Font.LithosProBlack}
+        color={ColorName.White}
+        textCenter
+      >
         Get Our Loyalty Card
       </Typography>
       <CardContent>

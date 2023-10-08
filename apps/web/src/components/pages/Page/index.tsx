@@ -13,9 +13,12 @@ export type PageOptions = {
 
 type ContentPageProps = {
   children?: React.ReactElement;
-}
+};
 
-const PageFactory = (ContentPage: FC<ContentPageProps>, options: PageOptions = {}) => {
+const PageFactory = (
+  ContentPage: FC<ContentPageProps>,
+  options: PageOptions = {},
+) => {
   return () => {
     const ref = useRef<ScrollView>(null);
     const [lastScrollType, setScrollType] = useState<Content | null>(null);
@@ -57,11 +60,18 @@ const PageFactory = (ContentPage: FC<ContentPageProps>, options: PageOptions = {
     }, [lastScrollType, headerHeight]);
 
     useEffect(() => {
-      globalThis.addEventListener(HomScroll, (event: HomEvent) => setScrollType(event.detail));
+      globalThis.addEventListener(HomScroll, (event: HomEvent) =>
+        setScrollType(event.detail),
+      );
     }, []);
 
     return (
-      <ScrollView ref={ref} onScroll={onScroll} scrollEventThrottle={4} style={{flex: 1}}>
+      <ScrollView
+        ref={ref}
+        onScroll={onScroll}
+        scrollEventThrottle={4}
+        style={{flex: 1}}
+      >
         <ContentPage>
           <Footer />
         </ContentPage>

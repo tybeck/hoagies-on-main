@@ -1,12 +1,17 @@
 import * as React from 'react';
-import Svg, { SvgProps, G, Path } from 'react-native-svg';
+import Svg, {SvgProps, G, Path} from 'react-native-svg';
 
-import { Theme } from '@hom/theme';
+import {Theme} from '@hom/theme';
 
 const Hoagie = (props: SvgProps) => {
   const hoagieFill = props.fill || Theme.colors.davysGrey;
   return (
-    <Svg xmlns="http://www.w3.org/2000/svg" width={80} height={47.998} {...props}>
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={80}
+      height={47.998}
+      {...props}
+    >
       <G data-name="sandwich (1)">
         <G data-name="Group 839">
           <G data-name="Group 838" fill={hoagieFill}>
@@ -67,6 +72,6 @@ const Hoagie = (props: SvgProps) => {
       </G>
     </Svg>
   );
-}
+};
 
 export {Hoagie};

@@ -1,7 +1,0 @@
-{
-  "name": "@hoagies-on-main/do-cloud",
-  "version": "0.0.4",
-  "type": "commonjs",
-  "generators": "./generators.json",
-  "executors": "./executors.json"
-}

@@ -12,6 +12,9 @@
     "baseUrl": "./",
     "paths": {
       "@hom/fonts": ["assets/fonts/index"],
+      "@hom/locale": ["src/localization/locale"],
+      "@hom/language": ["src/localization/index"],
+      "@hom/language-types": ["src/localization/types"],
       "@hom/common": ["src/components/common/index"],
       "@hom/support": ["src/support/index"],
       "@hom/theme": ["src/theme/index"],

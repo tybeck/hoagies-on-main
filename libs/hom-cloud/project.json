@@ -1,24 +1,24 @@
 {
-  "name": "do-cloud",
+  "name": "hom-cloud",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/do-cloud/src",
+  "sourceRoot": "libs/hom-cloud/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "libs/do-cloud/dist",
-        "main": "libs/do-cloud/src/index.ts",
-        "tsConfig": "libs/do-cloud/tsconfig.lib.json",
-        "assets": ["libs/do-cloud/*.md"]
+        "outputPath": "libs/hom-cloud/dist",
+        "main": "libs/hom-cloud/src/index.ts",
+        "tsConfig": "libs/hom-cloud/tsconfig.lib.json",
+        "assets": ["libs/hom-cloud/*.md"]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/do-cloud/**/*.ts"]
+        "lintFilePatterns": ["libs/hom-cloud/**/*.ts"]
       }
     }
   },

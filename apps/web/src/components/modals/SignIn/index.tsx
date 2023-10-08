@@ -3,7 +3,11 @@ import styled from 'styled-components/native';
 
 import {logoSmallest} from '@hom/assets';
 import {unpackAsset} from '@hom/utils';
-import {SignInWithTwitter, SignInWithGoogle, SignInWithFacebook} from '@hom/common';
+import {
+  SignInWithTwitter,
+  SignInWithGoogle,
+  SignInWithFacebook,
+} from '@hom/common';
 
 const SignInView = styled.View`
   align-items: center;

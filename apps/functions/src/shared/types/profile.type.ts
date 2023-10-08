@@ -1,6 +1,6 @@
-import { Profile as FacebookProfileAuth } from 'passport-facebook';
-import { Profile as GoogleProfileAuth } from 'passport-google-oauth20';
-import { Profile as TwitterProfileAuth } from 'passport-twitter';
+import {Profile as FacebookProfileAuth} from 'passport-facebook';
+import {Profile as GoogleProfileAuth} from 'passport-google-oauth20';
+import {Profile as TwitterProfileAuth} from 'passport-twitter';
 
 export type Token = {
   accessToken: string;

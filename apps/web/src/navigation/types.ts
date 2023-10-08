@@ -1,10 +1,13 @@
-import type {CompositeNavigationProp, NavigationProp, NavigatorScreenParams} from '@react-navigation/native';
-import type {DrawerScreenProps, DrawerNavigationProp} from '@react-navigation/drawer';
-import type {StackNavigationProp} from '@react-navigation/stack';
+import type {
+  NavigationProp,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
+import type {
+  DrawerScreenProps,
+} from '@react-navigation/drawer';
 
 export enum MainNavigation {
   Main = 'Main',
-  SignIn = 'SignIn',
 }
 
 export enum DrawerNavigation {
@@ -12,11 +15,11 @@ export enum DrawerNavigation {
   Products = 'Products',
   Location = 'Location',
   ContactUs = 'ContactUs',
+  SignIn = 'SignIn',
 }
 
 export type RootStackParamList = {
   Main: Partial<NavigatorScreenParams<RootDrawerParamList>>;
-  SignIn: undefined;
 };
 
 export type RootDrawerParamList = {
@@ -26,16 +29,20 @@ export type RootDrawerParamList = {
   };
   Location: undefined;
   ContactUs: undefined;
+  SignIn: undefined;
 };
 
-export type RootDrawerScreenProps<T extends keyof RootDrawerParamList> = DrawerScreenProps<
+export type RootDrawerScreenProps<T extends keyof RootDrawerParamList> =
+  DrawerScreenProps<RootDrawerParamList, T>;
+
+export type AllScreenProps = NavigationProp<
   RootDrawerParamList,
-  T
+  keyof RootDrawerParamList
+>;
+export type HomeScreenProps = NavigationProp<RootDrawerParamList, 'Home'>;
+export type ProductsScreenProps = NavigationProp<
+  RootDrawerParamList,
+  'Products'
 >;
 
-export type AllScreenProps = NavigationProp<RootDrawerParamList, keyof RootDrawerParamList>;
-export type HomeScreenProps = NavigationProp<RootDrawerParamList, 'Home'>;
-export type ProductsScreenProps = NavigationProp<RootDrawerParamList, 'Products'>;
-
-export type MainScreenProps = NavigationProp<RootStackParamList, 'Main'>
-export type SignInScreenProps = NavigationProp<RootStackParamList, 'SignIn'>;
+export type MainScreenProps = NavigationProp<RootStackParamList, 'Main'>;

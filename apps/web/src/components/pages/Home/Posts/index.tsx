@@ -1,81 +1,80 @@
 import React from 'react';
-import styled from 'styled-components/native';
-import {Platform} from 'react-native';
-import {css} from 'styled-components';
 
 import {ColorName} from '@hoagies-on-main/shared';
 
-import {Theme} from '@hom/theme';
+import {Media, Theme} from '@hom/theme';
 import {usePostQuery} from '@hom/queries';
+import {Typography, Heading} from '@hom/common';
+import {getLazyFC} from '@hom/utils';
 
-import {Heading} from '../../../common/Heading';
-import {Typography} from '../../../common/Typography';
+type PostProps = Record<string, unknown>;
 
-const PostContainer = styled.View`
-  background: ${Theme.colors[ColorName.White]};
-  flex-direction: column;
-  position: relative;
-  padding: 55px;
+export const Posts = getLazyFC<PostProps>(({ View }) => {
+  const PostContainer = View`
+    display: flex;
+    background: ${Theme.colors[ColorName.White]};
+    flex-direction: column;
+    position: relative;
+    padding: 15px;
+  `;
 
-  ${Platform.select({
-    ios: css`
-      padding: 15px;
-    `,
-  })}
-`;
+  const SlicedPosts = View`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    
+    ${Media.Md`
+      flex-direction: row;
+    `}    
+  `;
 
-const SlicedPosts = styled.View`
-  flex-direction: row;
-  width: 100%;
+  const Post = View`
+    display: flex;
+    background: ${Theme.colors[ColorName.Linen]};
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    width: calc(100% - 40px);
+    margin: 7px 0 7px 0;
+    padding: 20px;
+    min-height: auto;
+    
+    ${Media.Sm`
+      width: calc(90% - 40px);
+      max-width: 625px;
+    `}
+    
+    ${Media.Md`
+      min-height: 350px;
+      margin: 2.5%;
+      width: 28.33%;
+      padding: 2.5%;
+    `}
+  `;
 
-  ${Platform.select({
-    ios: css`
-      flex-direction: column;
-    `,
-  })}
-`;
+  return () => {
+    const {data} = usePostQuery();
+    const posts = data?.getPosts || [];
 
-const Post = styled.View`
-  background: ${Theme.colors[ColorName.Linen]};
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  min-height: 350px;
-  margin: 2.5%;
-  width: 28.33%;
-  padding: 2.5%;
+    if (!posts.length) {
+      return null;
+    }
 
-  ${Platform.select({
-    ios: css`
-      width: 100%;
-      margin: 7px 0 7px 0;
-      padding: 20px;
-      min-height: auto;
-    `,
-  })}
-`;
-
-function Posts(): React.ReactElement {
-  const {data} = usePostQuery();
-  const posts = data?.getPosts || [];
-
-  if (!posts.length) {
-    return null;
-  }
-
-  return (
-    <PostContainer style={{position: 'relative'}}>
-      <Heading textCenter>#hoagiesonmain</Heading>
-      <SlicedPosts>
-        {posts.length &&
-          posts.slice(0, 3).map((post) => (
-            <Post key={post._id}>
-              <Typography color={ColorName.SpaceCadet}>{post.message}</Typography>
-            </Post>
-          ))}
-      </SlicedPosts>
-    </PostContainer>
-  );
-}
-
-export {Posts};
+    return (
+      <PostContainer style={{position: 'relative'}}>
+        <Heading textCenter>#hoagiesonmain</Heading>
+        <SlicedPosts>
+          {posts.length &&
+            posts.slice(0, 3).map((post) => (
+              <Post key={post._id}>
+                <Typography color={ColorName.SpaceCadet} fullWidth>
+                  {post.message}
+                </Typography>
+              </Post>
+            ))}
+        </SlicedPosts>
+      </PostContainer>
+    );
+  };
+});

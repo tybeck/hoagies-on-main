@@ -1,12 +1,17 @@
 import * as React from 'react';
-import Svg, { SvgProps, G, Path } from 'react-native-svg';
+import Svg, {SvgProps, G, Path} from 'react-native-svg';
 
-import { Theme } from '@hom/theme';
+import {Theme} from '@hom/theme';
 
 const Fries = (props: SvgProps) => {
   const friesFill = props.fill || Theme.colors.davysGrey;
   return (
-    <Svg xmlns="http://www.w3.org/2000/svg" width={80} height={79.956} {...props}>
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={80}
+      height={79.956}
+      {...props}
+    >
       <G data-name="Group 841">
         <G data-name="Group 840" fill={friesFill}>
           <Path
@@ -25,6 +30,6 @@ const Fries = (props: SvgProps) => {
       </G>
     </Svg>
   );
-}
+};
 
 export {Fries};

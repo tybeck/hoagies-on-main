@@ -1,14 +1,14 @@
-import { Query, Resolver } from '@nestjs/graphql';
-import { forwardRef, Inject } from '@nestjs/common';
+import {Query, Resolver} from '@nestjs/graphql';
+import {forwardRef, Inject} from '@nestjs/common';
 
-import { Category, CategoryDocument } from '@hom-api/models';
-
-import { CategoryService } from '../../providers/category/category.service';
+import {Category, CategoryDocument} from '@hom-api/models';
+import {CategoryService} from '@hom-api-fn/graphql-providers';
 
 @Resolver(() => Category)
 export class CategoryResolver {
   constructor(
-    @Inject(forwardRef(() => CategoryService)) private category: CategoryService
+    @Inject(forwardRef(() => CategoryService))
+    private category: CategoryService,
   ) {}
 
   @Query(() => [Category])

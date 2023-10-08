@@ -6,17 +6,21 @@ import {NestFactory} from '@nestjs/core';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import {config} from 'dotenv';
+import {join} from 'path';
 
 import {ConfigService, Environment} from '@hom-api/modules';
 
 import {AppModule} from './app.module';
 
-config();
+config({path: join(__dirname, '../.env.development')});
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule, {cors: true});
   const config = app.get(ConfigService);
-  const [secret, port] = config.get(Environment.JwtSecret, Environment.Port) as [string, number]
+  const [secret, port] = config.get(
+    Environment.JwtSecret,
+    Environment.Port,
+  ) as [string, number];
 
   app.use(
     session({

@@ -1,21 +1,19 @@
 import React from 'react';
 import {Pressable, View} from 'react-native';
 import styled from 'styled-components/native';
+import {useTranslation} from 'react-i18next';
 
 import {FontAwesomeIcon, isElectron} from '@hom/support';
-import {Font, IFont} from '@hom/fonts';
+import {Fonts} from '@hom/fonts';
 import {Theme} from '@hom/theme';
 import {ButtonComponent} from '@hom/svg';
+import {LocaleKey} from '@hom/locale';
 
-interface OrderNowTextProps {
-  font: IFont;
-}
-
-const OrderNowText = styled.Text<OrderNowTextProps>`
+const OrderNowText = styled.Text`
   position: relative;
   z-index: 2;
   color: ${() => Theme.colors.white};
-  font-family: '${(props) => props.font}';
+  font-family: '${Fonts.NunitoBlack}';
   text-transform: uppercase;
   margin-left: 5px;
 `;
@@ -30,13 +28,19 @@ const ButtonView = styled.View`
 `;
 
 function OrderNowButton() {
+  const {t} = useTranslation();
+
   return (
     <Pressable onPress={() => {}}>
       <View>
-        <ButtonComponent adjustWidthBy={1} fill={Theme.colors.cyanCornflowerBlue} autoSize>
+        <ButtonComponent
+          adjustWidthBy={1}
+          fill={Theme.colors.cyanCornflowerBlue}
+          autoSize
+        >
           <ButtonView>
             <FontAwesomeIcon icon="shopping-cart" color={Theme.colors.white} />
-            <OrderNowText font={Font.NunitoBlack}>Order Now</OrderNowText>
+            <OrderNowText>{t(LocaleKey.OrderNow)}</OrderNowText>
           </ButtonView>
         </ButtonComponent>
       </View>

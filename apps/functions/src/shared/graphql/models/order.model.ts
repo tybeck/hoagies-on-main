@@ -1,9 +1,9 @@
-import { Document, Schema as MongooseSchema } from 'mongoose/lib/index';
-import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import {Document, Schema as MongooseSchema} from 'mongoose/lib/index';
+import {ObjectType, Field, Int} from '@nestjs/graphql';
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 
-import { Customer, CustomerSchema } from './customer.model';
-import { Product, ProductSchema } from './product.model';
+import {Customer, CustomerSchema} from './customer.model';
+import {Product, ProductSchema} from './product.model';
 
 export interface IOrder extends Document {
   _id: MongooseSchema.Types.ObjectId;
@@ -74,7 +74,7 @@ export class Order implements IOrder {
   chargeId: number;
 
   @Field(() => Object)
-  @Prop({ type: CustomerSchema })
+  @Prop({type: CustomerSchema})
   customer: Customer;
 
   /**
@@ -82,7 +82,7 @@ export class Order implements IOrder {
    * Items deliverable for this order
    */
   @Field(() => Array)
-  @Prop({ type: ProductSchema })
+  @Prop({type: ProductSchema})
   items: Product[];
 
   /**

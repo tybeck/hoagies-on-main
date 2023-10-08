@@ -16,7 +16,10 @@ const FoldWave: FC<Props> = ({fill, ...props}) => {
       }}
       {...props}
     >
-      <Path d="M186.51-4.43c29.35 69.07-33.3 123.35 27.65 192.43L500 150V0Z" fill={fill} />
+      <Path
+        d="M186.51-4.43c29.35 69.07-33.3 123.35 27.65 192.43L500 150V0Z"
+        fill={fill}
+      />
     </Svg>
   );
 };

@@ -1,11 +1,19 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {ParamListBase, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
-import {AllScreenProps, DrawerNavigation, MainNavigation, MainScreenProps} from '@hom/navigation-types';
+import {
+  DrawerNavigation,
+  MainNavigation,
+  MainScreenProps,
+} from '@hom/navigation-types';
 import {Content, Font, HomScroll} from '@hom/types';
-
 import {Link, LinkTypography} from '@hom/common';
+import {LocaleKey} from '@hom/locale';
 
 export const NavListItem = styled.View`
   margin: 0 1rem;
@@ -27,9 +35,10 @@ type ChildRoute = {
   routes: {
     name: string;
   }[];
-}
+};
 
 function NavList() {
+  const {t} = useTranslation();
   const navigation = useNavigation<MainScreenProps>();
   const route = useRoute();
 
@@ -58,11 +67,18 @@ function NavList() {
         const routeName = child.routes?.[0]?.name ?? '';
         const history = child.history ?? [];
         if (history && history.length) {
-          const historicRoute = history[history.length - 1]?.key?.split('-')?.[0];
-          if (historicRoute && !whitelistedPages.includes(historicRoute as DrawerNavigation)) {
+          const historicRoute =
+            history[history.length - 1]?.key?.split('-')?.[0];
+          if (
+            historicRoute &&
+            !whitelistedPages.includes(historicRoute as DrawerNavigation)
+          ) {
             isDifferentPage = true;
           }
-        } else if (routeName && !whitelistedPages.includes(routeName as DrawerNavigation)) {
+        } else if (
+          routeName &&
+          !whitelistedPages.includes(routeName as DrawerNavigation)
+        ) {
           isDifferentPage = true;
         }
       }
@@ -81,21 +97,29 @@ function NavList() {
   return (
     <NavListView>
       <NavListItem>
-        <Link text="Home" typography={typography} onPress={navigate(DrawerNavigation.Home)} />
-      </NavListItem>
-      <NavListItem>
-        <Link text="Menu" typography={typography} onPress={navigate(DrawerNavigation.Products)} />
+        <Link
+          text={t(LocaleKey.HeadingHome)}
+          typography={typography}
+          onPress={navigate(DrawerNavigation.Home)}
+        />
       </NavListItem>
       <NavListItem>
         <Link
-          text="Location"
+          text={t(LocaleKey.HeadingMenu)}
+          typography={typography}
+          onPress={navigate(DrawerNavigation.Products)}
+        />
+      </NavListItem>
+      <NavListItem>
+        <Link
+          text={t(LocaleKey.HeadingLocation)}
           typography={typography}
           onPress={navigate(DrawerNavigation.Location)}
         />
       </NavListItem>
       <NavListItem>
         <Link
-          text="Contact Us"
+          text={t(LocaleKey.HeadingContactUs)}
           typography={typography}
           onPress={navigate(DrawerNavigation.ContactUs)}
         />

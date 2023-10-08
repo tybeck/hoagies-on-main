@@ -1,34 +1,42 @@
-import { Global, Module } from '@nestjs/common';
-import { CacheModule, CacheStore } from '@nestjs/cache-manager';
-import { redisStore } from 'cache-manager-redis-yet';
-import { JwtService } from '@nestjs/jwt';
+import {Global, Module} from '@nestjs/common';
+import {CacheModule} from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-redis-store';
+import {JwtModule} from '@nestjs/jwt';
 
-import { ConfigModule } from '@hom-api/modules';
-
-import { ConfigService, Environment } from '../config/index.service';
+import {ConfigModule, ConfigService, Environment} from '@hom-api/modules';
 
 @Global()
 @Module({
-  providers: [JwtService],
-  exports: [JwtService],
+  exports: [
+    JwtModule,
+    CacheModule,
+  ],
   imports: [
     CacheModule.registerAsync({
       useFactory: async (config: ConfigService) => {
         const [host, port] = config.get(
           Environment.RedisHost,
-          Environment.RedisPort
+          Environment.RedisPort,
         ) as [string, number];
         return {
           isGlobal: true,
-          store: async () => {
-            return await redisStore({
-              socket: {
-                host,
-                port,
-              },
-            });
+          store: redisStore,
+          host,
+          port,
+        }
+      },
+      imports: [ConfigModule],
+      inject: [ConfigService],
+    }),
+    JwtModule.registerAsync({
+      useFactory: async (config: ConfigService) => {
+        const secret = config.get(Environment.JwtSecret);
+        return {
+          secret,
+          signOptions: {
+            expiresIn: '6hr',
           },
-        } as unknown as CacheStore;
+        }
       },
       imports: [ConfigModule],
       inject: [ConfigService],

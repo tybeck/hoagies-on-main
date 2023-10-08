@@ -1,18 +1,18 @@
 import React, {FC} from 'react';
 import styled from 'styled-components/native';
 import {Platform, Pressable} from 'react-native';
-
-import {Category as TCategory} from '@hom/queries';
-import {Theme} from '@hom/theme';
-import {ColorName} from '@hoagies-on-main/shared';
-import {unpackAsset} from '@hom/utils';
-
-import {Heading} from '../../../../common/Heading';
-import {Typography} from '../../../../common/Typography';
 import {css} from 'styled-components';
+import {useTranslation} from 'react-i18next';
 
-interface ContainerProps {
-  color: string;
+import {Category as TCategory, Maybe} from '@hom/queries';
+import {ColorName} from '@hoagies-on-main/shared';
+import {getView, Heading, Typography} from '@hom/common';
+import {unpackAsset} from '@hom/utils';
+import {Theme} from '@hom/theme';
+import {useApp} from "@hom/context";
+
+type ContainerProps = {
+  color?: Maybe<string> | undefined;
 }
 
 const CategoryImage = styled.Image`
@@ -34,30 +34,16 @@ const CategoryImage = styled.Image`
   })}
 `;
 
-const CategoryView = styled.View<ContainerProps>`
-  background-color: ${(props) => props.color};
-  flex-direction: row;
-  padding: 40px 20px;
-  display: flex;
-  height: 100%;
-  width: 100%;
-  position: unset;
-  align-self: center;
-  justify-content: center;
-  transition: 1000ms all ease;
-`;
-
-const Content = styled.View`
-  justify-content: flex-start;
-  align-self: center;
-  width: 100%;
-  z-index: 1;
-`;
-
-const CategoryPress = styled(Pressable)`
+const CategoryPress = styled(Pressable)<{appWidth?: number | null}>`
   background: white;
-  min-height: 450px;
-  height: 100%;
+  overflow: hidden;
+  height: ${Math.floor(920 / 6)}px;
+
+  ${props =>
+    props.appWidth && props.appWidth >= 800 &&
+    css`
+      height: ${Math.floor(920 / 2)}px;
+    `}
 
   ${Platform.select({
     ios: css`
@@ -67,24 +53,63 @@ const CategoryPress = styled(Pressable)`
   })}
 `;
 
-interface Props {
-  headingColor?: ColorName;
-  category: TCategory;
+type Props = {
+  headingColor?: ColorName | null;
+  category: Partial<TCategory>;
   image?: any;
 }
 
-const Category: FC<Props> = ({category, image, headingColor}) => {
-  return (
-    <CategoryPress onPress={() => console.log('dick')}>
-      <CategoryView color={Theme.colors[category.color]}>
-        {image && <CategoryImage resizeMode="contain" source={unpackAsset(image)} />}
-        <Content>
-          <Heading color={headingColor || ColorName.White}>{category.name}</Heading>
-          <Typography text="Yo our shit be bangin'" />
-        </Content>
-      </CategoryView>
-    </CategoryPress>
-  );
-};
+export const Category = React.lazy(async () => {
+  const View = await getView();
 
-export {Category};
+  const CategoryView = View<ContainerProps>`
+    background-color: ${(props) => props.color ? Theme.colors[props.color as never] : 'unset'};
+
+    ${css`
+      flex-direction: row;
+      padding: 40px 20px;
+      display: flex;
+      height: 100%;
+      width: 100%;
+      position: unset;
+      align-self: center;
+      justify-content: center;
+      transition: 1000ms all ease;    
+    `}
+  `;
+
+  const Content = View`
+    ${css`
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      align-self: center;
+      padding-left: ${Theme.spaceSize.xmedium}px;
+      width: 100%;
+      z-index: 1;
+    `}
+  `;
+
+  return {
+    default: ({category, image, headingColor}: Props) => {
+      const {appWidth} = useApp();
+      const {t} = useTranslation();
+
+      return (
+        <CategoryPress onPress={() => console.log('dick')} appWidth={appWidth}>
+          <CategoryView color={category.color}>
+            {image && (
+              <CategoryImage resizeMode="contain" source={unpackAsset(image)} />
+            )}
+            <Content>
+              <Heading color={headingColor || ColorName.White}>
+                {t(category.name ?? '')}
+              </Heading>
+              <Typography text="[Placeholder]" />
+            </Content>
+          </CategoryView>
+        </CategoryPress>
+      );
+    }
+  }
+});
