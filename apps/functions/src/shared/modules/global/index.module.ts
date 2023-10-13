@@ -24,14 +24,17 @@ import {AssetService} from './services/asset/index.service';
   imports: [
     CacheModule.registerAsync({
       useFactory: async (config: ConfigService) => {
-        const [host, port] = config.get(
+        const [host, port, local] = config.get(
           Environment.RedisHost,
           Environment.RedisPort,
-        ) as [string, number];
+          Environment.Local,
+        ) as [string, number, boolean];
         return {
           isGlobal: true,
           store: redisStore,
-          tls: true,
+          ...(!local && {
+            tls: true,
+          }),
           ttl: 0,
           host,
           port,

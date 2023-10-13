@@ -5,7 +5,7 @@ import {ProductListProvider} from '@hom/context';
 
 import {Banners} from './Banners';
 import {Filters} from './Filters';
-import {Products} from './Products';
+// import {Products} from './Products';
 
 const ProductListView = styled.View`
   display: flex;
@@ -21,7 +21,7 @@ const ProductList: FC = ({children}) => {
       <ProductListView>
         <Banners />
         <Filters />
-        <Products />
+        {/*<Products />*/}
         {children}
       </ProductListView>
     </ProductListProvider>

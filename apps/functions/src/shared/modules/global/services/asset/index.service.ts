@@ -35,7 +35,6 @@ export class AssetService implements OnApplicationBootstrap {
    * Get all static assets from s3, get the keys and cache them
    */
   async getAssetsToCache() {
-    this.logger.log('Get assets to cache');
     const lastRetrieval = (await this.cacheManager.get<number>(AssetService.LAST_RETRIEVAL_KEY_NAME)) || 0;
     const timestamp = Date.now();
     if (lastRetrieval + AssetService.ONE_WEEK_MILLIS < timestamp) {
@@ -69,7 +68,10 @@ export class AssetService implements OnApplicationBootstrap {
         await this.cacheManager.store.set(AssetService.LAST_RETRIEVAL_KEY_NAME, Date.now());
         this.logger.log(`Assets updated.`);
       }
+      return;
     }
+    this.logger.log(`Assets already up-to-date!`);
+    return Promise.resolve();
   }
 
   async getAsset<T = string>(key: string) {

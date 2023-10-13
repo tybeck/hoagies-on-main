@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@nestjs/common';
+import {Injectable, Logger} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model, Types} from 'mongoose';
 
@@ -14,7 +14,6 @@ import {
   VirtualizedProduct,
 } from '@hom-api/models';
 import {getCollectionName} from '@hom-api/shared-utils';
-import {S3Service} from '@hom-api/s3';
 
 type Options = {
   categories?: {
@@ -26,12 +25,13 @@ type Options = {
 export class ProductService {
   static IGNORED_VIRTUALS = ['id'];
 
+  private logger = new Logger(ProductService.name);
+
   constructor(
     @InjectModel(Product.name) private product: Model<ProductDocument>,
-    @Inject(S3Service) private s3: S3Service,
   ) {}
 
-  async getProducts(options: {categories?: string[]}): Promise<IProduct[]> {
+  async getProducts(options: {categories?: string[]} = {}): Promise<IProduct[]> {
     const {categories} = options;
     const opts: Options = {};
     if (categories && categories.length) {
@@ -39,6 +39,7 @@ export class ProductService {
         $in: (categories || []).map((category) => new Types.ObjectId(category)),
       };
     }
+    this.logger.log(`Get Products - ${JSON.stringify(options)}`)
     const products = await this.product
       .aggregate([
         {$match: opts},

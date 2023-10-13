@@ -4,10 +4,11 @@ import {
   HeadObjectCommandOutput,
   ListObjectsCommand,
   ListObjectsCommandOutput,
-  S3Client
+  S3Client,
 } from '@aws-sdk/client-s3';
 
 import {ConfigService, Environment} from '@hom-api/modules';
+import {join} from "path";
 
 /**
  * @type Bucket
@@ -18,7 +19,7 @@ type Bucket = Environment.AssetBucket;
 type MetadataObject = {
   key: string;
   metadata: HeadObjectCommandOutput['Metadata'];
-}
+};
 
 @Injectable()
 export class S3Service {
@@ -27,7 +28,12 @@ export class S3Service {
   private bucket: Bucket | null = null;
 
   constructor(@Inject(ConfigService) private config: ConfigService) {
-    const [accessKeyId, secretAccessKey, region] = this.config.get<string[]>(Environment.HomAwsAccessKeyId, Environment.HomAwsSecretAccessKey, Environment.HomAwsRegion);
+    const [accessKeyId, secretAccessKey, region, local] = this.config.get<[string, string, string, boolean]>(
+      Environment.HomAwsAccessKeyId,
+      Environment.HomAwsSecretAccessKey,
+      Environment.HomAwsRegion,
+      Environment.Local,
+    );
     this.logger.log(`Using access key: ${accessKeyId}`);
     this.client = new S3Client({
       credentials: {
@@ -35,11 +41,10 @@ export class S3Service {
         secretAccessKey,
       },
       region,
-      tls: true,
+      ...(!local && {
+        tls: true,
+      }),
     });
-    // (async () => {
-    //   await this.client.config.credentials();
-    // })();
   }
 
   /**
@@ -54,7 +59,9 @@ export class S3Service {
 
   private hasDefinedBucket() {
     if (!this.bucket) {
-      throw new Error('Please define a bucket to be used by calling `getFactory`!');
+      throw new Error(
+        'Please define a bucket to be used by calling `getFactory`!',
+      );
     }
   }
 
@@ -69,18 +76,20 @@ export class S3Service {
       Bucket,
     });
     const response = await this.client.send(command);
-    this.logger.log(`Response: ${JSON.stringify(response)}`)
+    this.logger.log(`Response: ${JSON.stringify(response)}`);
     if (response && response.Contents) {
-      return response.Contents.filter(content => !content.Key.endsWith('/'));
+      return response.Contents.filter((content) => !content.Key.endsWith('/'));
     }
     return [];
-  }
+  };
 
   /**
    * @method getMetadataForObjects
    * @param objects
    */
-  public getMetadataForObjects = async (objects: ListObjectsCommandOutput['Contents']): Promise<MetadataObject[]> => {
+  public getMetadataForObjects = async (
+    objects: ListObjectsCommandOutput['Contents'],
+  ): Promise<MetadataObject[]> => {
     this.hasDefinedBucket();
 
     const Bucket = this.config.get<string>(this.bucket);
@@ -100,5 +109,5 @@ export class S3Service {
       }
     }
     return metadata;
-  }
+  };
 }
