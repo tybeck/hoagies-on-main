@@ -34,6 +34,7 @@
       "@hom/assets": ["assets/index"],
       "@hom/context": ["src/context/index"],
       "@hom/modals": ["src/components/modals/index"],
+      "@hom/lazy": ["src/utils/lazy-fc"],
       "@hoagies-on-main/shared": ["../../libs/shared/src/index"]
     }
   },

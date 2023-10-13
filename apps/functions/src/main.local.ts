@@ -7,12 +7,17 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import {config} from 'dotenv';
 import {join} from 'path';
+import {INestApplication} from '@nestjs/common';
 
 import {ConfigService, Environment} from '@hom-api/modules';
 
 import {AppModule} from './app.module';
 
 config({path: join(__dirname, '../.env.development')});
+
+declare module globalThis {
+  let App: INestApplication;
+}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {cors: true});
@@ -21,6 +26,8 @@ async function bootstrap() {
     Environment.JwtSecret,
     Environment.Port,
   ) as [string, number];
+
+  globalThis.App = app;
 
   app.use(
     session({

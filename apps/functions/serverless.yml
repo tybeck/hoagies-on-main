@@ -16,13 +16,25 @@ provider:
   versionFunctions: true
   tracing:
     lambda: true
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - 's3:*'
+          Resource:
+            - 'arn:aws:s3:::hom-assets/*'
   vpc:
     securityGroupIds:
       - 'sg-04fc3cea2ee552103'
+      - 'sg-073ca64743f4e8ad9'
     subnetIds:
       - 'subnet-009f69c26fb4ee1ba'
       - 'subnet-0bcfa8c596a7e18cd'
       - 'subnet-05c822d45e6d5638f'
+      - 'subnet-0c00c3df3ee51f4a0'
+      - 'subnet-05c4102986c32ce66'
+      - 'subnet-057fb0897f4213bd1'
 
 package:
   individually: true

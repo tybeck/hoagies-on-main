@@ -2,7 +2,7 @@ import React, {FC, useCallback, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {useLazyQuery} from '@apollo/client';
 
-import {ProductsDocument, Product as IProduct} from '@hom/queries';
+import {ProductsDocument, VirtualizedProduct as IProduct} from '@hom/queries';
 import {useApp, useProductList} from '@hom/context';
 
 import {Product} from './Product';
@@ -12,6 +12,8 @@ const Container = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Products: FC = () => {

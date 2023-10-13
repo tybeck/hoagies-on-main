@@ -42,6 +42,7 @@ query Products($categories: [String!]) {
     price
     askForCheese
     needsOneOf
-    notes
+    notes,
+    images
   }
 }

@@ -19,10 +19,12 @@
       "@hom-api/models": ["src/shared/graphql/models/index"],
       "@hom-api/modules": ["src/shared/modules/index"],
       "@hom-api/types": ["src/shared/types/index"],
+      "@hom-api/s3": ["src/shared/modules/global/services/s3/index.service"],
       "@hom-api/auth-utils": ["src/shared/modules/auth/utils/index"],
       "@hom-api/auth-strategies": ["src/shared/modules/auth/strategies/index"],
       "@hom-api/auth-decorators": ["src/shared/modules/auth/decorators/index"],
       "@hom-api/shared-utils": ["src/shared/utils/index"],
+      "@hom-api/asset": ["src/shared/modules/global/services/asset/index.service"],
       "@hom-api/entities-response": [
         "src/shared/graphql/entities/response/index"
       ],

@@ -27,12 +27,13 @@ export enum Environment {
   FbGraphUrl = 'FB_GRAPH_URL',
   FbGraphUrlRating = 'FB_GRAPH_URL_RATING',
   FbGraphUrlPublishedPosts = 'FB_GRAPH_URL_PUBLISHED_POSTS',
-  HomDoctlApi = 'HOM_DOCTL_API',
-  DoFnFbPullUrl = 'DO_FN_FB_PULL_URL',
-  DoFnToken = 'DO_FN_TOKEN',
   FbPullCron = 'FB_PULL_CRON',
   NodeEnv = 'NODE_ENV',
   Local = 'LOCAL',
+  HomAwsAccessKeyId = 'HOM_AWS_ACCESS_KEY_ID',
+  HomAwsSecretAccessKey = 'HOM_AWS_SECRET_ACCESS_KEY',
+  HomAwsRegion = 'HOM_AWS_REGION',
+  AssetBucket = 'ASSET_BUCKET',
 }
 
 export type EnvironmentValues = Record<Environment, string>;

@@ -11,7 +11,8 @@ const ProductListView = styled.View`
   display: flex;
   width: 100%;
   height: 100%;
-  margin: 75px 0 0 0;
+  padding-top: 75px;
+  margin: 0;
 `;
 
 const ProductList: FC = ({children}) => {

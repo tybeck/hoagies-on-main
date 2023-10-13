@@ -17,6 +17,7 @@ export const Theme: ITheme = {
   },
   fontSize: {
     mini: normalize(4),
+    xsmall: normalize(5),
     small: normalize(6),
     medium: normalize(8),
     xmedium: normalize(13),
@@ -35,6 +36,7 @@ export const Theme: ITheme = {
   },
   spaceSize: {
     mini: normalize(2.25),
+    xsmall: normalize(2.5),
     small: normalize(3),
     medium: normalize(3.75),
     xmedium: normalize(6.5),

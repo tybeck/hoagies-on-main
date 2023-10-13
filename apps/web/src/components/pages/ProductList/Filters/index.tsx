@@ -9,18 +9,19 @@ import {useApp, useProductList} from '@hom/context';
 import {Filter} from './Filter';
 
 const Container = styled.View`
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 10px 20px;
   flex-direction: column;
   width: 100%;
 `;
 
 const HeadingView = styled.View`
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   margin-top: 10px;
 `;
 
 const FiltersWrapper = styled.View`
   flex-direction: row;
+  flex-wrap: wrap;
   width: 100%;
 `;
 

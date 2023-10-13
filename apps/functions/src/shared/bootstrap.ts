@@ -3,6 +3,7 @@ import {NestFactory} from '@nestjs/core';
 import {
   DynamicModule,
   ForwardReference,
+  INestApplication,
   Module,
   Type,
   ValidationPipe,
@@ -13,6 +14,10 @@ import serverlessExpress from '@vendia/serverless-express';
 import {GlobalModule} from '@hom-api/modules';
 
 let instance: Handler;
+
+declare module globalThis {
+  let App: INestApplication;
+}
 
 /**
  * @method bootstrap
@@ -41,6 +46,8 @@ export async function bootstrap(
     origin: '*',
   });
   await application.init();
+
+  globalThis.App = application;
 
   const app = application.getHttpAdapter().getInstance();
 

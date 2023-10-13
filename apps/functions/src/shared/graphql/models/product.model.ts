@@ -2,6 +2,10 @@ import {Document, Schema as MongooseSchema} from 'mongoose/lib/index';
 import {ObjectType, Field} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import mongoose from 'mongoose';
+import {mapSeries} from 'bluebird';
+import {INestApplication} from '@nestjs/common';
+
+import {AssetService} from '@hom-api/asset';
 
 import {Meat} from './meat.model';
 import {Cheese} from './cheese.model';
@@ -22,10 +26,15 @@ export interface IProduct extends Document {
   updated: Date;
   categories: Category[];
   needsOneOf?: MongooseSchema.Types.ObjectId[];
+  imageKey?: string[];
+}
+
+export interface IVirtualizedProduct extends IProduct {
+  images: string[];
 }
 
 @ObjectType()
-@Schema()
+@Schema({toJSON: {virtuals: true}, toObject: {virtuals: true}})
 export class Product implements IProduct {
   @Field(() => String)
   _id: MongooseSchema.Types.ObjectId;
@@ -77,7 +86,40 @@ export class Product implements IProduct {
   @Field(() => [String], {defaultValue: []})
   @Prop()
   needsOneOf?: MongooseSchema.Types.ObjectId[];
+
+  @Field(() => [String], {defaultValue: []})
+  @Prop()
+  imageKey?: string[];
+}
+
+/**
+ * @class VirtualizedProduct
+ * This class has virtual properties which don't exist in the product collection; we need
+ * to extend the original product class as mongoose will complain about there being a field
+ * and a virtual field of the same name; this way separates that concern while allowing both
+ * to function.
+ */
+@ObjectType()
+@Schema({toJSON: {virtuals: true}, toObject: {virtuals: true}})
+export class VirtualizedProduct extends Product implements IVirtualizedProduct {
+  @Field(() => [String], {defaultValue: []})
+  @Prop()
+  images: string[];
 }
 
 export type ProductDocument = Product & Document;
 export const ProductSchema = SchemaFactory.createForClass(Product);
+
+ProductSchema.virtual('images').get(function() {
+  if (this.imageKey && this.imageKey.length) {
+    return new Promise(async resolve => {
+      const app: INestApplication  = globalThis.App;
+      const assetService: AssetService = app.get(AssetService);
+      const images = await mapSeries(this.imageKey, key =>
+        assetService.getAsset<string>(key)
+      );
+      resolve(images.filter(img => img !== null));
+    });
+  }
+  return Promise.resolve([]);
+});

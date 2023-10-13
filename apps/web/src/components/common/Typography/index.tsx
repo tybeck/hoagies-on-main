@@ -7,6 +7,7 @@ import {ColorName} from '@hoagies-on-main/shared';
 
 import {Font, Size, Sizing} from '@hom/types';
 import {Theme} from '@hom/theme';
+import {useApp} from "@hom/context";
 
 export interface TypographyProps {
   font?: Font;
@@ -61,8 +62,9 @@ const TypographyText = styled.Text<TypographyProps>`
 `;
 
 const Typography: FC<TypographyProps> = ({children, text, style, ...props}) => {
+  const {theme} = useApp();
   const typographyProps = {
-    size: `${Theme.fontSize[props.size] || Theme.fontSize[Size.Medium]}px`,
+    size: `${(theme || Theme).fontSize[props.size] || (theme || Theme).fontSize[Size.Medium]}px`,
     font: props.font || Font.Nunito,
     color: Theme.colors[props.color] || Theme.colors[ColorName.Black],
     center: props.center || false,

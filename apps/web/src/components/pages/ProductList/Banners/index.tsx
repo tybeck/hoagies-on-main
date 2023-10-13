@@ -1,21 +1,27 @@
-import React, {FC} from 'react';
-import styled from 'styled-components/native';
+import React from 'react';
+
+import {getLazyFC} from '@hom/lazy';
+import {Media} from '@hom/theme';
 
 import {BuildYourOwnBanner} from '../BuildYourOwnBanner';
 import {LoyaltyCard} from '../LoyaltyCard';
 
-const BannersView = styled.View`
-  display: flex;
-  flex-direction: row;
-`;
+export const Banners = getLazyFC(({View}) => {
+  const BannersView = View`
+    display: flex;
+    flex-direction: column;
+    
+    ${Media.C(900)`
+      flex-direction: row;
+    `}
+  `;
 
-const Banners: FC = () => {
-  return (
-    <BannersView>
-      <BuildYourOwnBanner />
-      <LoyaltyCard />
-    </BannersView>
-  );
-};
-
-export {Banners};
+  return () => {
+    return (
+      <BannersView>
+        <BuildYourOwnBanner />
+        <LoyaltyCard />
+      </BannersView>
+    );
+  };
+});

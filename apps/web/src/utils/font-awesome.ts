@@ -8,6 +8,7 @@ import {faCircleChevronLeft} from '@fortawesome/free-solid-svg-icons/faCircleChe
 import {faCircleChevronRight} from '@fortawesome/free-solid-svg-icons/faCircleChevronRight';
 import {faLocationDot} from '@fortawesome/free-solid-svg-icons/faLocationDot';
 import {faPhone} from '@fortawesome/free-solid-svg-icons/faPhone';
+import {faXmark} from '@fortawesome/free-solid-svg-icons/faXmark';
 
 library.add(
   faBars,
@@ -19,4 +20,5 @@ library.add(
   faCircleChevronRight,
   faLocationDot,
   faPhone,
+  faXmark,
 );

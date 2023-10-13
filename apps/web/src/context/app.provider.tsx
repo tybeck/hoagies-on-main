@@ -1,9 +1,8 @@
 import React, {createContext, FC, useContext, useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import Constants from 'expo-constants';
-import {View} from 'react-native';
 
-import {Content, EnvironmentKey, SettingType} from '@hom/types';
+import {Content, EnvironmentKey, ITheme, SettingType} from '@hom/types';
 import {
   useSettingQuery,
   Setting,
@@ -11,10 +10,14 @@ import {
   useCategoryQuery,
 } from '@hom/queries';
 import {noop} from '@hom/utils';
+import {normalize} from "../theme/normalize";
+import {Platform} from "react-native";
 
 const AppProviderView = styled.View`
   flex: 1;
 `;
+
+type AppTheme = Pick<ITheme, 'fontSize' | 'spaceSize'>;
 
 interface IAppContext {
   settings: Setting[] | null;
@@ -32,6 +35,7 @@ interface IAppContext {
   headerHeight: number;
   positions: Positions;
   appWidth: number | null;
+  theme: AppTheme | null;
 }
 
 export const AppContext = createContext({
@@ -50,6 +54,7 @@ export const AppContext = createContext({
   headerHeight: 0,
   positions: {},
   appWidth: null,
+  theme: null,
 } as IAppContext);
 
 type Environment = {
@@ -65,6 +70,7 @@ export type AppProviderProps = {
 };
 
 export const AppProvider: FC<AppProviderProps> = ({children}) => {
+  const [theme, setTheme] = useState<AppTheme | null>(null);
   const [appWidth, setAppWidth] = useState<number | null>(null);
   const [scroll, setScroll] = useState<number>(0);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
@@ -100,6 +106,7 @@ export const AppProvider: FC<AppProviderProps> = ({children}) => {
     categories: categories?.data?.getCategories ?? [],
     positions,
     appWidth,
+    theme,
   };
 
   const getSetting = (key: SettingType) => {
@@ -137,6 +144,37 @@ export const AppProvider: FC<AppProviderProps> = ({children}) => {
     const width = event?.nativeEvent?.layout?.width;
     if (width !== appWidth) {
       setAppWidth(width);
+      setTheme({
+        fontSize: {
+          mini: normalize(4),
+          xsmall: normalize(5),
+          small: normalize(6),
+          medium: normalize(8),
+          xmedium: normalize(13),
+          large: normalize(16),
+          xlarge: normalize(19),
+          xxlarge: normalize(22),
+          ...Platform.select({
+            ios: {
+              medium: normalize(4),
+              xmedium: normalize(7.5),
+              large: normalize(7.5),
+              xlarge: normalize(13),
+              xxlarge: normalize(16),
+            },
+          }),
+        },
+        spaceSize: {
+          mini: normalize(2.25),
+          xsmall: normalize(2.5),
+          small: normalize(3),
+          medium: normalize(3.75),
+          xmedium: normalize(6.5),
+          large: normalize(11),
+          xlarge: normalize(13),
+          xxlarge: normalize(16),
+        },
+      });
     }
   };
 

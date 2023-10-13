@@ -1,19 +1,17 @@
-import React, {FC} from 'react';
+import React from 'react';
 import styled, {css} from 'styled-components/native';
 
+import {getLazyFC} from '@hom/lazy';
 import {ButtonComponent} from '@hom/svg';
 import {Theme} from '@hom/theme';
 import {Font} from '@hom/types';
-import {getView} from '@hom/common';
 
-interface InputProps {
+type InputProps = {
   placeholder?: string;
   noMargin?: boolean | undefined;
 }
 
-export const Input = React.lazy(async (): Promise<{default: FC<InputProps>}> => {
-  const View = await getView();
-
+export const Input = getLazyFC<InputProps>(({View}) => {
   const InputView = View<{noMargin?: boolean | undefined}>`
     display: flex;
     margin-bottom: ${Theme.spaceSize.xmedium}px;
@@ -23,6 +21,10 @@ export const Input = React.lazy(async (): Promise<{default: FC<InputProps>}> => 
       css`
         margin-bottom: 0;
       `
+    }
+    
+    input {
+      outline: none;
     }
   `;
 
@@ -40,20 +42,17 @@ export const Input = React.lazy(async (): Promise<{default: FC<InputProps>}> => 
     width: 100%;
     height: 100%;
     font-family: ${Font.Nunito};
-    outline: none;
   `;
 
-  return {
-    default: ({noMargin, placeholder}: InputProps) => {
-      return (
-        <InputView noMargin={noMargin}>
-          <ButtonComponent fill={Theme.colors.white} autoSize>
-            <InputViewWrapper>
-              <UIInput placeholder={placeholder} />
-            </InputViewWrapper>
-          </ButtonComponent>
-        </InputView>
-      );
-    }
-  }
+  return ({noMargin, placeholder}: InputProps) => {
+    return (
+      <InputView noMargin={noMargin}>
+        <ButtonComponent fill={Theme.colors.white} autoSize>
+          <InputViewWrapper>
+            <UIInput placeholder={placeholder} />
+          </InputViewWrapper>
+        </ButtonComponent>
+      </InputView>
+    );
+  };
 });

@@ -5,7 +5,7 @@ import {css} from 'styled-components';
 import {MyAccount, OrderNowButton} from '@hom/common';
 import {useApp} from '@hom/context';
 import {Media} from '@hom/theme';
-import {getLazyFC} from '@hom/utils';
+import {getLazyFC} from '@hom/lazy';
 
 import {BurgerMenuButton} from '../Drawer/BurgerMenuButton';
 import {NavList} from '../NavList';

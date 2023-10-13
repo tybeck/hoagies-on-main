@@ -80,28 +80,11 @@ export type Meat = {
   name: Scalars['String']['output'];
 };
 
-export type Product = {
-  __typename?: 'Product';
-  _id: Scalars['String']['output'];
-  askForCheese: Scalars['Boolean']['output'];
-  categories: Array<Category>;
-  cheeses: Array<Cheese>;
-  condiments: Array<Condiment>;
-  created: Scalars['DateTime']['output'];
-  key: Scalars['String']['output'];
-  meats: Array<Meat>;
-  name: Scalars['String']['output'];
-  needsOneOf: Array<Scalars['String']['output']>;
-  notes: Scalars['String']['output'];
-  price: Scalars['Float']['output'];
-  updated: Scalars['DateTime']['output'];
-};
-
 export type Query = {
   __typename?: 'Query';
   getCategories: Array<Category>;
   getPosts: Array<FbPost>;
-  getProducts: Array<Product>;
+  getProducts: Array<VirtualizedProduct>;
   getReviews: Array<FbReview>;
   getSettings: Array<Setting>;
   isValidToken: AuthTokenEntityResponse;
@@ -128,6 +111,25 @@ export type Strategy = {
   isActivelySignedIn: Scalars['Boolean']['output'];
   token: Scalars['String']['output'];
   type: Scalars['String']['output'];
+};
+
+export type VirtualizedProduct = {
+  __typename?: 'VirtualizedProduct';
+  _id: Scalars['String']['output'];
+  askForCheese: Scalars['Boolean']['output'];
+  categories: Array<Category>;
+  cheeses: Array<Cheese>;
+  condiments: Array<Condiment>;
+  created: Scalars['DateTime']['output'];
+  imageKey: Array<Scalars['String']['output']>;
+  images: Array<Scalars['String']['output']>;
+  key: Scalars['String']['output'];
+  meats: Array<Meat>;
+  name: Scalars['String']['output'];
+  needsOneOf: Array<Scalars['String']['output']>;
+  notes: Scalars['String']['output'];
+  price: Scalars['Float']['output'];
+  updated: Scalars['DateTime']['output'];
 };
 
 export type IsValidTokenQueryVariables = Exact<{
@@ -203,7 +205,7 @@ export type ProductsQueryVariables = Exact<{
 export type ProductsQuery = {
   __typename?: 'Query';
   getProducts: Array<{
-    __typename?: 'Product';
+    __typename?: 'VirtualizedProduct';
     _id: string;
     key: string;
     name: string;
@@ -211,6 +213,7 @@ export type ProductsQuery = {
     askForCheese: boolean;
     needsOneOf: Array<string>;
     notes: string;
+    images: Array<string>;
     meats: Array<{__typename?: 'Meat'; _id: string; name: string}>;
     cheeses: Array<{__typename?: 'Cheese'; _id: string; name: string}>;
     condiments: Array<{
@@ -592,6 +595,7 @@ export const ProductsDocument = gql`
       askForCheese
       needsOneOf
       notes
+      images
     }
   }
   ${MeatFieldsFragmentDoc}

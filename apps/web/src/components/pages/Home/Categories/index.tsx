@@ -6,7 +6,6 @@ import {useTranslation} from 'react-i18next';
 
 import {ColorName} from '@hoagies-on-main/shared';
 
-import {OS} from '@hom/types';
 import {Theme} from '@hom/theme';
 import {useApp} from '@hom/context';
 import {Category as ICategory} from '@hom/queries';

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {useTranslation} from 'react-i18next';
+import {css} from 'styled-components';
 
 import {ColorName} from '@hoagies-on-main/shared';
 
@@ -11,24 +12,21 @@ import {
   hoagieRoll,
   sausageChicken,
 } from '@hom/assets';
+import {getLazyFC} from '@hom/lazy';
 import {Font, Sizing} from '@hom/types';
 import {unpackAsset} from '@hom/utils';
-import {getView, Heading, Typography} from '@hom/common';
+import {Heading, Typography} from '@hom/common';
 import {LocaleKey} from '@hom/locale';
 
 import {BulletedItem} from './BulletedItem';
-import {css} from "styled-components";
 
-export const Ingredients = React.lazy(async () => {
-  const View = await getView();
-
+export const Ingredients = getLazyFC(({ View }) => {
   const IngredientView = View`
-   flex-direction: column;
-   display: flex;
-   background: ${Theme.colors.linen};
-   //padding: 55px;
-   flex-wrap: wrap;
-   padding: 40px 20px 55px;
+     flex-direction: column;
+     display: flex;
+     background: ${Theme.colors.linen};
+     flex-wrap: wrap;
+     padding: 40px 20px 55px;
   `;
 
   const IngredientsWrapper = View`
@@ -78,6 +76,7 @@ export const Ingredients = React.lazy(async () => {
     display: none;
     
     ${Media.C(550)`
+      justify-content: center;
       display: flex;
       height: 300px;
     `}
@@ -87,6 +86,7 @@ export const Ingredients = React.lazy(async () => {
     flex: 1;
     height: unset;
     width: unset;
+    max-width: 250px;
   `;
 
   const Disclaimer = View`
@@ -96,98 +96,97 @@ export const Ingredients = React.lazy(async () => {
   `;
 
   const IngredientHeading = styled(Typography)``;
-  return {
-    default: () => {
-      const {t} = useTranslation();
-      return (
-        <IngredientView>
-          <Heading textCenter>{t(LocaleKey.IngredientsHeading)}</Heading>
-          <IngredientsWrapper>
-            <IngredientsContent>
-              <IngredientColumn>
-                <IngredientHeading
-                  font={Font.LithosProBlack}
-                  color={ColorName.CyanCornflowerBlue}
-                  size={Sizing.Xmedium}
-                >
-                  {t(LocaleKey.FreshProductsHeading)}
-                </IngredientHeading>
-                <BulletedItem>{t(LocaleKey.MadeFreshBullet)}</BulletedItem>
-                <BulletedItem>{t(LocaleKey.HandTossedBullet)}</BulletedItem>
-              </IngredientColumn>
-              <IngredientColumn last>
-                <IngredientHeading
-                  font={Font.LithosProBlack}
-                  color={ColorName.CyanCornflowerBlue}
-                  size={Sizing.Xmedium}
-                >
-                  {t(LocaleKey.GroundBeefHeading)}
-                </IngredientHeading>
-                <BulletedItem>{t(LocaleKey.SignatureBeefBullet)}</BulletedItem>
-                <BulletedItem>{t(LocaleKey.NeverFrozenBullet)}</BulletedItem>
-              </IngredientColumn>
-            </IngredientsContent>
-            <IngredientImagery>
-              <IngredientImage
-                resizeMode="contain"
-                source={unpackAsset(basketOfGoods)}
-              />
-              <IngredientImage
-                resizeMode="contain"
-                source={unpackAsset(sausageChicken)}
-              />
-              <IngredientImage
-                resizeMode="contain"
-                source={unpackAsset(hoagieRoll)}
-              />
-              <IngredientImage
-                resizeMode="contain"
-                source={unpackAsset(carrotsMeat)}
-              />
-            </IngredientImagery>
-            <IngredientsContent>
-              <IngredientColumn>
-                <IngredientHeading
-                  font={Font.LithosProBlack}
-                  color={ColorName.CyanCornflowerBlue}
-                  size={Sizing.Xmedium}
-                >
-                  {t(LocaleKey.GroundTurkeyHeading)}
-                </IngredientHeading>
-                <BulletedItem>{t(LocaleKey.GroundFreshBullet)}</BulletedItem>
-                <BulletedItem>{t(LocaleKey.NeverFrozenBullet)}</BulletedItem>
-              </IngredientColumn>
-              <IngredientColumn last>
-                <IngredientHeading
-                  font={Font.LithosProBlack}
-                  color={ColorName.CyanCornflowerBlue}
-                  size={Sizing.Xmedium}
-                >
-                  {t(LocaleKey.ArtisanBunsHeading)}
-                </IngredientHeading>
-                <BulletedItem>{t(LocaleKey.AvailableGlutenFreeBullet)}</BulletedItem>
-                <BulletedItem>{t(LocaleKey.CustomRecipeBullet)}</BulletedItem>
-              </IngredientColumn>
-            </IngredientsContent>
-          </IngredientsWrapper>
-          <Disclaimer>
-            <Typography
-              font={Font.LithosProBlack}
-              color={ColorName.CyanCornflowerBlue}
-              textCenter
-            >
-              {t(LocaleKey.DisclaimerPartOne)}
-            </Typography>
-            <Typography
-              font={Font.LithosProBlack}
-              color={ColorName.CyanCornflowerBlue}
-              textCenter
-            >
-              {t(LocaleKey.DisclaimerPartTwo)}
-            </Typography>
-          </Disclaimer>
-        </IngredientView>
-      );
-    }
-  }
+
+  return () => {
+    const {t} = useTranslation();
+    return (
+      <IngredientView>
+        <Heading textCenter>{t(LocaleKey.IngredientsHeading)}</Heading>
+        <IngredientsWrapper>
+          <IngredientsContent>
+            <IngredientColumn>
+              <IngredientHeading
+                font={Font.LithosProBlack}
+                color={ColorName.CyanCornflowerBlue}
+                size={Sizing.Xmedium}
+              >
+                {t(LocaleKey.FreshProductsHeading)}
+              </IngredientHeading>
+              <BulletedItem>{t(LocaleKey.MadeFreshBullet)}</BulletedItem>
+              <BulletedItem>{t(LocaleKey.HandTossedBullet)}</BulletedItem>
+            </IngredientColumn>
+            <IngredientColumn last>
+              <IngredientHeading
+                font={Font.LithosProBlack}
+                color={ColorName.CyanCornflowerBlue}
+                size={Sizing.Xmedium}
+              >
+                {t(LocaleKey.GroundBeefHeading)}
+              </IngredientHeading>
+              <BulletedItem>{t(LocaleKey.SignatureBeefBullet)}</BulletedItem>
+              <BulletedItem>{t(LocaleKey.NeverFrozenBullet)}</BulletedItem>
+            </IngredientColumn>
+          </IngredientsContent>
+          <IngredientImagery>
+            <IngredientImage
+              resizeMode="contain"
+              source={unpackAsset(basketOfGoods)}
+            />
+            <IngredientImage
+              resizeMode="contain"
+              source={unpackAsset(sausageChicken)}
+            />
+            <IngredientImage
+              resizeMode="contain"
+              source={unpackAsset(hoagieRoll)}
+            />
+            <IngredientImage
+              resizeMode="contain"
+              source={unpackAsset(carrotsMeat)}
+            />
+          </IngredientImagery>
+          <IngredientsContent>
+            <IngredientColumn>
+              <IngredientHeading
+                font={Font.LithosProBlack}
+                color={ColorName.CyanCornflowerBlue}
+                size={Sizing.Xmedium}
+              >
+                {t(LocaleKey.GroundTurkeyHeading)}
+              </IngredientHeading>
+              <BulletedItem>{t(LocaleKey.GroundFreshBullet)}</BulletedItem>
+              <BulletedItem>{t(LocaleKey.NeverFrozenBullet)}</BulletedItem>
+            </IngredientColumn>
+            <IngredientColumn last>
+              <IngredientHeading
+                font={Font.LithosProBlack}
+                color={ColorName.CyanCornflowerBlue}
+                size={Sizing.Xmedium}
+              >
+                {t(LocaleKey.ArtisanBunsHeading)}
+              </IngredientHeading>
+              <BulletedItem>{t(LocaleKey.AvailableGlutenFreeBullet)}</BulletedItem>
+              <BulletedItem>{t(LocaleKey.CustomRecipeBullet)}</BulletedItem>
+            </IngredientColumn>
+          </IngredientsContent>
+        </IngredientsWrapper>
+        <Disclaimer>
+          <Typography
+            font={Font.LithosProBlack}
+            color={ColorName.CyanCornflowerBlue}
+            textCenter
+          >
+            {t(LocaleKey.DisclaimerPartOne)}
+          </Typography>
+          <Typography
+            font={Font.LithosProBlack}
+            color={ColorName.CyanCornflowerBlue}
+            textCenter
+          >
+            {t(LocaleKey.DisclaimerPartTwo)}
+          </Typography>
+        </Disclaimer>
+      </IngredientView>
+    );
+  };
 });

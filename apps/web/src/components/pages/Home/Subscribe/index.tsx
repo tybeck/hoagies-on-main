@@ -1,4 +1,4 @@
-import React, {FC, RefObject, useState} from 'react';
+import React, {RefObject, useState} from 'react';
 import styled from 'styled-components/native';
 import {View} from 'react-native';
 import {useTranslation} from 'react-i18next';
@@ -6,12 +6,13 @@ import {useTranslation} from 'react-i18next';
 import {ColorName} from '@hoagies-on-main/shared';
 
 import {Font, SettingType} from '@hom/types';
-import {Media, Theme} from '@hom/theme';
+import {BreakpointSize, Media, Theme} from '@hom/theme';
 import {unpackAsset} from '@hom/utils';
 import {newsletter} from '@hom/assets';
-import {getView, Input, Typography} from '@hom/common';
+import {Input, Typography} from '@hom/common';
 import {useApp} from '@hom/context';
 import {LocaleKey} from '@hom/locale';
+import {getLazyFC} from '@hom/lazy';
 
 import {Send} from './Send';
 
@@ -21,10 +22,9 @@ type SubscribeProps<T> = {
 }
 
 const MD_BREAKPOINT = 750;
+const LG_BREAKPOINT = 1024;
 
-export const Subscribe = React.lazy(async () => {
-  const View = await getView();
-
+export const Subscribe = getLazyFC<SubscribeProps<View>>(({View}) => {
   const SubscribeView = View`
     display: flex;
     background: ${Theme.colors[ColorName.Linen]};
@@ -72,6 +72,10 @@ export const Subscribe = React.lazy(async () => {
     ${Media.C(MD_BREAKPOINT)`
       flex-direction: row;
     `}
+    
+    ${Media.C(LG_BREAKPOINT)`
+      width: 100%;
+    `}
   `;
 
   const SendButton = View`
@@ -83,35 +87,36 @@ export const Subscribe = React.lazy(async () => {
     `}
   `;
 
-  return {
-    default: ({onPositionChange, viewRef}: SubscribeProps<View>) => {
-      const {appWidth, getSetting} = useApp();
-      const [phoneNo] = useState<string | null>(getSetting(SettingType.PhoneNumber));
-      const {t} = useTranslation();
+  return ({onPositionChange, viewRef}: SubscribeProps<View>) => {
+    const {appWidth, getSetting} = useApp();
+    const [phoneNo] = useState<string | null>(getSetting(SettingType.PhoneNumber));
+    const {t} = useTranslation();
 
-      const onLayout = (event: {nativeEvent: {layout: {y: number}}}) => {
-        const y = event?.nativeEvent?.layout?.y;
-        if (onPositionChange) {
-          onPositionChange(y);
-        }
-      };
+    const onLayout = (event: {nativeEvent: {layout: {y: number}}}) => {
+      const y = event?.nativeEvent?.layout?.y;
+      if (onPositionChange) {
+        onPositionChange(y);
+      }
+    };
 
-      return (
-        <SubscribeView ref={viewRef} onLayout={onLayout} className="subscribe-view">
-          <NewsletterImage resizeMode="contain" source={unpackAsset(newsletter)} />
-          <SubscribeColumn>
-            <Typography font={Font.NunitoBlack} color={ColorName.SpaceCadet} textCenter>
-              {t(LocaleKey.SubscribeParagraph, {phoneNo})}
-            </Typography>
-            <InputField>
-              <Input placeholder={t(LocaleKey.EmailInputPlaceholder)} noMargin={typeof appWidth === 'number' && appWidth >= MD_BREAKPOINT} />
-              <SendButton>
-                <Send />
-              </SendButton>
-            </InputField>
-          </SubscribeColumn>
-        </SubscribeView>
-      );
-    },
+    return (
+      <SubscribeView ref={viewRef} onLayout={onLayout} className="subscribe-view">
+        <NewsletterImage resizeMode="contain" source={unpackAsset(newsletter)} />
+        <SubscribeColumn>
+          <Typography font={Font.NunitoBlack} color={ColorName.SpaceCadet} textCenter={(typeof appWidth === 'number' && appWidth <= LG_BREAKPOINT)}>
+            {t(LocaleKey.SubscribeParagraph, {phoneNo})}
+          </Typography>
+          <InputField>
+            <Input
+              placeholder={t(LocaleKey.EmailInputPlaceholder)}
+              noMargin={typeof appWidth === 'number' && appWidth >= MD_BREAKPOINT}
+            />
+            <SendButton>
+              <Send />
+            </SendButton>
+          </InputField>
+        </SubscribeColumn>
+      </SubscribeView>
+    );
   };
 });

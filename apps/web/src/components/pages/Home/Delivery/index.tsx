@@ -10,11 +10,9 @@ import {Font, OS} from '@hom/types';
 import {Media, Theme} from '@hom/theme';
 import {LocaleKey} from '@hom/locale';
 import {Typography, Heading, Button} from '@hom/common';
-import {getView} from '@hom/common';
+import {getLazyFC} from '@hom/lazy';
 
-export const Delivery = React.lazy(async () => {
-  const View = await getView();
-
+export const Delivery = getLazyFC(({View}) => {
   const DeliveryView = View`
     ${css`
       flex-direction: column;
@@ -148,57 +146,55 @@ export const Delivery = React.lazy(async () => {
     `}
   `;
 
-  return {
-    default: () => {
-      const {t} = useTranslation();
+  return () => {
+    const {t} = useTranslation();
 
-      return (
-        <DeliveryView>
-          <DeliveryImageContent>
-            <DeliveryImage
-              source={unpackAsset(require('../../../../../assets/delivery.png'))}
-              resizeMode="contain"
-            />
-          </DeliveryImageContent>
-          <DeliveryContent>
-            <DeliveryContentPadded>
-              <HeadingWrapper>
-                <Heading>
-                  {t(LocaleKey.DeliveryTitle)}
-                </Heading>
-              </HeadingWrapper>
-              <Content>
-                <Typography
-                  text={t(LocaleKey.Delivery)}
-                  color={ColorName.DavysGrey}
+    return (
+      <DeliveryView>
+        <DeliveryImageContent>
+          <DeliveryImage
+            source={unpackAsset(require('../../../../../assets/delivery.png'))}
+            resizeMode="contain"
+          />
+        </DeliveryImageContent>
+        <DeliveryContent>
+          <DeliveryContentPadded>
+            <HeadingWrapper>
+              <Heading>
+                {t(LocaleKey.DeliveryTitle)}
+              </Heading>
+            </HeadingWrapper>
+            <Content>
+              <Typography
+                text={t(LocaleKey.Delivery)}
+                color={ColorName.DavysGrey}
+              />
+            </Content>
+            <Buttons>
+              <DoordashButton>
+                <Button
+                  text={t(LocaleKey.OrderButtonDoorDash)}
+                  fill={ColorName.CyanCornflowerBlue}
+                  typographyProps={{
+                    font: Font.NunitoBlack,
+                    color: ColorName.White,
+                  }}
                 />
-              </Content>
-              <Buttons>
-                <DoordashButton>
-                  <Button
-                    text={t(LocaleKey.OrderButtonDoorDash)}
-                    fill={ColorName.CyanCornflowerBlue}
-                    typographyProps={{
-                      font: Font.NunitoBlack,
-                      color: ColorName.White,
-                    }}
-                  />
-                </DoordashButton>
-                <GrubHubButton>
-                  <Button
-                    text={t(LocaleKey.OrderButtonGrubHub)}
-                    fill={ColorName.CyanCornflowerBlue}
-                    typographyProps={{
-                      font: Font.NunitoBlack,
-                      color: ColorName.White,
-                    }}
-                  />
-                </GrubHubButton>
-              </Buttons>
-            </DeliveryContentPadded>
-          </DeliveryContent>
-        </DeliveryView>
-      );
-    }
-  }
+              </DoordashButton>
+              <GrubHubButton>
+                <Button
+                  text={t(LocaleKey.OrderButtonGrubHub)}
+                  fill={ColorName.CyanCornflowerBlue}
+                  typographyProps={{
+                    font: Font.NunitoBlack,
+                    color: ColorName.White,
+                  }}
+                />
+              </GrubHubButton>
+            </Buttons>
+          </DeliveryContentPadded>
+        </DeliveryContent>
+      </DeliveryView>
+    );
+  };
 });

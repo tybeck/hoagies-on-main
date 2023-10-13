@@ -3,6 +3,7 @@ import {Color as SharedColor} from '@hoagies-on-main/shared';
 export enum Sizing {
   Mini = 'mini',
   Small = 'small',
+  Xsmall = 'xsmall',
   Medium = 'medium',
   Xmedium = 'xmedium',
   Large = 'large',
@@ -16,6 +17,7 @@ type SpacingType = {[K in Capitalize<Sizing>]: Lowercase<K>};
 export const Size: SizingType = {
   Mini: 'mini',
   Small: 'small',
+  Xsmall: 'xsmall',
   Medium: 'medium',
   Xmedium: 'xmedium',
   Large: 'large',

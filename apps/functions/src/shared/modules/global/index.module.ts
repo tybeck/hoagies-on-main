@@ -5,11 +5,21 @@ import {JwtModule} from '@nestjs/jwt';
 
 import {ConfigModule, ConfigService, Environment} from '@hom-api/modules';
 
+import {S3Service} from './services/s3/index.service';
+import {AssetService} from './services/asset/index.service';
+
 @Global()
 @Module({
+  providers: [
+    ConfigService,
+    AssetService,
+    S3Service,
+  ],
   exports: [
     JwtModule,
     CacheModule,
+    AssetService,
+    S3Service,
   ],
   imports: [
     CacheModule.registerAsync({
@@ -21,6 +31,8 @@ import {ConfigModule, ConfigService, Environment} from '@hom-api/modules';
         return {
           isGlobal: true,
           store: redisStore,
+          tls: true,
+          ttl: 0,
           host,
           port,
         }

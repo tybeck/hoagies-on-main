@@ -5,7 +5,7 @@ import {ColorName} from '@hoagies-on-main/shared';
 import {Media, Theme} from '@hom/theme';
 import {usePostQuery} from '@hom/queries';
 import {Typography, Heading} from '@hom/common';
-import {getLazyFC} from '@hom/utils';
+import {getLazyFC} from '@hom/lazy';
 
 type PostProps = Record<string, unknown>;
 
