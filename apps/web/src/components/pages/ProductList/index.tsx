@@ -5,7 +5,7 @@ import {ProductListProvider} from '@hom/context';
 
 import {Banners} from './Banners';
 import {Filters} from './Filters';
-// import {Products} from './Products';
+import {Products} from './Products';
 
 const ProductListView = styled.View`
   display: flex;
@@ -15,7 +15,11 @@ const ProductListView = styled.View`
   margin: 0;
 `;
 
-const ProductList: FC = ({children}) => {
+type ProductListProps = {
+  children?: React.ReactElement;
+}
+
+const ProductList: FC<ProductListProps> = ({children}) => {
   return (
     <ProductListProvider>
       <ProductListView>
