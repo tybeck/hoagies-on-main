@@ -3,13 +3,13 @@ import styled from 'styled-components/native';
 
 import {VirtualizedProduct as IProduct} from '@hom/queries';
 import {Typography, AddToCart, AddToFavorites} from '@hom/common';
-import {useCart} from '@hom/context';
+// import {useCart} from '@hom/context';
 import {Font, Sizing} from '@hom/types';
 import {Media, Theme} from '@hom/theme';
+import {getLazyFC} from '@hom/lazy';
+import {FontAwesomeIcon} from '@hom/support';
 
 import {ColorName} from '@hoagies-on-main/shared';
-import {FontAwesomeIcon} from "@hom/support";
-import {getLazyFC} from "@hom/lazy";
 
 interface ProductProps {
   product: IProduct;
@@ -106,7 +106,7 @@ export const Product = getLazyFC<ProductProps>( ({View}) => {
   `;
 
   return ({product, index}) => {
-    const {add} = useCart();
+    // const {add} = useCart();
     const ingredientNames = [
       ...product.meats,
       ...product.cheeses,

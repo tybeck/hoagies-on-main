@@ -6,7 +6,7 @@ import {Font} from '@hom/types';
 import {Typography} from '@hom/common';
 import {useApp, useProductList} from '@hom/context';
 
-// import {Filter} from './Filter';
+import {Filter} from './Filter';
 
 const Container = styled.View`
   padding: 0 20px 10px 20px;
@@ -57,16 +57,16 @@ export const Filters: FC = () => {
         </Typography>
       </HeadingView>
       <FiltersWrapper>
-        {/*{categories &&*/}
-        {/*  categories.length &&*/}
-        {/*  categories.map((category, index) => (*/}
-        {/*    <Filter*/}
-        {/*      index={index}*/}
-        {/*      total={categories.length}*/}
-        {/*      category={category}*/}
-        {/*      key={category._id}*/}
-        {/*    />*/}
-        {/*  ))}*/}
+        {categories &&
+          categories.length &&
+          categories.map((category, index) => (
+            <Filter
+              index={index}
+              total={categories.length}
+              category={category}
+              key={category._id}
+            />
+          ))}
       </FiltersWrapper>
     </Container>
   );
