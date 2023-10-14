@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect} from 'react';
+import React, {Suspense, FC, useCallback, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {useLazyQuery} from '@apollo/client';
 
@@ -44,8 +44,9 @@ export const Products: FC = () => {
       {products.map((product, index) => {
         console.log('!!!', product._id, product, index);
         return (
-          <TestView key={product._id} />
-          // <Product key={product._id} product={product} index={index} />
+          <Suspense>
+            <Product key={product._id} product={product} index={index} />
+          </Suspense>
         );
       })}
     </Container>

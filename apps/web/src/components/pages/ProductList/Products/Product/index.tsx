@@ -1,4 +1,4 @@
-// import React from 'react';
+import React, {useMemo} from 'react';
 // import styled from 'styled-components/native';
 
 import {VirtualizedProduct as IProduct} from '@hom/queries';
@@ -16,7 +16,7 @@ interface ProductProps {
   index: number;
 }
 
-export const Product = getLazyFC<ProductProps>( ({View}) => {
+export const Product = useMemo(() => getLazyFC<ProductProps>( ({View}) => {
   // const ProductView = View`
   //   height: 375px;
   //   border: 1px solid #000;
@@ -154,4 +154,4 @@ export const Product = getLazyFC<ProductProps>( ({View}) => {
     //   </ProductView>
     // );
   };
-});
+}), []);
