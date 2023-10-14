@@ -42,10 +42,9 @@ export const Products: FC = () => {
   return (
     <Container>
       {products.map((product, index) => {
-        console.log('!!!', product._id, product, index);
         return (
-          <Suspense>
-            <Product key={product._id} product={product} index={index} />
+          <Suspense key={product._id}>
+            <Product product={product} index={index} />
           </Suspense>
         );
       })}
