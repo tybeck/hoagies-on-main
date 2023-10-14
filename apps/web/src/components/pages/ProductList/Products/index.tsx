@@ -16,6 +16,8 @@ const Container = styled.View`
   justify-content: center;
 `;
 
+const TestView = styled.View``;
+
 export const Products: FC = () => {
   const {categories} = useApp();
   const [getProducts, {data}] = useLazyQuery(ProductsDocument);
@@ -42,7 +44,8 @@ export const Products: FC = () => {
       {products.map((product, index) => {
         console.log('!!!', product._id, product, index);
         return (
-          <Product key={product._id} product={product} index={index} />
+          <TestView key={product._id} />
+          // <Product key={product._id} product={product} index={index} />
         );
       })}
     </Container>
