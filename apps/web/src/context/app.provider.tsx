@@ -134,15 +134,17 @@ export const AppProvider: FC<AppProviderProps> = ({children}) => {
   };
 
   const setComponentPositionY = (component: Content, y: number) => {
-    setPositions({
-      ...positions,
-      [component]: y,
-    });
+    if (y) {
+      setPositions({
+        ...positions,
+        [component]: y,
+      });
+    }
   };
 
   const onLayout = (event: {nativeEvent: {layout: {y: number, width: number}}}) => {
     const width = event?.nativeEvent?.layout?.width;
-    if (width !== appWidth) {
+    if (width && width !== appWidth) {
       setAppWidth(width);
       setTheme({
         fontSize: {
