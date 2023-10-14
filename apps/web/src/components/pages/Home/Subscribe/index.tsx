@@ -19,7 +19,7 @@ import {Send} from './Send';
 type SubscribeProps<T> = {
   viewRef?: RefObject<T>;
   onPositionChange?: (y: number) => void;
-}
+};
 
 const MD_BREAKPOINT = 750;
 const LG_BREAKPOINT = 1024;
@@ -89,7 +89,9 @@ export const Subscribe = getLazyFC<SubscribeProps<View>>(({View}) => {
 
   return ({onPositionChange, viewRef}: SubscribeProps<View>) => {
     const {appWidth, getSetting} = useApp();
-    const [phoneNo] = useState<string | null>(getSetting(SettingType.PhoneNumber));
+    const [phoneNo] = useState<string | null>(
+      getSetting(SettingType.PhoneNumber),
+    );
     const {t} = useTranslation();
 
     const onLayout = (event: {nativeEvent: {layout: {y: number}}}) => {
@@ -100,16 +102,31 @@ export const Subscribe = getLazyFC<SubscribeProps<View>>(({View}) => {
     };
 
     return (
-      <SubscribeView ref={viewRef} onLayout={onLayout} className="subscribe-view">
-        <NewsletterImage resizeMode="contain" source={unpackAsset(newsletter)} />
+      <SubscribeView
+        ref={viewRef}
+        onLayout={onLayout}
+        className="subscribe-view"
+      >
+        <NewsletterImage
+          resizeMode="contain"
+          source={unpackAsset(newsletter)}
+        />
         <SubscribeColumn>
-          <Typography font={Font.NunitoBlack} color={ColorName.SpaceCadet} textCenter={(typeof appWidth === 'number' && appWidth <= LG_BREAKPOINT)}>
+          <Typography
+            font={Font.NunitoBlack}
+            color={ColorName.SpaceCadet}
+            textCenter={
+              typeof appWidth === 'number' && appWidth <= LG_BREAKPOINT
+            }
+          >
             {t(LocaleKey.SubscribeParagraph, {phoneNo})}
           </Typography>
           <InputField>
             <Input
               placeholder={t(LocaleKey.EmailInputPlaceholder)}
-              noMargin={typeof appWidth === 'number' && appWidth >= MD_BREAKPOINT}
+              noMargin={
+                typeof appWidth === 'number' && appWidth >= MD_BREAKPOINT
+              }
             />
             <SendButton>
               <Send />

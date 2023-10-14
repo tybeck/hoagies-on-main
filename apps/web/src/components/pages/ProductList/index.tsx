@@ -17,7 +17,7 @@ const ProductListView = styled.View`
 
 type ProductListProps = {
   children?: React.ReactElement;
-}
+};
 
 const ProductList: FC<ProductListProps> = ({children}) => {
   return (

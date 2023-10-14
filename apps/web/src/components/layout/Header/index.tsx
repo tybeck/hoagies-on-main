@@ -16,9 +16,9 @@ type LayoutEvent = {
   nativeEvent: {
     layout: {
       height: number;
-    }
-  }
-}
+    };
+  };
+};
 
 type HeaderViewProps = {
   bg?: boolean;
@@ -26,7 +26,7 @@ type HeaderViewProps = {
 
 type HeaderContainerProps = Record<string, unknown>;
 
-export const HeaderContainer = getLazyFC<HeaderContainerProps>(({ View }) => {
+export const HeaderContainer = getLazyFC<HeaderContainerProps>(({View}) => {
   const HeaderView = View<HeaderViewProps>`
     ${css`
       position: absolute;
@@ -40,11 +40,12 @@ export const HeaderContainer = getLazyFC<HeaderContainerProps>(({ View }) => {
       transition: 250ms all ease;
     `}
 
-    ${({bg}) => bg &&
-    css`
-      background: rgba(255, 255, 255, 0.85);
-      box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px;
-    `}
+    ${({bg}) =>
+      bg &&
+      css`
+        background: rgba(255, 255, 255, 0.85);
+        box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px;
+      `}
   `;
 
   const LeftView = View`
@@ -111,7 +112,7 @@ export const HeaderContainer = getLazyFC<HeaderContainerProps>(({ View }) => {
   const OrderNowButtonContainer = View`
     ${css`
       display: none;
-    
+
       ${Media.Lg`
         display: flex;
       `}
@@ -172,9 +173,9 @@ export const HeaderContainer = getLazyFC<HeaderContainerProps>(({ View }) => {
         </MyAccountView>
       </HeaderView>
     );
-  }
+  };
 });
 
 export const Header = () => {
   return <HeaderContainer />;
-}
+};

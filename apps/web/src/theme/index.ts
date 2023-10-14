@@ -71,37 +71,37 @@ export class Media {
     @media (min-width: ${Breakpoint.Xs}) {
       ${toCss.call(undefined, ...args)};
     }
-  `
+  `;
 
   static Sm = (...args: any[]) => css`
     @media (min-width: ${Breakpoint.Sm}) {
       ${toCss.call(undefined, ...args)};
     }
-  `
+  `;
 
   static Md = (...args: any[]): any => css`
     @media (min-width: ${Breakpoint.Md}) {
       ${toCss.call(undefined, ...args)};
     }
-  `
+  `;
 
   static Lg = (...args: any[]) => css`
     @media (min-width: ${Breakpoint.Lg}) {
       ${toCss.call(undefined, ...args)};
     }
-  `
+  `;
 
   static Xl = (...args: any[]) => css`
     @media (min-width: ${Breakpoint.Xl}) {
       ${toCss.call(undefined, ...args)};
     }
-  `
+  `;
 
   static Xxl = (...args: any[]) => css`
     @media (min-width: ${Breakpoint.Xxl}) {
       ${toCss.call(undefined, ...args)};
     }
-  `
+  `;
 
   /**
    * @method C
@@ -110,10 +110,11 @@ export class Media {
    * @param size
    * @constructor
    */
-  static C = (size: number) =>
+  static C =
+    (size: number) =>
     (...args: any[]) => css`
       @media (min-width: ${size}px) {
         ${toCss.call(undefined, ...args)};
       }
-    `
+    `;
 }

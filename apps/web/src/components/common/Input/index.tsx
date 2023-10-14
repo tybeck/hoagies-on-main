@@ -9,19 +9,18 @@ import {Font} from '@hom/types';
 type InputProps = {
   placeholder?: string;
   noMargin?: boolean | undefined;
-}
+};
 
 export const Input = getLazyFC<InputProps>(({View}) => {
   const InputView = View<{noMargin?: boolean | undefined}>`
     display: flex;
     margin-bottom: ${Theme.spaceSize.xmedium}px;
     
-    ${props =>
+    ${(props) =>
       props.noMargin &&
       css`
         margin-bottom: 0;
-      `
-    }
+      `}
     
     input {
       outline: none;

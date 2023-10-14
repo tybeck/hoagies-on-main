@@ -6,15 +6,13 @@ import * as languages from './languages';
 import {LanguageCode, Translations} from './types';
 
 const configureResources = (languages: {[key: string]: Translations}) => {
-  const allLanguages = Object
-    .keys(languages)
-    .map(language => ({
-      [language]: {
-        translation: {
-          ...languages[language],
-        },
+  const allLanguages = Object.keys(languages).map((language) => ({
+    [language]: {
+      translation: {
+        ...languages[language],
       },
-    }));
+    },
+  }));
   return Object.assign({}, ...allLanguages);
 };
 
@@ -25,10 +23,17 @@ i18n
     resources: configureResources(languages),
     fallbackLng: LanguageCode.English,
     detection: {
-      order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag'],
+      order: [
+        'querystring',
+        'cookie',
+        'localStorage',
+        'sessionStorage',
+        'navigator',
+        'htmlTag',
+      ],
       lookupQuerystring: 'lng',
       caches: ['localStorage'],
-    }
+    },
   });
 
 export default i18n;

@@ -10,7 +10,7 @@ import {Home, ProductList} from '@hom/pages';
 import {Content} from '@hom/types';
 
 import {PageFactory} from '../../components/pages/Page';
-import {SignInModal} from "@hom/modals";
+import {SignInModal} from '@hom/modals';
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 

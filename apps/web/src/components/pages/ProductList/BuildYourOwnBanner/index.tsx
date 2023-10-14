@@ -113,14 +113,10 @@ export const BuildYourOwnBanner = getLazyFC(({View}) => {
               condiments and more in our custom hoagie builder.
             </Typography>
           </TextView>
-          <ButtonLeftView>
-            {getButton()}
-          </ButtonLeftView>
+          <ButtonLeftView>{getButton()}</ButtonLeftView>
         </TextColumn>
         <BottomView>
-          <ButtonView>
-            {getButton()}
-          </ButtonView>
+          <ButtonView>{getButton()}</ButtonView>
           <BuildYourOwnImage
             resizeMode="contain"
             source={unpackAsset(BuildYourOwnBannerImage)}

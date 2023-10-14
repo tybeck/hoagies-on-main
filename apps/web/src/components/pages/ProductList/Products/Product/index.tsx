@@ -16,7 +16,7 @@ interface ProductProps {
   index: number;
 }
 
-export const Product = getLazyFC<ProductProps>( ({View}) => {
+export const Product = getLazyFC<ProductProps>(({View}) => {
   const ProductView = View`
     height: 375px;
     border: 1px solid #000;
@@ -119,13 +119,18 @@ export const Product = getLazyFC<ProductProps>( ({View}) => {
       if (product.images && product.images.length) {
         return (
           <ProductImageView className="product-image-view">
-            <ProductImage resizeMode="cover" source={{uri: product.images[0] }} />
+            <ProductImage
+              resizeMode="cover"
+              source={{uri: product.images[0]}}
+            />
           </ProductImageView>
         );
       }
       return (
         <NoImageAvailableYetView>
-          <Typography font={Font.NunitoBlack}>No Image Available Yet!</Typography>
+          <Typography font={Font.NunitoBlack}>
+            No Image Available Yet!
+          </Typography>
           <IconView>
             <FontAwesomeIcon icon="xmark" iconWidth={48} iconHeight={48} />
           </IconView>
@@ -139,7 +144,13 @@ export const Product = getLazyFC<ProductProps>( ({View}) => {
         {getImage()}
         <Typography font={Font.NunitoBlack}>{product.name}</Typography>
         <Ingredients>
-          <Typography size={Sizing.Xsmall} textCenter color={ColorName.DarkSilver}>{ingredientNames}</Typography>
+          <Typography
+            size={Sizing.Xsmall}
+            textCenter
+            color={ColorName.DarkSilver}
+          >
+            {ingredientNames}
+          </Typography>
         </Ingredients>
         <Price>
           <Typography font={Font.NunitoBlack}>

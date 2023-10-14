@@ -1,12 +1,12 @@
-import { Dimensions, Platform, PixelRatio } from 'react-native';
+import {Dimensions, Platform, PixelRatio} from 'react-native';
 
 export function normalize(size: number) {
   const screenWidth = Dimensions.get('window').width;
 
   // Define scaling factors for different device sizes
-  const scaleSmall = 2;  // For small screens (e.g., mobile)
-  const scaleMedium = 2.3;   // For medium screens (e.g., tablets)
-  const scaleLarge = 2.6;  // For large screens (e.g., desktops)
+  const scaleSmall = 2; // For small screens (e.g., mobile)
+  const scaleMedium = 2.3; // For medium screens (e.g., tablets)
+  const scaleLarge = 2.6; // For large screens (e.g., desktops)
 
   // Determine the appropriate scaling factor based on screen width
   let scale;

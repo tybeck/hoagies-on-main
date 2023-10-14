@@ -24,7 +24,7 @@ export const Delivery = getLazyFC(({View}) => {
       max-height: 650px;
       background: ${Theme.colors.linen};
       padding-top: 85px;
-    
+
       ${Media.C(800)`
         flex-direction: row;
       `}
@@ -61,9 +61,9 @@ export const Delivery = getLazyFC(({View}) => {
       flex: 1;
 
       ${Platform.OS === OS.web &&
-        css`
-          justify-content: center;
-        `}
+      css`
+        justify-content: center;
+      `}
     `}
   `;
 
@@ -160,9 +160,7 @@ export const Delivery = getLazyFC(({View}) => {
         <DeliveryContent>
           <DeliveryContentPadded>
             <HeadingWrapper>
-              <Heading>
-                {t(LocaleKey.DeliveryTitle)}
-              </Heading>
+              <Heading>{t(LocaleKey.DeliveryTitle)}</Heading>
             </HeadingWrapper>
             <Content>
               <Typography

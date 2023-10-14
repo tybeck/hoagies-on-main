@@ -110,15 +110,15 @@ export class VirtualizedProduct extends Product implements IVirtualizedProduct {
 export type ProductDocument = Product & Document;
 export const ProductSchema = SchemaFactory.createForClass(Product);
 
-ProductSchema.virtual('images').get(function() {
+ProductSchema.virtual('images').get(function () {
   if (this.imageKey && this.imageKey.length) {
-    return new Promise(async resolve => {
-      const app: INestApplication  = globalThis.App;
+    return new Promise(async (resolve) => {
+      const app: INestApplication = globalThis.App;
       const assetService: AssetService = app.get(AssetService);
-      const images = await mapSeries(this.imageKey, key =>
-        assetService.getAsset<string>(key)
+      const images = await mapSeries(this.imageKey, (key) =>
+        assetService.getAsset<string>(key),
       );
-      resolve(images.filter(img => img !== null));
+      resolve(images.filter((img) => img !== null));
     });
   }
   return Promise.resolve([]);

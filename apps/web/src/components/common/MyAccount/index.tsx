@@ -4,7 +4,11 @@ import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
-import {DrawerNavigation, MainNavigation, MainScreenProps} from '@hom/navigation-types';
+import {
+  DrawerNavigation,
+  MainNavigation,
+  MainScreenProps,
+} from '@hom/navigation-types';
 import {FontAwesomeIcon, isElectron} from '@hom/support';
 import {ButtonComponent} from '@hom/svg';
 import {Fonts} from '@hom/fonts';
@@ -35,7 +39,8 @@ const MyAccount: FC = () => {
   const {navigate} = useNavigation<MainScreenProps>();
   const {t} = useTranslation();
 
-  const onSignInNavigate = () => navigate(MainNavigation.Main, {screen: DrawerNavigation.SignIn});
+  const onSignInNavigate = () =>
+    navigate(MainNavigation.Main, {screen: DrawerNavigation.SignIn});
 
   return (
     <Pressable onPress={onSignInNavigate}>

@@ -26,7 +26,7 @@ import {
   ReviewService,
   PostService,
   ProductService,
-  AuthService
+  AuthService,
 } from '@hom-api-fn/graphql-providers';
 import {
   CategoryResolver,
@@ -34,7 +34,7 @@ import {
   ReviewResolver,
   PostResolver,
   ProductResolver,
-  AuthResolver
+  AuthResolver,
 } from '@hom-api-fn/graphql-resolvers';
 
 import {DbModule} from './db.module';

@@ -8,7 +8,7 @@ import {
 } from '@aws-sdk/client-s3';
 
 import {ConfigService, Environment} from '@hom-api/modules';
-import {join} from "path";
+import {join} from 'path';
 
 /**
  * @type Bucket
@@ -28,7 +28,9 @@ export class S3Service {
   private bucket: Bucket | null = null;
 
   constructor(@Inject(ConfigService) private config: ConfigService) {
-    const [accessKeyId, secretAccessKey, region, local] = this.config.get<[string, string, string, boolean]>(
+    const [accessKeyId, secretAccessKey, region, local] = this.config.get<
+      [string, string, string, boolean]
+    >(
       Environment.HomAwsAccessKeyId,
       Environment.HomAwsSecretAccessKey,
       Environment.HomAwsRegion,

@@ -1,5 +1,5 @@
-query IsValidToken ($token: String!) {
-    isValidToken(token: $token) {
-        isValid
-    }
+query IsValidToken($token: String!) {
+  isValidToken(token: $token) {
+    isValid
+  }
 }

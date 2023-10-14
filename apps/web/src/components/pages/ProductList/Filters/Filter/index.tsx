@@ -111,7 +111,7 @@ export const Filter = getLazyFC<FilterProps>(({View}) => {
     `}
   `;
 
-  return ({index,  category, total}) => {
+  return ({index, category, total}) => {
     const {selectedCategories, setSelectedCategories} = useProductList();
     const route = useRoute<RouteProp<ParamList, 'Categories'>>();
     const key = category.key as Category;
@@ -191,5 +191,5 @@ export const Filter = getLazyFC<FilterProps>(({View}) => {
         </Pressable>
       </FilterView>
     );
-  }
+  };
 });

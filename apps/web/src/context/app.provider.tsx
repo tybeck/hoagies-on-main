@@ -10,8 +10,8 @@ import {
   useCategoryQuery,
 } from '@hom/queries';
 import {noop} from '@hom/utils';
-import {normalize} from "../theme/normalize";
-import {Platform} from "react-native";
+import {normalize} from '../theme/normalize';
+import {Platform} from 'react-native';
 
 const AppProviderView = styled.View`
   flex: 1;
@@ -142,7 +142,9 @@ export const AppProvider: FC<AppProviderProps> = ({children}) => {
     }
   };
 
-  const onLayout = (event: {nativeEvent: {layout: {y: number, width: number}}}) => {
+  const onLayout = (event: {
+    nativeEvent: {layout: {y: number; width: number}};
+  }) => {
     const width = event?.nativeEvent?.layout?.width;
     if (width && width !== appWidth) {
       setAppWidth(width);
@@ -190,9 +192,7 @@ export const AppProvider: FC<AppProviderProps> = ({children}) => {
         setComponentPositionY,
       }}
     >
-      <AppProviderView onLayout={onLayout}>
-        {children}
-      </AppProviderView>
+      <AppProviderView onLayout={onLayout}>{children}</AppProviderView>
     </AppContext.Provider>
   );
 };

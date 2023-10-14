@@ -10,17 +10,8 @@ import {AssetService} from './services/asset/index.service';
 
 @Global()
 @Module({
-  providers: [
-    ConfigService,
-    AssetService,
-    S3Service,
-  ],
-  exports: [
-    JwtModule,
-    CacheModule,
-    AssetService,
-    S3Service,
-  ],
+  providers: [ConfigService, AssetService, S3Service],
+  exports: [JwtModule, CacheModule, AssetService, S3Service],
   imports: [
     CacheModule.registerAsync({
       useFactory: async (config: ConfigService) => {
@@ -38,7 +29,7 @@ import {AssetService} from './services/asset/index.service';
           ttl: 0,
           host,
           port,
-        }
+        };
       },
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -51,7 +42,7 @@ import {AssetService} from './services/asset/index.service';
           signOptions: {
             expiresIn: '6hr',
           },
-        }
+        };
       },
       imports: [ConfigModule],
       inject: [ConfigService],

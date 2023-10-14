@@ -9,11 +9,11 @@ import {ColorName} from '@hoagies-on-main/shared';
 import {getView, Heading, Typography} from '@hom/common';
 import {unpackAsset} from '@hom/utils';
 import {Theme} from '@hom/theme';
-import {useApp} from "@hom/context";
+import {useApp} from '@hom/context';
 
 type ContainerProps = {
   color?: Maybe<string> | undefined;
-}
+};
 
 const CategoryImage = styled.Image`
   width: 100%;
@@ -39,8 +39,9 @@ const CategoryPress = styled(Pressable)<{appWidth?: number | null}>`
   overflow: hidden;
   height: ${Math.floor(920 / 6)}px;
 
-  ${props =>
-    props.appWidth && props.appWidth >= 800 &&
+  ${(props) =>
+    props.appWidth &&
+    props.appWidth >= 800 &&
     css`
       height: ${Math.floor(920 / 2)}px;
     `}
@@ -57,13 +58,14 @@ type Props = {
   headingColor?: ColorName | null;
   category: Partial<TCategory>;
   image?: any;
-}
+};
 
 export const Category = React.lazy(async () => {
   const View = await getView();
 
   const CategoryView = View<ContainerProps>`
-    background-color: ${(props) => props.color ? Theme.colors[props.color as never] : 'unset'};
+    background-color: ${(props) =>
+      props.color ? Theme.colors[props.color as never] : 'unset'};
 
     ${css`
       flex-direction: row;
@@ -74,7 +76,7 @@ export const Category = React.lazy(async () => {
       position: unset;
       align-self: center;
       justify-content: center;
-      transition: 1000ms all ease;    
+      transition: 1000ms all ease;
     `}
   `;
 
@@ -110,6 +112,6 @@ export const Category = React.lazy(async () => {
           </CategoryView>
         </CategoryPress>
       );
-    }
-  }
+    },
+  };
 });

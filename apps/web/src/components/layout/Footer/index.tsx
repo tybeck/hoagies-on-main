@@ -30,7 +30,7 @@ export const Footer = React.lazy(async () => {
 
   return {
     default: () => {
-      const components = [<OrderAndPickup />, <Map />]
+      const components = [<OrderAndPickup />, <Map />];
 
       return (
         <FooterView>
@@ -39,6 +39,6 @@ export const Footer = React.lazy(async () => {
           ))}
         </FooterView>
       );
-    }
-  }
+    },
+  };
 });

@@ -2,9 +2,7 @@ import type {
   NavigationProp,
   NavigatorScreenParams,
 } from '@react-navigation/native';
-import type {
-  DrawerScreenProps,
-} from '@react-navigation/drawer';
+import type {DrawerScreenProps} from '@react-navigation/drawer';
 
 export enum MainNavigation {
   Main = 'Main',

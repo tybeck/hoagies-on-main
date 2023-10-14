@@ -20,7 +20,7 @@ import {LocaleKey} from '@hom/locale';
 
 import {BulletedItem} from './BulletedItem';
 
-export const Ingredients = getLazyFC(({ View }) => {
+export const Ingredients = getLazyFC(({View}) => {
   const IngredientView = View`
      flex-direction: column;
      display: flex;
@@ -53,12 +53,13 @@ export const Ingredients = getLazyFC(({ View }) => {
       justify-content: center;
       flex: 1;
       
-      ${(props: {last: boolean}) => props.last && css`
-        align-items: flex-end;
-      `}
+      ${(props: {last: boolean}) =>
+        props.last &&
+        css`
+          align-items: flex-end;
+        `}
     `}
   `;
-
 
   const IngredientsContent = View`
     display: flex;
@@ -165,7 +166,9 @@ export const Ingredients = getLazyFC(({ View }) => {
               >
                 {t(LocaleKey.ArtisanBunsHeading)}
               </IngredientHeading>
-              <BulletedItem>{t(LocaleKey.AvailableGlutenFreeBullet)}</BulletedItem>
+              <BulletedItem>
+                {t(LocaleKey.AvailableGlutenFreeBullet)}
+              </BulletedItem>
               <BulletedItem>{t(LocaleKey.CustomRecipeBullet)}</BulletedItem>
             </IngredientColumn>
           </IngredientsContent>

@@ -4,7 +4,7 @@ import {getView, View} from '@hom/common';
 
 type LazyOpts = {
   View: View;
-}
+};
 
 /**
  * @method getLazyFC
@@ -14,7 +14,9 @@ type LazyOpts = {
  * for both web and mobile we need to lazily load components that require said resources.
  * @param callback
  */
-export const getLazyFC = <Props = {},>(callback: (opts: LazyOpts) => FC<Props>): LazyExoticComponent<FC<Props>> => {
+export const getLazyFC = <Props = {},>(
+  callback: (opts: LazyOpts) => FC<Props>,
+): LazyExoticComponent<FC<Props>> => {
   return React.lazy(async () => {
     const View = await getView();
     return {

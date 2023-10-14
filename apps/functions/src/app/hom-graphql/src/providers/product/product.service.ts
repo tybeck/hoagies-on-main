@@ -31,7 +31,9 @@ export class ProductService {
     @InjectModel(Product.name) private product: Model<ProductDocument>,
   ) {}
 
-  async getProducts(options: {categories?: string[]} = {}): Promise<IProduct[]> {
+  async getProducts(
+    options: {categories?: string[]} = {},
+  ): Promise<IProduct[]> {
     const {categories} = options;
     const opts: Options = {};
     if (categories && categories.length) {
@@ -39,7 +41,7 @@ export class ProductService {
         $in: (categories || []).map((category) => new Types.ObjectId(category)),
       };
     }
-    this.logger.log(`Get Products - ${JSON.stringify(options)}`)
+    this.logger.log(`Get Products - ${JSON.stringify(options)}`);
     const products = await this.product
       .aggregate([
         {$match: opts},

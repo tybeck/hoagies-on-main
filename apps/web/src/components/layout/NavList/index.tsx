@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
 import {

@@ -1,4 +1,9 @@
-import {Inject, Injectable, Logger, OnApplicationBootstrap} from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  Logger,
+  OnApplicationBootstrap,
+} from '@nestjs/common';
 import {CACHE_MANAGER} from '@nestjs/cache-manager';
 import {Cache} from 'cache-manager';
 
@@ -35,11 +40,16 @@ export class AssetService implements OnApplicationBootstrap {
    * Get all static assets from s3, get the keys and cache them
    */
   async getAssetsToCache() {
-    const lastRetrieval = (await this.cacheManager.get<number>(AssetService.LAST_RETRIEVAL_KEY_NAME)) || 0;
+    const lastRetrieval =
+      (await this.cacheManager.get<number>(
+        AssetService.LAST_RETRIEVAL_KEY_NAME,
+      )) || 0;
     const timestamp = Date.now();
     if (lastRetrieval + AssetService.ONE_WEEK_MILLIS < timestamp) {
       this.logger.log(`Attempting to refresh assets...`);
-      const objects = await this.s3.getFactory(Environment.AssetBucket).getAll();
+      const objects = await this.s3
+        .getFactory(Environment.AssetBucket)
+        .getAll();
       const bucket = this.config.get(Environment.AssetBucket);
       if (objects && objects.length) {
         const metadataObjects = await this.s3.getMetadataForObjects(objects);
@@ -65,7 +75,10 @@ export class AssetService implements OnApplicationBootstrap {
             await this.cacheManager.store.set(key, value);
           }
         }
-        await this.cacheManager.store.set(AssetService.LAST_RETRIEVAL_KEY_NAME, Date.now());
+        await this.cacheManager.store.set(
+          AssetService.LAST_RETRIEVAL_KEY_NAME,
+          Date.now(),
+        );
         this.logger.log(`Assets updated.`);
       }
       return;

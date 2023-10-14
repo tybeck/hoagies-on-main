@@ -9,7 +9,7 @@ import {getLazyFC} from '@hom/lazy';
 
 type PostProps = Record<string, unknown>;
 
-export const Posts = getLazyFC<PostProps>(({ View }) => {
+export const Posts = getLazyFC<PostProps>(({View}) => {
   const PostContainer = View`
     display: flex;
     background: ${Theme.colors[ColorName.White]};

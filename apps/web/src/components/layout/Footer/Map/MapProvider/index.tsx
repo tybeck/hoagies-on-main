@@ -21,7 +21,7 @@ type PinProps = {
   text: string;
   lat: number;
   lng: number;
-}
+};
 const Pin: FC<PinProps> = ({text}) => <div>{text}</div>;
 
 export const MapProvider = React.lazy(async (): Promise<{default: FC}> => {
@@ -39,11 +39,7 @@ export const MapProvider = React.lazy(async (): Promise<{default: FC}> => {
               zoomControl: true,
             }}
           >
-            <Pin
-              lat={LATITUDE}
-              lng={LONGITUDE}
-              text="Hoagies on Main"
-            />
+            <Pin lat={LATITUDE} lng={LONGITUDE} text="Hoagies on Main" />
           </WebMap>
         </WebView>
       ),
