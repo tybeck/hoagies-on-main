@@ -19,7 +19,7 @@ const ProductList: FC = ({children}) => {
   return (
     <ProductListProvider>
       <ProductListView>
-        {/*<Banners />*/}
+        <Banners />
         {/*<Filters />*/}
         {/*<Products />*/}
         {children}
