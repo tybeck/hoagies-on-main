@@ -33,12 +33,15 @@ export const Products: FC = () => {
     getProductsQuery();
   }, [selectedCategories]);
 
+  if (!Array.isArray(products)) {
+    return null;
+  }
+
   return (
     <Container>
-      {Array.isArray(products) &&
-        products?.map((product, index) => (
-          <Product key={product._id} product={product} index={index} />
-        ))}
+      {products.map((product, index) => (
+        <Product key={product._id} product={product} index={index} />
+      ))}
     </Container>
   );
 };
