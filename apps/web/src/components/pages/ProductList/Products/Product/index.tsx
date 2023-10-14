@@ -105,6 +105,8 @@ export const Product = getLazyFC<ProductProps>( ({View}) => {
   //   width: 100%;
   // `;
 
+  const ProductView = View``;
+
   return ({product, index}) => {
     // const {add} = useCart();
     // const ingredientNames = [
@@ -115,7 +117,7 @@ export const Product = getLazyFC<ProductProps>( ({View}) => {
     //   .map((ingredient) => ingredient.name)
     //   .join(', ');
 
-    return null;
+    return <ProductView></ProductView>;
 
     // const getImage = () => {
     //   if (product.images && product.images.length) {
