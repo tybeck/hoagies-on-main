@@ -115,28 +115,28 @@ export const Product = getLazyFC<ProductProps>( ({View}) => {
       .map((ingredient) => ingredient.name)
       .join(', ');
 
-    // const getImage = () => {
-    //   if (product.images && product.images.length) {
-    //     return (
-    //       <ProductImageView className="product-image-view">
-    //         <ProductImage resizeMode="cover" source={{uri: product.images[0] }} />
-    //       </ProductImageView>
-    //     );
-    //   }
-    //   return (
-    //     <NoImageAvailableYetView>
-    //       <Typography font={Font.NunitoBlack}>No Image Available Yet!</Typography>
-    //       <IconView>
-    //         <FontAwesomeIcon icon="xmark" iconWidth={48} iconHeight={48} />
-    //       </IconView>
-    //     </NoImageAvailableYetView>
-    //   );
-    // };
+    const getImage = () => {
+      if (product.images && product.images.length) {
+        return (
+          <ProductImageView className="product-image-view">
+            <ProductImage resizeMode="cover" source={{uri: product.images[0] }} />
+          </ProductImageView>
+        );
+      }
+      return (
+        <NoImageAvailableYetView>
+          <Typography font={Font.NunitoBlack}>No Image Available Yet!</Typography>
+          <IconView>
+            <FontAwesomeIcon icon="xmark" iconWidth={48} iconHeight={48} />
+          </IconView>
+        </NoImageAvailableYetView>
+      );
+    };
 
     return (
       <ProductView>
         {/*<AddToFavorites />*/}
-        {/*{getImage()}*/}
+        {getImage()}
         <Typography font={Font.NunitoBlack}>{product.name}</Typography>
         <Ingredients>
           <Typography size={Sizing.Xsmall} textCenter color={ColorName.DarkSilver}>{ingredientNames}</Typography>

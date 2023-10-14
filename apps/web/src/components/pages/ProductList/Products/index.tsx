@@ -39,9 +39,9 @@ export const Products: FC = () => {
 
   return (
     <Container>
-      {products.map((product, index) => (
-        <Product key={product._id} product={product} index={index} />
-      ))}
+      {/*{products.map((product, index) => (*/}
+      {/*  <Product key={product._id} product={product} index={index} />*/}
+      {/*))}*/}
     </Container>
   );
 };
