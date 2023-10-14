@@ -5,7 +5,7 @@ import {useLazyQuery} from '@apollo/client';
 import {ProductsDocument, VirtualizedProduct as IProduct} from '@hom/queries';
 import {useApp, useProductList} from '@hom/context';
 
-import {Product} from './Product';
+// import {Product} from './Product';
 
 const Container = styled.View`
   padding: 0 20px 20px 20px;
@@ -39,9 +39,9 @@ export const Products: FC = () => {
 
   return (
     <Container>
-      {products.map((product, index) => (
-        <Product key={product._id} product={product} index={index} />
-      ))}
+      {/*{products.map((product, index) => (*/}
+      {/*  <Product key={product._id} product={product} index={index} />*/}
+      {/*))}*/}
     </Container>
   );
 };
