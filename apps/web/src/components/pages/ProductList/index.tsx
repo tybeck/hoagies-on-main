@@ -21,7 +21,7 @@ const ProductList: FC = ({children}) => {
       <ProductListView>
         <Banners />
         <Filters />
-        {/*<Products />*/}
+        <Products />
         {children}
       </ProductListView>
     </ProductListProvider>
