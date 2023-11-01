@@ -117,14 +117,19 @@ export const AppProvider: FC<AppProviderProps> = ({children}) => {
   };
 
   const getEnvironment = (key: EnvironmentKey): string | null | undefined => {
-    const constants = (Constants.expoConfig?.extra ?? {}) as Environment;
-    if (constants && constants[key]) {
-      return constants[key] || null;
+    const expoConstants = (Constants.expoConfig?.extra ?? {}) as Environment;
+    const processConstants = (process.env ?? {}) as Environment;
+    if (expoConstants && expoConstants[key]) {
+      return expoConstants[key] || null;
+    }
+    if (processConstants && processConstants[key]) {
+      return processConstants[key] || null;
     }
     return null;
   };
 
   const getEndpointUri = (key: EnvironmentKey): string | null => {
+    console.log('process', process.env);
     const baseUri = getEnvironment(EnvironmentKey.BaseUri);
     const endpointUri = getEnvironment(key);
     if (baseUri && endpointUri) {
@@ -145,6 +150,7 @@ export const AppProvider: FC<AppProviderProps> = ({children}) => {
   const onLayout = (event: {
     nativeEvent: {layout: {y: number; width: number}};
   }) => {
+    // TODO: this works but need to clean it up
     const width = event?.nativeEvent?.layout?.width;
     if (width && width !== appWidth) {
       setAppWidth(width);

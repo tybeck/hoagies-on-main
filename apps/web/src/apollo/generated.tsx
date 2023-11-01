@@ -60,6 +60,11 @@ export type Condiment = {
   type: Scalars['String']['output'];
 };
 
+export type FbLoginEntityResponse = {
+  __typename?: 'FbLoginEntityResponse';
+  ok: Scalars['Boolean']['output'];
+};
+
 export type FbPost = {
   __typename?: 'FbPost';
   _id: Scalars['String']['output'];
@@ -88,6 +93,7 @@ export type Query = {
   getReviews: Array<FbReview>;
   getSettings: Array<Setting>;
   isValidToken: AuthTokenEntityResponse;
+  loginFB: FbLoginEntityResponse;
 };
 
 export type QueryGetProductsArgs = {
@@ -139,6 +145,13 @@ export type IsValidTokenQueryVariables = Exact<{
 export type IsValidTokenQuery = {
   __typename?: 'Query';
   isValidToken: {__typename?: 'AuthTokenEntityResponse'; isValid: boolean};
+};
+
+export type LoginFbQueryVariables = Exact<{[key: string]: never}>;
+
+export type LoginFbQuery = {
+  __typename?: 'Query';
+  loginFB: {__typename?: 'FbLoginEntityResponse'; ok: boolean};
 };
 
 export type CategoryQueryVariables = Exact<{[key: string]: never}>;
@@ -389,6 +402,102 @@ export type IsValidTokenLazyQueryHookResult = ReturnType<
 export type IsValidTokenQueryResult = Apollo.QueryResult<
   IsValidTokenQuery,
   IsValidTokenQueryVariables
+>;
+export const LoginFbDocument = gql`
+  query LoginFB {
+    loginFB {
+      ok
+    }
+  }
+`;
+export type LoginFbComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    LoginFbQuery,
+    LoginFbQueryVariables
+  >,
+  'query'
+>;
+
+export const LoginFbComponent = (props: LoginFbComponentProps) => (
+  <ApolloReactComponents.Query<LoginFbQuery, LoginFbQueryVariables>
+    query={LoginFbDocument}
+    {...props}
+  />
+);
+
+export type LoginFbProps<
+  TChildProps = {},
+  TDataName extends string = 'data',
+> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<
+    LoginFbQuery,
+    LoginFbQueryVariables
+  >;
+} & TChildProps;
+export function withLoginFb<
+  TProps,
+  TChildProps = {},
+  TDataName extends string = 'data',
+>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    LoginFbQuery,
+    LoginFbQueryVariables,
+    LoginFbProps<TChildProps, TDataName>
+  >,
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    LoginFbQuery,
+    LoginFbQueryVariables,
+    LoginFbProps<TChildProps, TDataName>
+  >(LoginFbDocument, {
+    alias: 'loginFb',
+    ...operationOptions,
+  });
+}
+
+/**
+ * __useLoginFbQuery__
+ *
+ * To run a query within a React component, call `useLoginFbQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLoginFbQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLoginFbQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLoginFbQuery(
+  baseOptions?: Apollo.QueryHookOptions<LoginFbQuery, LoginFbQueryVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<LoginFbQuery, LoginFbQueryVariables>(
+    LoginFbDocument,
+    options,
+  );
+}
+export function useLoginFbLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    LoginFbQuery,
+    LoginFbQueryVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<LoginFbQuery, LoginFbQueryVariables>(
+    LoginFbDocument,
+    options,
+  );
+}
+export type LoginFbQueryHookResult = ReturnType<typeof useLoginFbQuery>;
+export type LoginFbLazyQueryHookResult = ReturnType<typeof useLoginFbLazyQuery>;
+export type LoginFbQueryResult = Apollo.QueryResult<
+  LoginFbQuery,
+  LoginFbQueryVariables
 >;
 export const CategoryDocument = gql`
   query Category {

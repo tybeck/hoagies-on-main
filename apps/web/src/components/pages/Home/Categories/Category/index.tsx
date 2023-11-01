@@ -98,7 +98,7 @@ export const Category = React.lazy(async () => {
       const {t} = useTranslation();
 
       return (
-        <CategoryPress onPress={() => console.log('dick')} appWidth={appWidth}>
+        <CategoryPress onPress={() => console.log('test')} appWidth={appWidth}>
           <CategoryView color={category.color}>
             {image && (
               <CategoryImage resizeMode="contain" source={unpackAsset(image)} />

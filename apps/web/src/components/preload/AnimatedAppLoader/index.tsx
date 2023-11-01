@@ -21,7 +21,6 @@ const AnimatedAppLoader: FC<AnimatedAppLoaderProps> = ({children, image}) => {
   const {isAuthReady} = useAuthLoader();
 
   useEffect(() => {
-    console.log(isSplashReady, fontsLoaded, hasSettingsLoaded, isAuthReady);
     if (isSplashReady && fontsLoaded && hasSettingsLoaded && isAuthReady) {
       setAppReady(true);
     }

@@ -39,8 +39,11 @@ const MyAccount: FC = () => {
   const {navigate} = useNavigation<MainScreenProps>();
   const {t} = useTranslation();
 
-  const onSignInNavigate = () =>
-    navigate(MainNavigation.Main, {screen: DrawerNavigation.SignIn});
+  const onSignInNavigate = () => {
+    if (!isLoggedIn) {
+      navigate(MainNavigation.Main, {screen: DrawerNavigation.SignIn});
+    }
+  }
 
   return (
     <Pressable onPress={onSignInNavigate}>

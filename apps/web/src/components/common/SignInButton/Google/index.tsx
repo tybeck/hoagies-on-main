@@ -54,10 +54,12 @@ const SignInWithGoogle: FC<Props> = () => {
 
   const onPress = () => {
     const endpoint = getEndpointUri(EnvironmentKey.GoogleAuthUri);
-    if (isNativeMobile()) {
-      return Linking.openURL(endpoint);
+    if (endpoint) {
+      if (isNativeMobile()) {
+        return Linking.openURL(endpoint);
+      }
+      window.location.href = endpoint;
     }
-    window.location.href = endpoint;
   };
 
   return (

@@ -5,12 +5,12 @@ import {
 } from '@react-navigation/drawer';
 
 import {DrawerNavigation, RootDrawerParamList} from '@hom/navigation-types';
-import {Header} from '@hom/layout';
 import {Home, ProductList} from '@hom/pages';
+import {SignInModal} from '@hom/modals';
+import {Header} from '@hom/layout';
 import {Content} from '@hom/types';
 
 import {PageFactory} from '../../components/pages/Page';
-import {SignInModal} from '@hom/modals';
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 

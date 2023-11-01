@@ -31,3 +31,7 @@ For development purposes we can run `npx nx serve:local functions`, this will ru
 locally.
 
 ### Deployment
+
+TODO: Add info
+
+To deploy to AWS using serverless framework, run `npx nx deploy:cloud functions`

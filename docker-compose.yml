@@ -5,4 +5,4 @@ services:
     image: hom-api:latest
     ports:
       - '3000:3000'
-    command: npx nx serve api --host 0.0.0.0
+    command: npx nx serve:local functions

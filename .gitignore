@@ -12,7 +12,7 @@ apps/**/data
 libs/do-cloud/dist
 apps/**/.expo
 .env
-.env.local
+.env.*
 
 # Expo
 node_modules/
