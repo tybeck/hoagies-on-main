@@ -1,0 +1,17 @@
+parameters: {}
+packages:
+  - name: hom
+    environment: {}
+    parameters: {}
+    annotations: {}
+    functions:
+      - name: fb-pull
+        binary: false
+        main: ''
+        runtime: 'nodejs:default'
+        web: true
+        parameters: {}
+        environment: {}
+        annotations: {}
+        limits: {}
+environment:

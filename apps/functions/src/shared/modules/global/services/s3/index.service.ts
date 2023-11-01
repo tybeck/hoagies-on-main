@@ -7,8 +7,7 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3';
 
-import {ConfigService, Environment} from '@hom-api/modules';
-import {join} from 'path';
+import {ConfigService, Environment} from '@hom-api/config';
 
 /**
  * @type Bucket
@@ -74,11 +73,14 @@ export class S3Service {
     this.hasDefinedBucket();
     const Bucket = this.config.get<string>(this.bucket);
     this.logger.log(`Get all objects in bucket: ${Bucket}`);
+    // this.logger.log('Test...');
+    // const res = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+    // const data = await res.json();
+    // this.logger.log(`data... ${JSON.stringify(data)}`);
     const command = new ListObjectsCommand({
       Bucket,
     });
     const response = await this.client.send(command);
-    this.logger.log(`Response: ${JSON.stringify(response)}`);
     if (response && response.Contents) {
       return response.Contents.filter((content) => !content.Key.endsWith('/'));
     }

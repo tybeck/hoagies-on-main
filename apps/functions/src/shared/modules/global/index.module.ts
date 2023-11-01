@@ -3,10 +3,9 @@ import {CacheModule} from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
 import {JwtModule} from '@nestjs/jwt';
 
-import {ConfigModule, ConfigService, Environment} from '@hom-api/modules';
-
-import {S3Service} from './services/s3/index.service';
-import {AssetService} from './services/asset/index.service';
+import {ConfigModule, ConfigService, Environment} from '@hom-api/config';
+import {AssetService} from '@hom-api/asset';
+import {S3Service} from '@hom-api/s3';
 
 @Global()
 @Module({

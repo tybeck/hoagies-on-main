@@ -1,8 +1,8 @@
 import {Module} from '@nestjs/common';
-import {MongooseModule, MongooseModuleOptions} from '@nestjs/mongoose';
 import {join} from 'path';
 
-import {ConfigModule, ConfigService, Environment} from '@hom-api/modules';
+import {MongooseModule, MongooseModuleOptions} from '@nestjs/mongoose';
+import {ConfigModule, ConfigService, Environment} from '@hom-api/config';
 
 @Module({
   imports: [

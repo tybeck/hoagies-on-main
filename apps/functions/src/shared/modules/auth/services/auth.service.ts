@@ -33,8 +33,8 @@ export class AuthService {
    * @method do
    * Provides initial login for a customer; this is invoked through OAuth by our defined strategies
    * such as Facebook, Google and Twitter.  Once we are successfully authenticated with these sources we check
-   * to see if the given user exists already in our system.  If they don't we create a new document so
-   * we can track
+   * to see if the given user exists already in our system.  If they don't we create a new document, so
+   * we can track.
    * @param strategy
    * @param profile
    */
@@ -45,13 +45,14 @@ export class AuthService {
       let existingCustomer = await this.customerModel.findOne({email}).exec();
       if (!existingCustomer) {
         const customerModel = new this.customerModel();
+        const {id, ...allCustomer} = customer;
         const customerData: Partial<Customer> = {
-          ...customer,
+          ...allCustomer,
           strategies: [
             {
               id,
               type,
-              isActivelySignedIn: false,
+              isActivelySignedIn: true,
             },
           ],
         };
@@ -67,7 +68,6 @@ export class AuthService {
         await customerModel.save();
         return this.signAndReturnToken(id, type);
       }
-
       existingCustomer = await this.clearOldTokens(existingCustomer);
 
       const foundStrategy = existingCustomer.strategies.find(
@@ -166,7 +166,7 @@ export class AuthService {
   }
 
   /**
-   * @method getUser
+   * @method getCustomer
    * @param strategy
    * @param profile
    */

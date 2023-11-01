@@ -3,3 +3,9 @@ query IsValidToken($token: String!) {
     isValid
   }
 }
+
+query LoginFB {
+  loginFB {
+    ok
+  }
+}

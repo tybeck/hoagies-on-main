@@ -14,7 +14,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "cd apps/functions && npx ncc build src/main.local.ts -o local -w",
+          "cd apps/functions && npx ncc build src/main.local.ts -o local -sw",
           "cd apps/functions && nodemon local/index"
         ]
       }

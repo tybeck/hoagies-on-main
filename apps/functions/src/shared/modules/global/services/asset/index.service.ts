@@ -7,7 +7,7 @@ import {
 import {CACHE_MANAGER} from '@nestjs/cache-manager';
 import {Cache} from 'cache-manager';
 
-import {ConfigService, Environment} from '@hom-api/modules';
+import {ConfigService, Environment} from '@hom-api/config';
 
 import {S3Service} from '../s3/index.service';
 

@@ -1,5 +1,4 @@
 import {Injectable} from '@nestjs/common';
-
 export enum Environment {
   Url = 'URL',
   Port = 'PORT',
@@ -34,6 +33,10 @@ export enum Environment {
   HomAwsSecretAccessKey = 'HOM_AWS_SECRET_ACCESS_KEY',
   HomAwsRegion = 'HOM_AWS_REGION',
   AssetBucket = 'ASSET_BUCKET',
+  RmqUrl = 'RMQ_URL',
+  RmqPort = 'RMQ_PORT',
+  RmqUser = 'RMQ_USER',
+  RmqPass = 'RMQ_PASS',
 }
 
 export type EnvironmentValues = Record<Environment, string>;
@@ -74,6 +77,7 @@ export class ConfigService {
    * @description Fallback configuration values if they're not provided by
    * an environment file. This is bare minimum to get our application running if
    * the specified values aren't provided.
+   * TODO: finish implementation
    * @private
    */
   private getFallbackConfigurationValue<T>(

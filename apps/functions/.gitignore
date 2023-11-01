@@ -5,3 +5,4 @@ schema.gql
 .env*
 libs
 !.env.template
+.backup-serverless

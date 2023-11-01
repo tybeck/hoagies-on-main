@@ -1,32 +1,19 @@
 import {Module} from '@nestjs/common';
 import {GraphQLModule} from '@nestjs/graphql';
-import {MongooseModule} from '@nestjs/mongoose';
 import {ApolloDriver} from '@nestjs/apollo';
 import {ApolloServerPluginLandingPageLocalDefault} from '@apollo/server/plugin/landingPage/default';
 import {join} from 'path';
 
-import {
-  Setting,
-  SettingSchema,
-  Category,
-  CategorySchema,
-  FbReview,
-  FbReviewSchema,
-  FbPost,
-  FbPostSchema,
-  Product,
-  ProductSchema,
-  Customer,
-  CustomerSchema,
-} from '@hom-api/models';
-import {ConfigModule, ConfigService, Environment} from '@hom-api/modules';
+import {ConfigModule, ConfigService, Environment} from '@hom-api/config';
+import {DbModule} from '@hom-api/shared-db-module';
+import {ModelsModule} from '@hom-api/shared-models-module';
+import {SharedAuthModule} from '@hom-api/shared-auth-module';
 import {
   CategoryService,
   SettingService,
   ReviewService,
   PostService,
   ProductService,
-  AuthService,
 } from '@hom-api-fn/graphql-providers';
 import {
   CategoryResolver,
@@ -37,43 +24,11 @@ import {
   AuthResolver,
 } from '@hom-api-fn/graphql-resolvers';
 
-import {DbModule} from './db.module';
-
 @Module({
   imports: [
     DbModule,
-    MongooseModule.forFeature([
-      {
-        name: Setting.name,
-        schema: SettingSchema,
-        collection: Setting.name.toLowerCase(),
-      },
-      {
-        name: Category.name,
-        schema: CategorySchema,
-        collection: Category.name.toLowerCase(),
-      },
-      {
-        name: FbReview.name,
-        schema: FbReviewSchema,
-        collection: FbReview.name.toLowerCase(),
-      },
-      {
-        name: FbPost.name,
-        schema: FbPostSchema,
-        collection: FbPost.name.toLowerCase(),
-      },
-      {
-        name: Product.name,
-        schema: ProductSchema,
-        collection: Product.name.toLowerCase(),
-      },
-      {
-        name: Customer.name,
-        schema: CustomerSchema,
-        collection: Customer.name.toLowerCase(),
-      },
-    ]),
+    ModelsModule,
+    SharedAuthModule,
     GraphQLModule.forRootAsync({
       driver: ApolloDriver,
       useFactory: async (config: ConfigService) => {
@@ -99,7 +54,6 @@ import {DbModule} from './db.module';
     ReviewService,
     PostService,
     ProductService,
-    AuthService,
     // resolvers
     SettingResolver,
     CategoryResolver,

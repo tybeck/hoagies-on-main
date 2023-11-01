@@ -9,6 +9,7 @@ plugins:
 
 provider:
   name: aws
+  region: us-east-1
   runtime: nodejs18.x
   runtimeManagement: auto
   memorySize: 512
@@ -16,25 +17,29 @@ provider:
   versionFunctions: true
   tracing:
     lambda: true
+  vpc:
+    securityGroupIds:
+      - 'sg-0bebb4a2d0ea2a673'
+    subnetIds:
+      - 'subnet-00de4b393c96085a0'
+      - 'subnet-035c8cac300cfbf38'
+      - 'subnet-04228e4aed2ce0e35'
+      - 'subnet-09ecb135c1481416d'
+      - 'subnet-084b74ef0a9f87510'
+      - 'subnet-0748e6b6c36037d28'
   iam:
     role:
       statements:
         - Effect: Allow
+          # TODO: Provide stricter policy
           Action:
+            - 'ec2:*'
+            - 'docdb-elastic:*'
+            - 'memorydb:*'
             - 's3:*'
+            - 'mq:*'
           Resource:
-            - 'arn:aws:s3:::hom-assets/*'
-  vpc:
-    securityGroupIds:
-      - 'sg-04fc3cea2ee552103'
-      - 'sg-073ca64743f4e8ad9'
-    subnetIds:
-      - 'subnet-009f69c26fb4ee1ba'
-      - 'subnet-0bcfa8c596a7e18cd'
-      - 'subnet-05c822d45e6d5638f'
-      - 'subnet-0c00c3df3ee51f4a0'
-      - 'subnet-05c4102986c32ce66'
-      - 'subnet-057fb0897f4213bd1'
+            - '*'
 
 package:
   individually: true
@@ -44,18 +49,6 @@ package:
     - '!libs/**'
     - '!local/**'
 
-resources:
-  Resources:
-    GatewayResponseDefault4XX:
-      Type: 'AWS::ApiGateway::GatewayResponse'
-      Properties:
-        ResponseParameters:
-          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
-        ResponseType: DEFAULT_4XX
-        RestApiId:
-          Ref: 'ApiGatewayRestApi'
-
 functions:
   graphql:
     handler: dist/packages/hom/graphql/index.handler
@@ -64,17 +57,58 @@ functions:
           path: /graphql
           method: POST
           cors: true
-  playground:
-    handler: dist/packages/hom/graphql/index.handler
+    warmup:
+      default:
+        enabled: true
+  fb-pull:
+    handler: dist/packages/hom/fb-pull/index.handler
+    events:
+      - rabbitmq:
+          arn: arn:aws:mq:us-east-1:077269188659:broker:HOM-MQ:b-d49c8b06-7316-42aa-852f-74f4ce4272e1
+          queue: fb
+          basicAuthArn: arn:aws:secretsmanager:us-east-1:077269188659:secret:MQAccess-5d5oAI
+  fb-push:
+    handler: dist/packages/hom/fb-push/index.handler
+    events:
+      - schedule:
+          rate: rate(60 minutes)
+  auth:
+    handler: dist/packages/hom/auth/index.handler
     events:
       - http:
-          path: /
+          path: /auth/test
           method: GET
+          cors: true
+      - http:
+          path: /auth/fb
+          method: GET
+          cors: true
+      - http:
+          path: /auth/fb/redirect
+          method: GET
+          cors: true
+      - http:
+          path: /auth/google
+          method: GET
+          cors: true
+      - http:
+          path: /auth/google/redirect
+          method: GET
+          cors: true
+      - http:
+          path: /auth/twitter
+          method: GET
+          cors: true
+      - http:
+          path: /auth/twitter/redirect
+          method: GET
+          cors: true
     warmup:
       default:
         enabled: true
 
 custom:
+  # plugins
   serverless-offline:
     httpPort: 3000
     host: 0.0.0.0

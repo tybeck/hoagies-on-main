@@ -1,19 +1,21 @@
 /**
- * Local version of our serverless architecture
+ * Local version of our serverless architecture, this is independent
+ * of what serverless-offline provides and is more robust.
  * @author Tyler Beck
  */
+import {config} from 'dotenv';
+import {join} from 'path';
+
+config({path: join(__dirname, '../.env.development')});
+
 import {NestFactory} from '@nestjs/core';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import {config} from 'dotenv';
-import {join} from 'path';
 import {INestApplication} from '@nestjs/common';
 
-import {ConfigService, Environment} from '@hom-api/modules';
+import {ConfigService, Environment} from '@hom-api/config';
 
 import {AppModule} from './app.module';
-
-config({path: join(__dirname, '../.env.development')});
 
 declare module globalThis {
   let App: INestApplication;
@@ -37,6 +39,8 @@ async function bootstrap() {
     }),
   );
   app.use(cookieParser());
+
   await app.listen(port);
 }
-bootstrap();
+
+(async () => await bootstrap())();
